@@ -1,5 +1,7 @@
 <?php
 
+trigger_error('Cwd: ' . __DIR__ . ' Include path: ' . ini_get('include_path') . ' Request: ' . print_r($_SERVER, true));
+
 /**
  * Phorms: HTML form widgets with validation
  * 
@@ -18,20 +20,22 @@
  * @example ../examples/comment_form.php A simple comment form
  * 
  **/
+ 
+define('PHORMS_ROOT', __DIR__ . '/');
 
 /**
  * Widget classes used to serialize form elements.
  **/
-require_once('widgets.php');
+require_once(PHORMS_ROOT . 'widgets.php');
 /**
  * Various helper types.
  **/
-require_once('types.php');
+require_once(PHORMS_ROOT . 'types.php');
 /**
  * Field classes used to import and export form data and to handle
  * form validation.
  **/
-require_once('fields.php');
+require_once(PHORMS_ROOT . 'fields.php');
 
 /**
  * Phorm

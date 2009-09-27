@@ -13,11 +13,11 @@
 /**
  * Widget classes used to serialize form elements.
  **/
-require_once('widgets.php');
+require_once(PHORMS_ROOT . 'widgets.php');
 /**
  * Various helper types.
  **/
-require_once('types.php');
+require_once(PHORMS_ROOT . 'types.php');
 
 /**
  * ValidationError
