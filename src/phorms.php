@@ -1,7 +1,5 @@
 <?php
 
-trigger_error('Cwd: ' . __DIR__ . ' Include path: ' . ini_get('include_path') . ' Request: ' . print_r($_SERVER, true));
-
 /**
  * Phorms: HTML form widgets with validation
  * 
@@ -21,6 +19,9 @@ trigger_error('Cwd: ' . __DIR__ . ' Include path: ' . ini_get('include_path') . 
  * 
  **/
  
+/**
+ * Constant used to determine path of includes.
+ **/
 define('PHORMS_ROOT', __DIR__ . '/');
 
 /**
