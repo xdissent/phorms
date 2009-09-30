@@ -22,7 +22,7 @@
 /**
  * Constant used to determine path of includes.
  **/
-define('PHORMS_ROOT', __DIR__ . '/');
+define('PHORMS_ROOT', dirname(__FILE__) . '/');
 
 /**
  * Widget classes used to serialize form elements.
