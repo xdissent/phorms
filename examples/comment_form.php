@@ -15,7 +15,7 @@ class CommentForm extends Phorm
 	protected function define_fields()
 	{
 		// Define form fields
-		$this->post_id = new HiddenField(255);
+		$this->post_id = new HiddenField(array('required'));
 		$this->first_name = new TextField("First name", 25, 255, array('required'));
 		$this->last_name = new TextField("Last name", 25, 255, array('required'));
 		$this->email = new EmailField("Email address", 25, 255, array('required'));
