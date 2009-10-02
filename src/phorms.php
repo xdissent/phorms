@@ -37,6 +37,11 @@ require_once(PHORMS_ROOT . 'types.php');
  * form validation.
  **/
 require_once(PHORMS_ROOT . 'fields.php');
+/**
+ * Field classes used to import and export form data and to handle
+ * form validation.
+ **/
+require_once(PHORMS_ROOT . 'fieldsets.php');
 
 /**
  * Phorm
@@ -400,6 +405,54 @@ abstract class Phorm
                 $elts[] = strval($field);
         }
         return implode($elts);
+    }
+}
+
+
+/**
+ * FieldsetPhorm
+ * 
+ * The abstract FieldsetPhorm class is a subclass of Phorm. It additionally
+ * specifies one abstract method: 'define_fieldsets', which must set the
+ * 'fieldsets' attribute. It should be an array of Fieldset instances to
+ * use in the form.
+ *
+ * @author Greg Thornton
+ * @see fieldsets.php
+ * @example ../examples/comment_form.php A simple comment form
+ **/
+abstract class FieldsetPhorm extends Phorm
+{
+    public function __construct($method=Phorm::GET, $multi_part=false, $data=array())
+    {
+        parent::__construct($method, $multi_part, $data);
+        $this->define_fieldsets();
+    }
+
+    /**
+     * Returns the form fields as a series of HTML table rows. Does not include
+     * the table's opening and closing tags, nor the table's tbody tags.
+     * @return string the HTML form
+     * @author Greg Thornton
+     **/
+    public function as_table()
+    {
+        $elts = array();
+        foreach ($this->fieldsets as $fieldset)
+        {
+            $elts[] = sprintf('<tr><td colspan="2"><fieldset><legend>%s</legend><table>', $fieldset->label);
+            foreach ($fieldset->field_names as $field_name) {
+                $field = $this->$field_name;
+                $label = $field->label();
+
+                if ($label !== '')
+                    $elts[] = sprintf('<tr><th>%s:</th><td>%s</td></tr>', $label, $field);
+                else
+                    $elts[] = strval($field);
+            }
+            $elts[] = '</table></fieldset></td></tr>';
+        }
+        return implode($elts, "\n");
     }
 }
 
