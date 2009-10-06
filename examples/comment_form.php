@@ -12,7 +12,7 @@ function required($value)
 
 class CommentForm extends Phorm
 {
-	protected function define_fields()
+	protected function defineFields()
 	{
 		// Define form fields
 		$this->post_id = new HiddenField(array('required'));

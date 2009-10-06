@@ -1,126 +1,148 @@
 <?php
-
 /**
- * Fields
+ * Phorms Fields
  *
- * Field classes that are used to compose a Phorm instance.
+ * This file defines fields that are used to compose a Phorm instance.
+ *
+ * PHP VERSION 5
  * 
- * @author Jeff Ober
- * @package Fields
- * @see Phorm,Widget
- **/
+ * @category   HTML_Forms
+ * @package    Phorms
+ * @subpackage Fields
+ * @author     Jeff Ober <jeffober@gmail.com>
+ * @copyright  2009 Jeff Ober <jeffober@gmail.com>
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT License
+ * @link       http://www.artfulcode.net/phorms/
+ * @see        Phorm_Form
+ * @see        Phorm_Widget
+ */
 
 /**
- * Widget classes used to serialize form elements.
- **/
-require_once(PHORMS_ROOT . 'widgets.php');
-/**
- * Various helper types.
- **/
-require_once(PHORMS_ROOT . 'types.php');
+ * Load widget classes used to serialize form elements.
+ */
+require_once dirname(__FILE__) . '/widgets.php';
 
 /**
- * ValidationError
+ * Load various helper types.
+ */
+require_once dirname(__FILE__) . '/types.php';
+
+/**
+ * An exception to indicate a validation error occurred.
  * 
  * Thrown when a field's data fails to validate.
- * @author Jeff Ober
- * @package Fields
- **/
-class ValidationError extends Exception { }
+ *
+ * @category   HTML_Forms
+ * @package    Phorms
+ * @subpackage Fields
+ * @author     Jeff Ober <jeffober@gmail.com>
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT License
+ * @link       http://www.artfulcode.net/phorms/
+ */
+class ValidationError extends Exception
+{
+}
 
 /**
- * PhormField
- * 
  * Abstract class from which all other field classes are derived.
- * @author Jeff Ober
- * @package Fields
- **/
+ *
+ * @category   HTML_Forms
+ * @package    Phorms
+ * @subpackage Fields
+ * @author     Jeff Ober <jeffober@gmail.com>
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT License
+ * @link       http://www.artfulcode.net/phorms/
+ */
 abstract class PhormField
 {
     /**
      * The field's text label.
-     **/
-    private $label;
+     */
+    private $_label;
     /**
      * Store's the field's value. Set during validation.
-     **/
-    private $value;
+     */
+    private $_value;
     /**
      * Array of callbacks used to validate field data. May be either a string
      * denoting a function or an array of array(instance, string method) to use
      * a class instance method.
-     **/
-    private $validators;
+     */
+    private $_validators;
     /**
-     * Associative array of key/value pairs representing HTML attributes of the field.
-     **/
-    private $attributes;
+     * Associative array of key/value pairs representing HTML attributes of 
+     * the field.
+     */
+    private $_attributes;
     /**
      * Array storing errors generated during field validation.
-     **/
-    private $errors;
+     */
+    private $_errors;
     /**
      * Storage of the "cleaned" field value.
-     **/
-    private $imported;
+     */
+    private $_imported;
     /**
      * Help text for the field. This is printed out with the field HTML.
-     **/
-    private $help_text = "";
+     */
+    private $_help_text = "";
     /**
      * If true, this field uses multiple field widgets.
      * @see widgets.php
-     **/
+     */
     public $multi_field = false;
     /**
      * Stores the result of field validation to prevents double-validation.
-     **/
-    private $valid;
+     */
+    private $_valid;
     
     /**
-     * @author Jeff Ober
-     * @param string $label the field's label
-     * @param array $validators callbacks used to validate field data
-     * @param array $attributes an assoc of key/value pairs representing HTML attributes
-     * @return null
-     **/
+     * Constructs a PhormField instance.
+     *
+     * @param string $label      The field's label.
+     * @param array  $validators Callbacks used to validate field data.
+     * @param array  $attributes An assoc of key/value pairs representing HTML attributes.
+     *
+     * @return void
+     */
     public function __construct($label, array $validators=array(), array $attributes=array())
     {
-        $this->label = (string)$label;
-        $this->attributes = $attributes;
-        $this->validators = $validators;
+        $this->_label = (string)$label;
+        $this->_attributes = $attributes;
+        $this->_validators = $validators;
     }
     
     /**
      * Assigns help text to the field.
-     * @author Jeff Ober
+     *
      * @param string $text the help text
-     * @return null
-     **/
+     *
+     * @return void
+     */
     public function set_help_text($text)
     {
-        $this->help_text = $text;
+        $this->_help_text = $text;
     }
     
     /**
      * Sets the value of the field.
      * @author Jeff Ober
      * @param mixed $value the field's value
-     * @return null
-     **/
+     * @return void
+     */
     public function set_value($value)
     {
-        $this->value = $value;
+        $this->_value = $value;
     }
     
     /**
      * Returns the "cleaned" value of the field.
      * @author Jeff Ober
      * @return mixed the field's "cleaned" value
-     **/
+     */
     public function get_value()
     {
-        return $this->imported;
+        return $this->_imported;
     }
     
     /**
@@ -128,11 +150,11 @@ abstract class PhormField
      * @author Jeff Ober
      * @param string $key the attribute name
      * @param string $value the attribute's value
-     * @return null
-     **/
+     * @return void
+     */
     public function set_attribute($key, $value)
     {
-        $this->attributes[$key] = $value;
+        $this->_attributes[$key] = $value;
     }
     
     /**
@@ -140,11 +162,11 @@ abstract class PhormField
      * @author Jeff Ober
      * @param string $key the attribute name to look up
      * @return string|null the attribute's value or null if not set
-     **/
+     */
     public function get_attribute($key)
     {
-        if (array_key_exists($key, $this->attributes))
-            return $this->attributes[$key];
+        if (array_key_exists($key, $this->_attributes))
+            return $this->_attributes[$key];
         return null;
     }
     
@@ -153,54 +175,54 @@ abstract class PhormField
      * yet validated, returns null.
      * @author Jeff Ober
      * @return array|null
-     **/
+     */
     public function get_errors()
     {
-        return $this->errors;
+        return $this->_errors;
     }
     
     /**
      * Returns an HTML string containing the field's help text.
      * @author Jeff Ober
      * @return string the HTML help text paragraph
-     **/
+     */
     public function help_text()
     {
-        return sprintf('<p class="phorm_help">%s</p>', htmlentities($this->help_text));
+        return sprintf('<p class="phorm_help">%s</p>', htmlentities($this->_help_text));
     }
     
     /**
      * Returns the HTML field label.
      * @author Jeff Ober
      * @return string the HTML label tag
-     **/
+     */
     public function label()
     {
-        return sprintf('<label for="%s">%s</label>', (string)$this->get_attribute('id'), $this->label);
+        return sprintf('<label for="%s">%s</label>', (string)$this->get_attribute('id'), $this->_label);
     }
     
     /**
      * Returns the field's tag as HTML.
      * @author Jeff Ober
      * @return string the field as HTML
-     **/
+     */
     public function html()
     {
         $widget = $this->get_widget();
-        $attr = $this->attributes;
-        return $widget->html($this->value, $this->attributes);
+        $attr = $this->_attributes;
+        return $widget->html($this->_value, $this->_attributes);
     }
     
     /**
      * Returns the field's errors as an unordered list with the class "phorm_error".
      * @author Jeff Ober
      * @return string the field errors as an unordered list
-     **/
+     */
     public function errors()
     {
         $elts = array();
-        if (is_array($this->errors) && count($this->errors) > 0)
-            foreach ($this->errors as $error)
+        if (is_array($this->_errors) && count($this->_errors) > 0)
+            foreach ($this->_errors as $error)
                 $elts[] = sprintf('<li>%s</li>', $error);
         return sprintf('<ul class="phorm_error">%s</ul>', implode($elts));
     }
@@ -209,7 +231,7 @@ abstract class PhormField
      * Serializes the field to HTML.
      * @author Jeff Ober
      * @return string the field's complete HTMl representation.
-     **/
+     */
     public function __toString()
     {
         return $this->html() . $this->help_text() . $this->errors();
@@ -226,33 +248,33 @@ abstract class PhormField
      * @param boolean $reprocess if true, ignores memoized result of initial call
      * @return boolean true if the field's value is valid
      * @see PhormField::$valid,PhormField::$imported,PhormField::$validators,PhormField::$errors
-     **/
+     */
     public function is_valid($reprocess=false)
     {
-        if ( $reprocess || is_null($this->valid) )
+        if ( $reprocess || is_null($this->_valid) )
         {
             // Pre-process value
-            $value = $this->prepare_value($this->value);
+            $value = $this->prepare_value($this->_value);
 
-            $this->errors = array();
-            $v = $this->validators;
+            $this->_errors = array();
+            $v = $this->_validators;
 
             foreach($v as $f)
             {
                 try { call_user_func($f, $value); }
-                catch (ValidationError $e) { $this->errors[] = $e->getMessage(); }
+                catch (ValidationError $e) { $this->_errors[] = $e->getMessage(); }
             }
             
             if ( $value !== '' )
             {
                 try { $this->validate($value); }
-                catch (ValidationError $e) { $this->errors[] = $e->getMessage(); }
+                catch (ValidationError $e) { $this->_errors[] = $e->getMessage(); }
             }
 
-            if ( $this->valid = ( count($this->errors) === 0 ) )
-                $this->imported = $this->import_value($value);
+            if ( $this->_valid = ( count($this->_errors) === 0 ) )
+                $this->_imported = $this->import_value($value);
         }
-        return $this->valid;
+        return $this->_valid;
     }
     
     /**
@@ -260,26 +282,26 @@ abstract class PhormField
      * @author Jeff Ober
      * @param string $value the value from the form array
      * @return string the pre-processed value
-     **/
+     */
     protected function prepare_value($value)
     {
-        return ( get_magic_quotes_gpc() ) ? stripslashes($value) : $value;
+        return (get_magic_quotes_gpc()) ? stripslashes($value) : $value;
     }
     
     /**
      * Defined in derived classes; must return an instance of PhormWidget.
      * @return PhormWidget the field's widget
      * @see PhormWidget
-     **/
+     */
     abstract protected function get_widget();
     
     /**
      * Raises a ValidationError if $value is invalid.
      * @param string|mixed $value (may be mixed if prepare_value returns a non-string)
      * @throws ValidationError
-     * @return null
+     * @return void
      * @see ValidationError
-     **/
+     */
     abstract protected function validate($value);
     
     /**
@@ -288,7 +310,7 @@ abstract class PhormField
      * into a unix timestamp or a numeric string into an integer or float.
      * @param string|mixed $value the pre-processed string value (or mixed if prepare_value returns a non-string)
      * @return mixed
-     **/
+     */
     abstract public function import_value($value);
 }
 
@@ -299,17 +321,17 @@ abstract class PhormField
  * @author Jeff Ober
  * @package Fields
  * @see File
- **/
+ */
 class FileField extends PhormField
 {
     /**
      * Stores the valid types for this field.
-     **/
-    private $types;
+     */
+    private $_types;
     /**
      * Stores the maximum size boundary in bytes.
-     **/
-    private $max_size;
+     */
+    private $_max_size;
     
     /**
      * @author Jeff Ober
@@ -318,11 +340,11 @@ class FileField extends PhormField
      * @param int $max_size the maximum upload size in bytes
      * @param array $validators a list of callbacks to validate the field data
      * @param array $attributes a list of key/value pairs representing HTML attributes
-     **/
+     */
     public function __construct($label, array $mime_types, $max_size, array $validators=array(), array $attributes=array())
     {
-        $this->types = $mime_types;
-        $this->max_size = $max_size;
+        $this->_types = $mime_types;
+        $this->_max_size = $max_size;
         parent::__construct($label, $validators, $attributes);
     }
     
@@ -330,7 +352,7 @@ class FileField extends PhormField
      * Returns true if the file was uploaded without an error.
      * @author Jeff Ober
      * @return boolean
-     **/
+     */
     protected function file_was_uploaded()
     {
         $file = $this->get_file_data();
@@ -342,7 +364,7 @@ class FileField extends PhormField
      * @author Jeff Ober
      * @param int $errno the error code (from $_FILES['name']['error'])
      * @return string the error message
-     **/
+     */
     protected function file_upload_error($errno)
     {
         switch ($errno)
@@ -373,17 +395,17 @@ class FileField extends PhormField
      * @author Jeff Ober
      * @return FileWidget
      * @see FileWidget,FileField::$types
-     **/
+     */
     protected function get_widget()
     {
-        return new FileWidget($this->types);
+        return new FileWidget($this->_types);
     }
     
     /**
      * Returns an array of file upload data.
      * @author Jeff Ober
      * @return array file upload data
-     **/
+     */
     protected function get_file_data()
     {
         $data = $_FILES[ $this->get_attribute('name') ];
@@ -396,7 +418,7 @@ class FileField extends PhormField
      * @author Jeff Ober
      * @return File a new File instance
      * @see File
-     **/
+     */
     protected function get_file()
     {
         return new File( $this->get_file_data() );
@@ -408,7 +430,7 @@ class FileField extends PhormField
      * @param array $value the file data from $_FILES
      * @return File a new File instance
      * @see File
-     **/
+     */
     public function import_value($value)
     {
         if ( $this->file_was_uploaded() )
@@ -421,7 +443,7 @@ class FileField extends PhormField
      * @author Jeff Ober
      * @param mixed $value
      * @return boolean|File
-     **/
+     */
     public function prepare_value($value)
     {
         if ( $this->file_was_uploaded() )
@@ -435,9 +457,9 @@ class FileField extends PhormField
      * the file was not a valid type, or if the file exceded the maximum size.
      * @author Jeff Ober
      * @param mixed $value
-     * @return null
+     * @return void
      * @throws ValidationError
-     **/
+     */
     protected function validate($value)
     {
         $file = $this->get_file_data();
@@ -445,11 +467,11 @@ class FileField extends PhormField
         if ($file['error'])
             throw new ValidationError($file['error']);
         
-        if (is_array($this->types) && !in_array($file['type'], $this->types))
+        if (is_array($this->_types) && !in_array($file['type'], $this->_types))
             throw new ValidationError("Files of type ${file['type']} are not accepted.");
         
-        if ($file['size'] > $this->max_size)
-            throw new ValidationError(sprintf("Files are limited to %s bytes.", number_format($this->max_size)));
+        if ($file['size'] > $this->_max_size)
+            throw new ValidationError(sprintf("Files are limited to %s bytes.", number_format($this->_max_size)));
     }
 }
 
@@ -462,7 +484,7 @@ class FileField extends PhormField
  * @author Jeff Ober
  * @package Fields
  * @see FileField,Image
- **/
+ */
 class ImageField extends FileField
 {
     /**
@@ -471,7 +493,7 @@ class ImageField extends FileField
      * @param int $max_size the maximum upload size in bytes
      * @param array $validators a list of callbacks to validate the field data
      * @param array $attributes a list of key/value pairs representing HTML attributes
-     **/
+     */
     public function __construct($label, $max_size, array $validators=array(), array $attributes=array())
     {
         parent::__construct($label, array('image/png', 'image/gif', 'image/jpg', 'image/jpeg'), $max_size, $validators, $attributes);
@@ -481,7 +503,7 @@ class ImageField extends FileField
      * Returns a new Image.
      * @author Jeff Ober
      * @return Image
-     **/
+     */
     protected function get_file()
     {
         return new Image( $this->get_file_data() );
@@ -494,13 +516,13 @@ class ImageField extends FileField
  * A simple text field.
  * @author Jeff Ober
  * @package Fields
- **/
+ */
 class TextField extends PhormField
 {
     /**
      * Stores the maximum value length in characters.
-     **/
-    private $max_length;
+     */
+    private $_max_length;
     
     /**
      * @author Jeff Ober
@@ -509,10 +531,10 @@ class TextField extends PhormField
      * @param int $max_length the maximum size in characters
      * @param array $validators a list of callbacks to validate the field data
      * @param array $attributes a list of key/value pairs representing HTML attributes
-     **/
+     */
     public function __construct($label, $size, $max_length, array $validators=array(), array $attributes=array())
     {
-        $this->max_length = $max_length;
+        $this->_max_length = $max_length;
         $attributes['size'] = $size;
         parent::__construct($label, $validators, $attributes);
     }
@@ -521,23 +543,23 @@ class TextField extends PhormField
      * Returns a new CharWidget.
      * @author Jeff Ober
      * @return CharWidget
-     **/
+     */
     protected function get_widget()
     {
         return new CharWidget();
     }
     
     /**
-     * Validates that the value is less than $this->max_length;
+     * Validates that the value is less than $this->_max_length;
      * @author Jeff Ober
-     * @return null
+     * @return void
      * @throws ValidationError
      * @see TextField::$max_width
-     **/
+     */
     protected function validate($value)
     {
-        if (strlen($value) > $this->max_length)
-            throw new ValidationError('Must be fewer than {$this->max_length} characters in length.');
+        if (strlen($value) > $this->_max_length)
+            throw new ValidationError('Must be fewer than {$this->_max_length} characters in length.');
     }
     
     /**
@@ -545,7 +567,7 @@ class TextField extends PhormField
      * @author Jeff Ober
      * @param string $value
      * @return string the decoded value
-     **/
+     */
     public function import_value($value)
     {
         return html_entity_decode((string)$value);
@@ -558,14 +580,14 @@ class TextField extends PhormField
  * A hidden text field that does not print a label.
  * @author Jeff Ober
  * @package Fields
- **/
+ */
 class HiddenField extends TextField
 {
     /**
      * @author Jeff Ober
      * @param array $validators a list of callbacks to validate the field data
      * @param array $attributes a list of key/value pairs representing HTML attributes
-     **/
+     */
     public function __construct(array $validators=array(), array $attributes=array())
     {
         parent::__construct('', 255, $validators, $attributes);
@@ -575,7 +597,7 @@ class HiddenField extends TextField
      * Does not print out a label.
      * @author Jeff Ober
      * @return string an empty string
-     **/
+     */
     public function label()
     {
         return '';
@@ -585,7 +607,7 @@ class HiddenField extends TextField
      * Does not print out the help text.
      * @author Jeff Ober
      * @return string an empty string.
-     **/
+     */
     public function help_text()
     {
         return '';
@@ -595,7 +617,7 @@ class HiddenField extends TextField
      * Returns a new HiddenWidget.
      * @author Jeff Ober
      * @return HiddenWidget
-     **/
+     */
     protected function get_widget()
     {
         return new HiddenWidget();
@@ -608,13 +630,13 @@ class HiddenField extends TextField
  * A password field that uses a user-specified hash function to import values.
  * @author Jeff Ober
  * @package Fields
- **/
+ */
 class PasswordField extends TextField
 {
     /**
      * The hash function to encode the user-submitted value.
-     **/
-    private $hash_function;
+     */
+    private $_hash_function;
     
     /**
      * @author Jeff Ober
@@ -624,11 +646,11 @@ class PasswordField extends TextField
      * @param callback $hash_function a (string) function or array (instance, string method) callback
      * @param array $validators a list of callbacks to validate the field data
      * @param array $attributes a list of key/value pairs representing HTML attributes
-     **/
+     */
     public function __construct($label, $size, $max_length, $hash_function, array $validators=array(), array $attributes=array())
     {
-        $this->max_length = $max_length;
-        $this->hash_function = $hash_function;
+        $this->_max_length = $max_length;
+        $this->_hash_function = $hash_function;
         $attributes['size'] = $size;
         parent::__construct($label, $validators, $attributes);
     }
@@ -637,7 +659,7 @@ class PasswordField extends TextField
      * Returns a PasswordWidget.
      * @author Jeff Ober
      * @return PasswordWidget
-     **/
+     */
     public function get_widget()
     {
         return new PasswordWidget();
@@ -648,10 +670,10 @@ class PasswordField extends TextField
      * @author Jeff Ober
      * @param string $value
      * @return string the encoded value
-     **/
+     */
     public function import_value($value)
     {
-        return call_user_func($this->hash_function, array($value));
+        return call_user_func($this->_hash_function, array($value));
     }
 }
 
@@ -661,7 +683,7 @@ class PasswordField extends TextField
  * A large text field using a textarea tag.
  * @author Jeff Ober
  * @package Fields
- **/
+ */
 class LargeTextField extends PhormField
 {
     /**
@@ -671,7 +693,7 @@ class LargeTextField extends PhormField
      * @param int $cols the number of columns
      * @param array $validators a list of callbacks to validate the field data
      * @param array $attributes a list of key/value pairs representing HTML attributes
-     **/
+     */
     public function __construct($label, $rows, $cols, array $validators=array(), array $attributes=array())
     {
         $attributes['cols'] = $cols;
@@ -683,7 +705,7 @@ class LargeTextField extends PhormField
      * Returns a new TextWidget.
      * @author Jeff Ober
      * @return TextWidget
-     **/
+     */
     protected function get_widget()
     {
         return new TextWidget();
@@ -692,8 +714,8 @@ class LargeTextField extends PhormField
     /**
      * Returns null.
      * @author Jeff Ober
-     * @return null
-     **/
+     * @return void
+     */
     protected function validate($value)
     {
         return true;
@@ -704,7 +726,7 @@ class LargeTextField extends PhormField
      * @author Jeff Ober
      * @param string $value
      * @return string the decoded value
-     **/
+     */
     public function import_value($value)
     {
         return html_entity_decode((string)$value);
@@ -717,13 +739,13 @@ class LargeTextField extends PhormField
  * A field that accepts only integers.
  * @author Jeff Ober
  * @package Fields
- **/
+ */
 class IntegerField extends PhormField
 {
     /**
      * Stores the max number of digits permitted.
-     **/
-    private $max_digits;
+     */
+    private $_max_digits;
     
     /**
      * @author Jeff Ober
@@ -731,19 +753,19 @@ class IntegerField extends PhormField
      * @param int $max_digits the maximum number of digits permitted
      * @param array $validators a list of callbacks to validate the field data
      * @param array $attributes a list of key/value pairs representing HTML attributes
-     **/
+     */
     public function __construct($label, $max_digits, array $validators=array(), array $attributes=array())
     {
         $attributes['size'] = 20;
         parent::__construct($label, $validators, $attributes);
-        $this->max_digits = $max_digits;
+        $this->_max_digits = $max_digits;
     }
     
     /**
      * Returns a new CharWidget.
      * @author Jeff Ober
      * @return CharWidget
-     **/
+     */
     public function get_widget()
     {
         return new CharWidget();
@@ -751,16 +773,16 @@ class IntegerField extends PhormField
     
     /**
      * Validates that the value is parsable as an integer and that it is fewer
-     * than $this->max_digits digits.
+     * than $this->_max_digits digits.
      * @author Jeff Ober
      * @param string $value
-     * @return null
+     * @return void
      * @throws ValidationError
-     **/
+     */
     public function validate($value)
     {
-        if (preg_match('/\D/', $value) || strlen((string)$value) > $this->max_digits)
-            throw new ValidationError("Must be a number with fewer than {$this->max_digits} digits.");
+        if (preg_match('/\D/', $value) || strlen((string)$value) > $this->_max_digits)
+            throw new ValidationError("Must be a number with fewer than {$this->_max_digits} digits.");
     }
     
     /**
@@ -768,7 +790,7 @@ class IntegerField extends PhormField
      * @author Jeff Ober
      * @param string $value
      * @return int
-     **/
+     */
     public function import_value($value)
     {
         return (int)(html_entity_decode((string)$value));
@@ -781,13 +803,13 @@ class IntegerField extends PhormField
  * A field that accepts only decimals of a specified precision.
  * @author Jeff Ober
  * @package Fields
- **/
+ */
 class DecimalField extends PhormField
 {
     /**
      * The maximum precision of the field's value.
-     **/
-    private $precision;
+     */
+    private $_precision;
     
     /**
      * @author Jeff Ober
@@ -795,19 +817,19 @@ class DecimalField extends PhormField
      * @param int $precision the maximum number of decimals permitted
      * @param array $validators a list of callbacks to validate the field data
      * @param array $attributes a list of key/value pairs representing HTML attributes
-     **/
+     */
     public function __construct($label, $precision, array $validators=array(), array $attributes=array())
     {
         $attributes['size'] = 20;
         parent::__construct($label, $validators, $attributes);
-        $this->precision = $precision;
+        $this->_precision = $precision;
     }
     
     /**
      * Returns a new CharWidget.
      * @author Jeff Ober
      * @return CharWidget
-     **/
+     */
     public function get_widget()
     {
         return new CharWidget();
@@ -817,9 +839,9 @@ class DecimalField extends PhormField
      * Validates that the value is parsable as a float.
      * @author Jeff Ober
      * @param string value
-     * @return null
+     * @return void
      * @throws ValidationError
-     **/
+     */
     public function validate($value)
     {
         if (!is_numeric($value))
@@ -827,14 +849,14 @@ class DecimalField extends PhormField
     }
     
     /**
-     * Returns the parsed float, rounded to $this->precision digits.
+     * Returns the parsed float, rounded to $this->_precision digits.
      * @author Jeff Ober
      * @param string $value
      * @return float the parsed value
-     **/
+     */
     public function import_value($value)
     {
-        return round((float)(html_entity_decode($value)), $this->precision);
+        return round((float)(html_entity_decode($value)), $this->_precision);
     }
 }
 
@@ -844,63 +866,63 @@ class DecimalField extends PhormField
  * A field representing a boolean choice using a checkbox field.
  * @author Jeff Ober
  * @package Fields
- **/
+ */
 class BooleanField extends PhormField
 {
     /**
      * True when the field is checked (true).
-     **/
-    private $checked;
+     */
+    private $_checked;
     
     /**
      * @author Jeff Ober
      * @param string $label the field's text label
      * @param array $validators a list of callbacks to validate the field data
      * @param array $attributes a list of key/value pairs representing HTML attributes
-     **/
+     */
     public function __construct($label, array $validators=array(), array $attributes=array())
     {
         parent::__construct($label, $validators, $attributes);
         parent::set_value('on');
-        $this->checked = false;
+        $this->_checked = false;
     }
     
     /**
      * Sets the value of the field.
      * @author Jeff Ober
      * @param boolean $value
-     * @return null
-     **/
+     * @return void
+     */
     public function set_value($value)
     {
-        $this->checked = (boolean)$value;
+        $this->_checked = (boolean)$value;
     }
     
     /**
      * Returns true if the field is checked.
      * @author Jeff Ober
      * @return boolean
-     **/
+     */
     public function get_value()
     {
-        return $this->checked;
+        return $this->_checked;
     }
     
     /**
      * Returns a new CheckboxWidget.
      * @author Jeff Ober
      * @return CheckboxWidget
-     **/
+     */
     public function get_widget()
     {
-        return new CheckboxWidget($this->checked);
+        return new CheckboxWidget($this->_checked);
     }
     
     /**
      * Returns null.
      * @author Jeff Ober
-     * @return null
-     **/
+     * @return void
+     */
     public function validate($value)
     {
         return null;
@@ -911,10 +933,10 @@ class BooleanField extends PhormField
      * otherwise.
      * @author Jeff Ober
      * @return boolean
-     **/
+     */
     public function import_value($value)
     {
-        return $this->checked;
+        return $this->_checked;
     }
     
     /**
@@ -922,7 +944,7 @@ class BooleanField extends PhormField
      * @author Jeff Ober
      * @param string $value
      * @param string
-     **/
+     */
     public function prepare_value($value)
     {
         return $value;
@@ -935,13 +957,13 @@ class BooleanField extends PhormField
  * A field that presents a list of options as a drop-down.
  * @author Jeff Ober
  * @package Fields
- **/
+ */
 class DropDownField extends PhormField
 {
     /**
      * An array storing the drop-down's choices.
-     **/
-    private $choices;
+     */
+    private $_choices;
     
     /**
      * @author Jeff Ober
@@ -949,34 +971,34 @@ class DropDownField extends PhormField
      * @param array $choices a list of choices as actual_value=>display_value
      * @param array $validators a list of callbacks to validate the field data
      * @param array $attributes a list of key/value pairs representing HTML attributes
-     **/
+     */
     public function __construct($label, array $choices, array $validators=array(), array $attributes=array())
     {
         parent::__construct($label, $validators, $attributes);
-        $this->choices = $choices;
+        $this->_choices = $choices;
     }
     
     /**
      * Returns a new SelectWidget.
      * @author Jeff Ober
      * @return SelectWidget
-     **/
+     */
     public function get_widget()
     {
-        return new SelectWidget($this->choices);
+        return new SelectWidget($this->_choices);
     }
     
     /**
-     * Validates that $value is present in $this->choices.
+     * Validates that $value is present in $this->_choices.
      * @author Jeff Ober
      * @param string $value
-     * @return null
+     * @return void
      * @throws ValidationError
      * @see DropDownField::$choices
-     **/
+     */
     public function validate($value)
     {
-        if (!in_array($value, array_keys($this->choices)))
+        if (!in_array($value, array_keys($this->_choices)))
             throw new ValidationError("Invalid selection.");
     }
     
@@ -986,7 +1008,7 @@ class DropDownField extends PhormField
      * @author Jeff Ober
      * @param string $value
      * @return string the decoded string
-     **/
+     */
     public function import_value($value)
     {
         return html_entity_decode((string)$value);
@@ -1001,7 +1023,7 @@ class DropDownField extends PhormField
  * value.
  * @author Jeff Ober
  * @package Fields
- **/
+ */
 class URLField extends TextField
 {
     /**
@@ -1009,7 +1031,7 @@ class URLField extends TextField
      * @author Jeff Ober
      * @param string $value
      * @return string
-     **/
+     */
     public function prepare_value($value)
     {
         if (!preg_match('@^(http|ftp)s?://@', $value))
@@ -1022,9 +1044,9 @@ class URLField extends TextField
      * Validates the the value is a valid URL (mostly).
      * @author Jeff Ober
      * @param string $value
-     * @return null
+     * @return void
      * @throws ValidationError
-     **/
+     */
     public function validate($value)
     {
         parent::validate($value);
@@ -1039,16 +1061,16 @@ class URLField extends TextField
  * A text field that only accepts a valid email address.
  * @author Jeff Ober
  * @package Fields
- **/
+ */
 class EmailField extends TextField
 {
     /**
      * Validates that the value is a valid email address.
      * @author Jeff Ober
      * @param string $value
-     * @return null
+     * @return void
      * @throws ValidationError
-     **/
+     */
     public function validate($value)
     {
         parent::validate($value);
@@ -1066,7 +1088,7 @@ class EmailField extends TextField
  * as well in 5.2.9+.)
  * @author Jeff Ober
  * @package Fields
- **/
+ */
 class DateTimeField extends TextField
 {
     /**
@@ -1074,7 +1096,7 @@ class DateTimeField extends TextField
      * @param string $label the field's text label
      * @param array $validators a list of callbacks to validate the field data
      * @param array $attributes a list of key/value pairs representing HTML attributes
-     **/
+     */
     public function __construct($label, array $validators=array(), array $attributes=array())
     {
         parent::__construct($label, 25, 100, $validators, $attributes);
@@ -1084,9 +1106,9 @@ class DateTimeField extends TextField
      * Validates that the value is parsable as a date/time value.
      * @author Jeff Ober
      * @param string $value
-     * @return null
+     * @return void
      * @throws ValidationError
-     **/
+     */
     public function validate($value)
     {
         parent::validate($value);
@@ -1100,7 +1122,7 @@ class DateTimeField extends TextField
      * @author Jeff Ober
      * @param string $value
      * @return int the date/time as a unix timestamp
-     **/
+     */
     public function import_value($value)
     {
         $value = parent::import_value($value);
@@ -1115,20 +1137,20 @@ class DateTimeField extends TextField
  * array of captured values.
  * @author Jeff Ober
  * @package Fields
- **/
+ */
 class RegexField extends TextField
 {
     /**
      * The (pcre) regular expression.
-     **/
+     */
     private $regex;
     /**
      * The error message thrown when unmatched.
-     **/
+     */
     private $message;
     /**
      * Storage for matches during validation so that the expression needn't run twice.
-     **/
+     */
     private $matches;
     
     /**
@@ -1138,7 +1160,7 @@ class RegexField extends TextField
      * @param string $error_msg the message thrown on a regex mismatch
      * @param array $validators a list of callbacks to validate the field data
      * @param array $attributes a list of key/value pairs representing HTML attributes
-     **/
+     */
     public function __construct($label, $regex, $error_msg, array $validators=array(), array $attributes=array())
     {
         parent::__construct($label, 25, 100, $validators, $attributes);
@@ -1150,9 +1172,9 @@ class RegexField extends TextField
      * Validates that the value matches the regular expression.
      * @author Jeff Ober
      * @param string $value
-     * @return null
+     * @return void
      * @throws ValidationError
-     **/
+     */
     public function validate($value)
     {
         parent::validate($value);
@@ -1165,7 +1187,7 @@ class RegexField extends TextField
      * @author Jeff Ober
      * @param string $value
      * @return array the captured matches
-     **/
+     */
     public function import_value($value)
     {
         return $this->matches;
@@ -1180,20 +1202,20 @@ class RegexField extends TextField
  * @author Jeff Ober
  * @package Fields
  * @see RegexField
- **/
+ */
 class ScanField extends TextField
 {
     /**
      * The sscanf() format.
-     **/
+     */
     private $format;
     /**
      * The error message on match failure.
-     **/
+     */
     private $message;
     /**
      * Storage for the matched values to prevent calling sscanf twice.
-     **/
+     */
     private $matched;
     
     /**
@@ -1203,7 +1225,7 @@ class ScanField extends TextField
      * @param string $error_msg the message thrown on a mismatch
      * @param array $validators a list of callbacks to validate the field data
      * @param array $attributes a list of key/value pairs representing HTML attributes
-     **/
+     */
     public function __construct($label, $format, $error_msg, array $validators=array(), array $attributes=array())
     {
         parent::__construct($label, 25, 100, $validators, $attributes);
@@ -1215,9 +1237,9 @@ class ScanField extends TextField
      * Validates that the value matches the sscanf format.
      * @author Jeff Ober
      * @param string $value
-     * @return null
+     * @return void
      * @throws ValidationError
-     **/
+     */
     public function validate($value)
     {
         parent::validate($value);
@@ -1230,7 +1252,7 @@ class ScanField extends TextField
      * Returns the parsed matches that were captured in validate().
      * @param string $value
      * @return array the captured values
-     **/
+     */
     public function import_value($value)
     {
         return $this->matched;
@@ -1243,17 +1265,17 @@ class ScanField extends TextField
  * A compound field offering multiple choices as a select multiple tag.
  * @author Jeff Ober
  * @package Fields
- **/
+ */
 class MultipleChoiceField extends PhormField
 {
     /**
      * Specifies that this field's name attribute must be post-fixed by [].
-     **/
+     */
     public $multi_field = true;
     /**
      * Stores the field options as actual_value=>display_value.
-     **/
-    private $choices;
+     */
+    private $_choices;
     
     /**
      * @author Jeff Ober
@@ -1261,47 +1283,47 @@ class MultipleChoiceField extends PhormField
      * @param array $choices a list of choices as actual_value=>display_value
      * @param array $validators a list of callbacks to validate the field data
      * @param array $attributes a list of key/value pairs representing HTML attributes
-     **/
+     */
     public function __construct($label, array $choices, array $validators=array(), array $attributes=array())
     {
         parent::__construct($label, $validators, $attributes);
-        $this->choices = $choices;
+        $this->_choices = $choices;
     }
     
     /**
      * Returns a new MultiSelectWidget.
      * @author Jeff Ober
      * @return MultiSelectWidget
-     **/
+     */
     public function get_widget()
     {
-        return new MultiSelectWidget($this->choices);
+        return new MultiSelectWidget($this->_choices);
     }
     
     /**
-     * Validates that each of the selected choice exists in $this->choices.
+     * Validates that each of the selected choice exists in $this->_choices.
      * @author Jeff Ober
      * @param array $value
-     * @return null
+     * @return void
      * @throws ValidationError
      * @see MultipleChoiceField::$choices
-     **/
+     */
     public function validate($value)
     {
         if (!is_array($value))
             throw new ValidationError('Invalid selection');
         
         foreach ($value as $v)
-            if (!in_array($v, array_keys($this->choices)))
+            if (!in_array($v, array_keys($this->_choices)))
                 throw new ValidationError("Invalid selection.");
     }
     
     /**
-     * Imports the value as an array of the actual values (from $this->choices.)
+     * Imports the value as an array of the actual values (from $this->_choices.)
      * @author Jeff Ober
      * @param array $value
      * @return array
-     **/
+     */
     public function import_value($value)
     {
         if (is_array($value))
@@ -1317,14 +1339,14 @@ class MultipleChoiceField extends PhormField
  * A selection of choices represented as a series of labeled checkboxes.
  * @author Jeff Ober
  * @package Fields
- **/
+ */
 class OptionsField extends MultipleChoiceField
 {
     /**
      * Returns a new OptionGroupWidget.
      * @author Jeff Ober
      * @return OptionGroupWidget
-     **/
+     */
     public function get_widget()
     {
         return new OptionGroupWidget($this->options);

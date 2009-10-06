@@ -35,7 +35,7 @@ class UploadForm extends Phorm
 		parent::__construct($method, $multi_part, $data);
 	}
 	
-	protected function define_fields()
+	protected function defineFields()
 	{
 		$this->image = new ImageField('Photo', 1024 * 1024, array('check_image_size'));
 		$this->caption = new TextField('Caption', 50, 255);

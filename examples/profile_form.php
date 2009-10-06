@@ -12,7 +12,7 @@ function required($value)
 
 class ProfileForm extends FieldsetPhorm
 {
-	protected function define_fields()
+	protected function defineFields()
 	{
 		// Define form fields
 		$this->user_id = new HiddenField(array('required'));
@@ -26,7 +26,7 @@ class ProfileForm extends FieldsetPhorm
 		$this->email->set_help_text('We will never give out your email address.');
 	}
 	
-	protected function define_fieldsets()
+	protected function defineFieldsets()
 	{
         $this->fieldsets = array(new Fieldset('name', 'Name', array('user_id', 
                                                                     'first_name', 
