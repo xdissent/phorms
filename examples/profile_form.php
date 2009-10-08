@@ -16,11 +16,25 @@ class ProfileForm extends FieldsetPhorm
 	{
 		// Define form fields
 		$this->user_id = new HiddenField(array('required'));
-		$this->first_name = new TextField("First name", 25, 255, array('required'));
-		$this->last_name = new TextField("Last name", 25, 255, array('required'));
-		$this->email = new EmailField("Email address", 25, 255, array('required'));
-		$this->url = new URLField("Home page", 25, 255);
+		$this->first_name = new TextField('First name', 25, 255, array('required'));
+		$this->last_name = new TextField('Last name', 25, 255, array('required'));
+		$this->email = new EmailField('Email address', 25, 255, array('required'));
+		$this->url = new URLField('Home page', 25, 255);
 		$this->bio = new LargeTextField('Bio', 5, 40, array('required'));
+		$this->display = new MultipleChoiceField(
+		  'Display',
+		  array(
+		      'first_name' => 'First Name',
+		      'last_name' => 'Last Name',
+		      'email' => 'Email Address',
+		      'gender' => 'Gender',
+		      'dob' => 'Date of Birth',
+		      'address' => 'Address',
+		      'city' => 'City',
+		      'state' => 'State'
+		  ),
+		  array('required')
+        );
 		
 		// Add some help text
 		$this->email->set_help_text('We will never give out your email address.');
@@ -28,12 +42,15 @@ class ProfileForm extends FieldsetPhorm
 	
 	protected function defineFieldsets()
 	{
-        $this->fieldsets = array(new Fieldset('name', 'Name', array('user_id', 
-                                                                    'first_name', 
-                                                                    'last_name')),
-                                 new Fieldset('extra', 'Extra', array('email', 
-                                                                      'url', 
-                                                                      'bio')));
+        $this->fieldsets = array(
+            new Fieldset(
+                'name',
+                'Name',
+                array('user_id', 'first_name', 'last_name')
+            ),
+            new Fieldset('extra', 'Extra', array('email', 'url', 'bio')),
+            new Fieldset('display', 'Display', array('display'))
+        );
 	}
 	
 	public function report()

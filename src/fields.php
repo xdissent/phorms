@@ -1301,6 +1301,27 @@ class MultipleChoiceField extends PhormField
     }
     
     /**
+     * Pre-processes a value for validation, handling magic quotes if used.
+     *
+     * @author Greg Thornton <xdissent@gmail.com>
+     *
+     * @param array $value The value from the form array.
+     *
+     * @return string the pre-processed value
+     */
+    protected function prepare_value($value)
+    {
+        if (!is_array($value)) {
+            return array();
+        }
+        
+        foreach ($value as $key => $val) {
+            $value[$key] = (get_magic_quotes_gpc()) ? stripslashes($val) : $val;
+        }
+        return $value;
+    }
+    
+    /**
      * Validates that each of the selected choice exists in $this->_choices.
      * @author Jeff Ober
      * @param array $value
