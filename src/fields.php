@@ -86,6 +86,18 @@ abstract class PhormField
      **/
     public function __construct($label, array $validators=array(), array $attributes=array())
     {
+        if(in_array('required', $validators))
+        {
+            if(!isset($attributes['class']))
+            {
+                $attributes['class'] = 'required';
+            }
+            else
+            {
+                $attributes['class'] .= ' required';
+            }
+        }
+        
         $this->label = (string)$label;
         $this->attributes = $attributes;
         $this->validators = $validators;
@@ -735,6 +747,14 @@ class IntegerField extends PhormField
     public function __construct($label, $max_digits, array $validators=array(), array $attributes=array())
     {
         $attributes['size'] = 20;
+        if(!isset($attributes['class']))
+        {
+            $attributes['class'] = 'validate-digits';
+        }
+        else
+        {
+            $attributes['class'] .= ' validate-digits';
+        }
         parent::__construct($label, $validators, $attributes);
         $this->max_digits = $max_digits;
     }
@@ -798,6 +818,15 @@ class DecimalField extends PhormField
      **/
     public function __construct($label, $precision, array $validators=array(), array $attributes=array())
     {
+        if(!isset($attributes['class']))
+        {
+            $attributes['class'] = 'validate-number';
+        }
+        else
+        {
+            $attributes['class'] .= ' validate-number';
+        }
+        
         $attributes['size'] = 20;
         parent::__construct($label, $validators, $attributes);
         $this->precision = $precision;
@@ -1005,6 +1034,28 @@ class DropDownField extends PhormField
 class URLField extends TextField
 {
     /**
+     * @author Thomas Lété
+     * @param string $label the field's text label
+     * @param int $size the field's size attribute
+     * @param int $max_length the maximum size in characters
+     * @param array $validators a list of callbacks to validate the field data
+     * @param array $attributes a list of key/value pairs representing HTML attributes
+     **/
+    public function __construct($label, $size, $max_length, array $validators=array(), array $attributes=array())
+    {
+        if(!isset($attributes['class']))
+        {
+            $attributes['class'] = 'validate-url';
+        }
+        else
+        {
+            $attributes['class'] .= ' validate-url';
+        }
+        
+        parent::__construct($label, $size, $max_length, $validators, $attributes);
+    }
+    
+    /**
      * Prepares the value by inserting http:// to the beginning if missing.
      * @author Jeff Ober
      * @param string $value
@@ -1043,6 +1094,28 @@ class URLField extends TextField
 class EmailField extends TextField
 {
     /**
+     * @author Thomas Lété
+     * @param string $label the field's text label
+     * @param int $size the field's size attribute
+     * @param int $max_length the maximum size in characters
+     * @param array $validators a list of callbacks to validate the field data
+     * @param array $attributes a list of key/value pairs representing HTML attributes
+     **/
+    public function __construct($label, $size, $max_length, array $validators=array(), array $attributes=array())
+    {
+        if(!isset($attributes['class']))
+        {
+            $attributes['class'] = 'validate-email';
+        }
+        else
+        {
+            $attributes['class'] .= ' validate-email';
+        }
+        
+        parent::__construct($label, $size, $max_length, $validators, $attributes);
+    }
+    
+    /**
      * Validates that the value is a valid email address.
      * @author Jeff Ober
      * @param string $value
@@ -1077,6 +1150,15 @@ class DateTimeField extends TextField
      **/
     public function __construct($label, array $validators=array(), array $attributes=array())
     {
+        if(!isset($attributes['class']))
+        {
+            $attributes['class'] = 'validate-date';
+        }
+        else
+        {
+            $attributes['class'] .= ' validate-date';
+        }
+        
         parent::__construct($label, 25, 100, $validators, $attributes);
     }
     
