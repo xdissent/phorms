@@ -316,6 +316,16 @@ abstract class Phorm
     }
     
     /**
+     * Returns an the fields' array.
+     * @return Array
+     * @author Thomas Lété
+     **/
+    public function getFields()
+    {
+        return $this->fields;
+    }
+    
+    /**
      * Returns the form's opening HTML tag.
      * @param string $target the form target ($_SERVER['PHP_SELF'] by default)
      * @return string the form's opening tag
