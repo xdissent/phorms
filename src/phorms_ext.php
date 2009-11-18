@@ -5,11 +5,12 @@ abstract class PhormExt extends Phorm
     {
         parent::__construct($method, $multi_part, $data);
     }
+    
     /**
      * Returns a string of all of the form's fields' HTML tags as labels only.
      * @return string the HTML form
      * @author Thomas Lété
-     * @see Phorm::as_labels()
+     * @see PhormExt::as_labels()
      **/
     public function __toString()
     {
@@ -43,6 +44,18 @@ abstract class FieldsetPhormExt extends Phorm
         parent::__construct($method, $multi_part, $data);
         $this->define_fieldsets();
     }
+    
+    /**
+     * Returns a string of all of the form's fields' HTML tags as labels only.
+     * @return string the HTML form
+     * @author Thomas Lété
+     * @see FieldsetPhormExt::as_labels()
+     **/
+    public function __toString()
+    {
+        return $this->as_labels();
+    }
+    
     /**
      * Returns the form fields as a series of paragraphs.
      * @return string the HTML form

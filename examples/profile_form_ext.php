@@ -11,24 +11,30 @@ function required($value)
 		throw new ValidationError('This field is required.');
 }
 
-class CommentForm extends PhormExt
+class ProfileForm extends FieldsetPhormExt
 {
 	protected function define_fields()
 	{
 		// Define form fields
-		$this->post_id = new HiddenField(array('required'));
+		$this->user_id = new HiddenField(array('required'));
 		$this->first_name = new TextField("First name", 25, 255, array('required'));
 		$this->last_name = new TextField("Last name", 25, 255, array('required'));
 		$this->email = new EmailField("Email address", 25, 255, array('required'));
 		$this->url = new URLField("Home page", 25, 255);
-		$this->number = new IntegerField("Favorite number", 7, array('required'));
-		$this->message = new LargeTextField('Message', 5, 40, array('required'));
-		$this->notify = new BooleanField('Reply notification');
-		$this->date = new DateTimeField('Date', array('required'));
+		$this->bio = new LargeTextField('Bio', 5, 40, array('required'));
 		
 		// Add some help text
-		$this->notify->set_help_text('Email me when my comment receives a response.');
 		$this->email->set_help_text('We will never give out your email address.');
+	}
+	
+	protected function define_fieldsets()
+	{
+        $this->fieldsets = array(new Fieldset('name', 'Name', array('user_id', 
+                                                                    'first_name', 
+                                                                    'last_name')),
+                                 new Fieldset('extra', 'Extra', array('email', 
+                                                                      'url', 
+                                                                      'bio')));
 	}
 	
 	public function report()
@@ -39,12 +45,13 @@ class CommentForm extends PhormExt
 
 // Set up the form
 $post_id = 42;
-$form = new CommentForm(Phorm::POST, false, array('post_id'=>$post_id, 'notify'=>true));
+$form = new ProfileForm(Phorm::POST, false, array('post_id'=>$post_id));
 
 // Check form validity
 $valid = $form->is_valid();
 
-?><html>
+?>
+<html>
 	<head>
 		<script src="../src/javascript/scriptaculous/lib/prototype.js" type="text/javascript"></script>
 		<script src="../src/javascript/scriptaculous/src/effects.js" type="text/javascript"></script>
@@ -190,10 +197,5 @@ $valid = $form->is_valid();
 		<?php else: ?>
 			<p><em>The form is unbound.</em></p>
 		<?php endif ?>
-		<script type="text/javascript">
-			new Validation(document.forms[0], {immediate : true}); // OR new Validation('form-id');
-		</script>
 	</body>
 </html>
-
-
