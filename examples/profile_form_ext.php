@@ -197,5 +197,8 @@ $valid = $form->is_valid();
 		<?php else: ?>
 			<p><em>The form is unbound.</em></p>
 		<?php endif ?>
+		<script type="text/javascript">
+			new Validation(document.forms[0], {immediate : true}); // OR new Validation('form-id');
+		</script>
 	</body>
 </html>
