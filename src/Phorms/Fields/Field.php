@@ -105,7 +105,7 @@ abstract class Phorms_Fields_Field
     public $multi_field = false;
     
     /**
-     * Stores the result of field validation to prevents double-validation.
+     * Stores the result of field validation to prevent double-validation.
      *
      * @var    mixed
      * @access protected
@@ -220,7 +220,7 @@ abstract class Phorms_Fields_Field
     public function getHelpText()
     {
         return sprintf(
-            '<p class="phorm_help">%s</p>', 
+            '<p class="help">%s</p>', 
             htmlentities($this->help_text)
         );
     }
@@ -307,7 +307,7 @@ abstract class Phorms_Fields_Field
             foreach ($v as $f) {
                 try {
                     call_user_func($f, $value);
-                } catch (ValidationError $e) { 
+                } catch (Phorms_Validation_Error $e) { 
                     $this->errors[] = $e->getMessage();
                 }
             }
@@ -315,7 +315,7 @@ abstract class Phorms_Fields_Field
             if ($value !== '') {
                 try {
                     $this->validate($value);
-                } catch (ValidationError $e) { 
+                } catch (Phorms_Validation_Error $e) { 
                     $this->errors[] = $e->getMessage(); 
                 }
             }
@@ -357,7 +357,7 @@ abstract class Phorms_Fields_Field
      *
      * @access   protected
      * @abstract 
-     * @throws   ValidationError
+     * @throws   Phorms_Validation_Error
      * @return   void
      */
     abstract protected function validate($value);
