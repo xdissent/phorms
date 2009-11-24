@@ -36,6 +36,8 @@
  * @author     Greg Thornton <xdissent@gmail.com>
  * @license    http://www.opensource.org/licenses/mit-license.php MIT
  * @link       http://www.artfulcode.net/articles/phorms-a-php-form-library/
+ *
+ * @abstract
  */
 abstract class Phorms_Forms_FieldsetForm extends Phorms_Forms_Form
 {
@@ -47,10 +49,11 @@ abstract class Phorms_Forms_FieldsetForm extends Phorms_Forms_Form
      * @param array   $data       Initial/default data for form fields (e.g. 
      *                            array('first_name'=>'enter your name')).
      *
+     * @access public
      * @return void
      */
     public function __construct($method=Phorms_Forms_Form::GET, 
-    boolean $multi_part=false, array $data=array()) {
+    $multi_part=false, $data=array()) {
         parent::__construct($method, $multi_part, $data);
         $this->defineFieldsets();
     }
@@ -58,7 +61,9 @@ abstract class Phorms_Forms_FieldsetForm extends Phorms_Forms_Form
     /**
      * Abstract method that sets the Form's fieldsets as class attributes. 
      *
-     * @return void
+     * @access   protected
+     * @abstract
+     * @return   void
      */
     abstract protected function defineFieldsets();
 
@@ -66,6 +71,7 @@ abstract class Phorms_Forms_FieldsetForm extends Phorms_Forms_Form
      * Returns the form fields as a series of HTML table rows. Does not include
      * the table's opening and closing tags, nor the table's tbody tags.
      *
+     * @access public
      * @return string the HTML form
      */
     public function asTable()

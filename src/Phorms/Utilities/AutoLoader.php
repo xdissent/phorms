@@ -43,17 +43,27 @@ class Phorms_Utilities_AutoLoader
     /**
      * The extension to use when locating class names.
      * 
-     * @var string
+     * @var    string
      * @access protected
+     * @static
      */
     protected static $extension = '.php';
+    
+    /**
+     * A flag to indicate if this auto loader has been registered.
+     *
+     * @var    string
+     * @access protected
+     * @static
+     */
+    protected static $registered = false;
     
     /**
      * Registers the auto loader with PHP's auto loading system.
      * 
      * @access public
      * @static
-     * @return bool
+     * @return boolean
      */
     public static function register()
     {
@@ -62,7 +72,12 @@ class Phorms_Utilities_AutoLoader
          * name of the class or subclass that called this static
          * method.
          */
-        return spl_autoload_register(array(get_called_class(), 'autoLoad'));
+        if (!static::$registered) {
+            static::$registered = spl_autoload_register(
+                array(get_called_class(), 'autoLoad')
+            );
+        }
+        return static::$registered;
     }
 
     /**
@@ -88,10 +103,11 @@ class Phorms_Utilities_AutoLoader
      *
      * @param string $class The name of the class to try to load.
      *
-     * @todo Make subclasses calculate the path prefix correct.
      * @access public
      * @static
-     * @return bool
+     * @return boolean
+     *
+     * @todo Make subclasses calculate the path prefix correct.
      */
     public static function autoLoad($class)
     {
@@ -147,7 +163,7 @@ class Phorms_Utilities_AutoLoader
          * locate it.
          */
         include_once $path;
-        
+
         return true;
     }
 }

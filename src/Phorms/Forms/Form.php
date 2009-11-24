@@ -38,6 +38,8 @@
  * @license    http://www.opensource.org/licenses/mit-license.php MIT
  * @link       http://www.artfulcode.net/articles/phorms-a-php-form-library/
  *
+ * @abstract
+ *
  * @todo Remove GET and POST constants in favor of actual arrays.
  */
 abstract class Phorms_Forms_Form
@@ -45,56 +47,92 @@ abstract class Phorms_Forms_Form
     /**
      * Causes the form to use $_GET as its data source.
      */
-     
     const GET = 0;
+
     /**
      * Causes the form to use $_POST as its data source.
      */
     const POST = 1;
     
     /**
+     * Causes the form to use the static $test_data variable as its data source.
+     */
+    const TEST = 2;
+    
+    /**
      * The form's method. Determines which superglobal array to use as the data
      * source.
+     *
+     * @var    Phorms_Forms_Form::GET|Phorms_Forms_Form::POST
+     * @access protected
      */
     protected $method = Phorms_Forms_Form::GET;
     
     /**
      * If true, $_FILES is included in the form data. Makes possible file fields.
+     *
+     * @var    boolean
+     * @access protected
      */
     protected $multi_part = false;
     
     /**
      * True when the form has user-submitted data.
+     *
+     * @var    boolean
+     * @access protected
      */
     protected $bound = false;
     
     /**
      * A copy of the superglobal data array merged with any default field values
      * provided during class instantiation.
-     * @see Phorms_Forms_Form::__construct()
+     *
+     * @var    array
+     * @access protected
      */
     protected $data;
     
     /**
      * Protected field storage.
+     *
+     * @var    array
+     * @access protected
      */
     protected $fields = array();
     
     /**
      * Protected storage to collect error messages. Stored as $field_name => $msg.
+     *
+     * @var    array
+     * @access protected
      */
     protected $errors = array();
     
     /**
      * Protected storage for cleaned field values.
+     *
+     * @var    array
+     * @access protected
      */
     protected $clean;
     
     /**
      * Memoized return value of the initial is_valid call.
-     * @see Phorms_Forms_Form::is_valid()
+     *
+     * @var    array
+     * @access protected
      */
     protected $valid;
+    
+    /**
+     * Test form data.
+     *
+     * @var    array
+     * @static
+     * @access public
+     */
+    public static $test_data;
     
     /**
      * The Form constructor.
@@ -104,10 +142,11 @@ abstract class Phorms_Forms_Form
      * @param array   $data       Initial/default data for form fields (e.g. 
      *                            array('first_name'=>'enter your name')).
      *
+     * @access public
      * @return void
      */
     public function __construct($method=Phorms_Forms_Form::GET, 
-    boolean $multi_part=false, array $data=array()) {
+    $multi_part=false, $data=array()) {
     
         $this->multi_part = $multi_part;
         if ($this->multi_part && $method != Phorms_Forms_Form::POST) {
@@ -117,7 +156,7 @@ abstract class Phorms_Forms_Form
         
         // Set up fields
         $this->defineFields();
-        $this->fields = $this->find_fields();
+        $this->fields = $this->findFields();
         
         // Find submitted data, if any
         switch ($method) {
@@ -130,6 +169,14 @@ abstract class Phorms_Forms_Form
             $user_data = $_POST;
             $this->method = $method;
             break;
+
+        /**
+         * Allow test data, defined as a static member variable.
+         */
+        case Phorms_Forms_Form::TEST:
+            $user_data = static::$test_data;
+            $this->method = Phorms_Forms_Form::GET;
+            break;
         
         default:
             $user_data = array();
@@ -137,19 +184,21 @@ abstract class Phorms_Forms_Form
         }
         
         // Determine if this form is bound (depends on defined fields)
-        $this->bound = $this->check_if_bound($user_data);
+        $this->bound = $this->hasFieldsInData($user_data);
         
         // Merge user data over the default data (if any)
         $this->data = array_merge($data, $user_data);
         
         // Set the fields' data
-        $this->set_data();
+        $this->setData();
     }
     
     /**
      * Abstract method that sets the Form's fields as class attributes.
      *
-     * @return void
+     * @access   protected
+     * @abstract
+     * @return   void
      */
     abstract protected function defineFields();
     
@@ -158,6 +207,7 @@ abstract class Phorms_Forms_Form
      *
      * @param array $data The data to check for boundness.
      *
+     * @access protected
      * @return boolean
      */
     protected function hasFieldsInData(array $data)
@@ -177,23 +227,24 @@ abstract class Phorms_Forms_Form
      * class after the child's 'defineFields' is called. Returns an array of
      * the field instances.
      *
-     * @return array The field instances.
+     * @access protected
+     * @return array
      */
     protected function findFields()
     {
         $found = array();
         foreach (array_keys(get_object_vars($this)) as $name) {
-            if ($this->$name instanceof PhormField) {
+            if ($this->$name instanceof Phorms_Fields_Field) {
                 $name = htmlentities($name);
                 $id = sprintf('id_%s', $name);
                 
                 if ($this->$name->multi_field) {
-                    $this->$name->set_attribute('name', sprintf('%s[]', $name));
+                    $this->$name->setAttribute('name', sprintf('%s[]', $name));
                 } else {
-                    $this->$name->set_attribute('name', $name);
+                    $this->$name->setAttribute('name', $name);
                 }
                 
-                $this->$name->set_attribute('id', $id);
+                $this->$name->setAttribute('id', $id);
                 
                 $found[$name] =& $this->$name;
             }
@@ -204,13 +255,14 @@ abstract class Phorms_Forms_Form
     /**
      * Sets the value of each field from the proper superglobal data array.
      *
+     * @access protected
      * @return void
      */
     protected function setData()
     {
         foreach ($this->fields as $name => &$field) {
             if (array_key_exists($name, $this->data)) {
-                $field->set_value($this->data[$name]);
+                $field->setValue($this->data[$name]);
             }
         }
     }
@@ -220,6 +272,7 @@ abstract class Phorms_Forms_Form
      * form. Returns null if the form is not yet bound or if the form is not
      * valid.
      *
+     * @access public
      * @return array|void
      */
     public function cleanedData()
@@ -231,6 +284,7 @@ abstract class Phorms_Forms_Form
      * Returns true if the form is bound (i.e., there is data in the appropriate
      * superglobal array.)
      *
+     * @access public
      * @return boolean
      */
     public function isBound()
@@ -241,6 +295,7 @@ abstract class Phorms_Forms_Form
     /**
      * Returns true if the form has errors.
      *
+     * @access public
      * @return boolean
      */
     public function hasErrors()
@@ -251,6 +306,7 @@ abstract class Phorms_Forms_Form
     /**
      * Returns the list of errors.
      *
+     * @access public
      * @return array Error messages for this form.
      */
     public function getErrors()
@@ -264,6 +320,7 @@ abstract class Phorms_Forms_Form
      * @param boolean $reprocess If true (default: false), call all validators 
      *                           again.
      *
+     * @access public
      * @return boolean
      */
     public function isValid($reprocess=false)
@@ -288,19 +345,21 @@ abstract class Phorms_Forms_Form
      * Processes each field's data in turn, calling it's get_value method to
      * access its "cleaned" data.
      *
+     * @access protected
      * @return null
      */
     protected function cleanData()
     {
         $this->clean = array();
         foreach ($this->fields as $name => &$field) {
-            $this->clean[$name] = $field->get_value();
+            $this->clean[$name] = $field->getValue();
         }
     }
     
     /**
      * Returns an iterator that returns each field instance in turn.
      *
+     * @access public
      * @return Iterator
      */
     public function getIterator()
@@ -313,6 +372,7 @@ abstract class Phorms_Forms_Form
      *
      * @param string $target The form target ($_SERVER['PHP_SELF'] by default).
      *
+     * @access public
      * @return string
      */
     public function open($target=null)
@@ -346,6 +406,7 @@ abstract class Phorms_Forms_Form
     /**
      * Returns the form's closing HTML tag.
      *
+     * @access public
      * @return string the form's closing tag
      */
     public function close()
@@ -356,9 +417,8 @@ abstract class Phorms_Forms_Form
     /**
      * Returns a string of all of the form's fields' HTML tags as a table.
      *
+     * @access public
      * @return string the HTML form
-     *
-     * @see Phorms_Forms_Form::as_table()
      */
     public function __toString()
     {
@@ -369,6 +429,7 @@ abstract class Phorms_Forms_Form
      * Returns the form fields as a series of HTML table rows. Does not include
      * the table's opening and closing tags, nor the table's tbody tags.
      *
+     * @access public
      * @return string the HTML form
      */
     public function asTable()
@@ -393,6 +454,7 @@ abstract class Phorms_Forms_Form
      * Returns the form fields as a series of list items. Does not include the
      * list's opening and closing tags.
      *
+     * @access public
      * @return string the HTML form
      */
     public function asList()
@@ -409,5 +471,4 @@ abstract class Phorms_Forms_Form
         return implode($elts);
     }
 }
-
 ?>

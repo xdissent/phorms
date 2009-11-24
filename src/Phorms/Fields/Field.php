@@ -261,8 +261,8 @@ abstract class Phorms_Fields_Field
     public function errors()
     {
         $elts = array();
-        if (is_array($this->_errors) && count($this->_errors) > 0) {
-            foreach ($this->_errors as $error) {
+        if (is_array($this->errors) && count($this->errors) > 0) {
+            foreach ($this->errors as $error) {
                 $elts[] = sprintf('<li>%s</li>', $error);
             }
         }
@@ -277,7 +277,7 @@ abstract class Phorms_Fields_Field
      */
     public function __toString()
     {
-        return $this->html() . $this->help_text() . $this->errors();
+        return $this->html() . $this->helpText() . $this->errors();
     }
     
     /**
@@ -295,18 +295,18 @@ abstract class Phorms_Fields_Field
      */
     public function isValid($reprocess=false)
     {
-        if ($reprocess || is_null($this->_valid)) {
+        if ($reprocess || is_null($this->valid)) {
             // Pre-process value
-            $value = $this->prepare_value($this->_value);
+            $value = $this->prepareValue($this->value);
 
-            $this->_errors = array();
-            $v = $this->_validators;
+            $this->errors = array();
+            $v = $this->validators;
 
             foreach ($v as $f) {
                 try {
                     call_user_func($f, $value);
                 } catch (ValidationError $e) { 
-                    $this->_errors[] = $e->getMessage();
+                    $this->errors[] = $e->getMessage();
                 }
             }
             
@@ -314,15 +314,15 @@ abstract class Phorms_Fields_Field
                 try {
                     $this->validate($value);
                 } catch (ValidationError $e) { 
-                    $this->_errors[] = $e->getMessage(); 
+                    $this->errors[] = $e->getMessage(); 
                 }
             }
 
-            if ($this->_valid = (count($this->_errors) === 0)) {
-                $this->_imported = $this->import_value($value);
+            if ($this->valid = (count($this->errors) === 0)) {
+                $this->imported = $this->importValue($value);
             }
         }
-        return $this->_valid;
+        return $this->valid;
     }
     
     /**
