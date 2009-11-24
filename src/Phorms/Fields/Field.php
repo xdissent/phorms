@@ -116,6 +116,7 @@ abstract class Phorms_Fields_Field
      * The field constructor.
      *
      * @param string $label      The field's label.
+     * @param string $help_text  The field's help text.
      * @param array  $validators Callbacks used to validate field data.
      * @param array  $attributes An assoc of key/value pairs representing HTML 
      *                           attributes.
@@ -123,9 +124,10 @@ abstract class Phorms_Fields_Field
      * @access public
      * @return void
      */
-    public function __construct($label, array $validators=array(), 
-    array $attributes=array()) {
+    public function __construct($label, $help_text='',
+    array $validators=array(), array $attributes=array()) {
         $this->label = (string)$label;
+        $this->help_text = (string)$help_text;
         $this->attributes = $attributes;
         $this->validators = $validators;
     }
@@ -140,7 +142,7 @@ abstract class Phorms_Fields_Field
      */
     public function setHelpText($text)
     {
-        $this->help_text = $text;
+        $this->help_text = (string)$text;
     }
     
     /**
@@ -215,7 +217,7 @@ abstract class Phorms_Fields_Field
      * @access public
      * @return string
      */
-    public function helpText()
+    public function getHelpText()
     {
         return sprintf(
             '<p class="phorm_help">%s</p>', 
@@ -277,7 +279,7 @@ abstract class Phorms_Fields_Field
      */
     public function __toString()
     {
-        return $this->html() . $this->helpText() . $this->errors();
+        return $this->html() . $this->getHelpText() . $this->errors();
     }
     
     /**

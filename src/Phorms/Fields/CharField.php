@@ -47,6 +47,7 @@ class Phorms_Fields_CharField extends Phorms_Fields_Field
      * The CharField constructor.
      *
      * @param string $label      The field's text label.
+     * @param string $help_text  The field's help text.
      * @param int    $size       The field's size attribute.
      * @param int    $max_length The maximum size in characters.
      * @param array  $validators A list of callbacks to validate the field data.
@@ -56,11 +57,11 @@ class Phorms_Fields_CharField extends Phorms_Fields_Field
      * @access public
      * @return void
      */
-    public function __construct($label, $size, $max_length, 
-    array $validators=array(), array $attributes=array()) {
+    public function __construct($label, $help_text='', $size=25,
+    $max_length=255, array $validators=array(), array $attributes=array()) {
         $this->max_length = $max_length;
         $attributes['size'] = $size;
-        parent::__construct($label, $validators, $attributes);
+        parent::__construct($label, $help_text, $validators, $attributes);
     }
     
     /**

@@ -53,8 +53,18 @@ class TestForm extends Phorms_Forms_Form
      * @return void
      */
     protected function defineFields() {
-        $this->name = new Phorms_Fields_CharField('First name', 25, 255);
-        $this->email = new Phorms_Fields_CharField('Email address', 25, 255);
+        $this->name = new Phorms_Fields_CharField(
+            'First name', 
+            'Enter your first name.', 
+            25, 
+            255
+        );
+        $this->email = new Phorms_Fields_CharField(
+            'Email address', 
+            'Enter your email address.',
+            25, 
+            255
+        );
     }
 }
 
