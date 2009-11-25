@@ -49,11 +49,11 @@ class Phorms_Fields_TextField extends Phorms_Fields_Field
      * @access public
      * @return void
      */
-    public function __construct($label, $rows, $cols, array $validators=array(),
-    array $attributes=array()) {
+    public function __construct($label, $help_text='', $rows=40, $cols=60, 
+    array $validators=array(), array $attributes=array()) {
         $attributes['cols'] = $cols;
         $attributes['rows'] = $rows;
-        parent::__construct($label, $validators, $attributes);
+        parent::__construct($label, $help_text, $validators, $attributes);
     }
     
     /**

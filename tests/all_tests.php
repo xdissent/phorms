@@ -16,7 +16,9 @@ class AllTests extends TestSuite
 
         $this->addFile(dirname(__FILE__) . '/field_tests/hiddenfield_test.php');
         
-        $this->addFile(dirname(__FILE__) . '/field_tests/passwordfield_test.php');    
+        $this->addFile(dirname(__FILE__) . '/field_tests/passwordfield_test.php');
+        
+        $this->addFile(dirname(__FILE__) . '/field_tests/textfield_test.php');
     }
 }
 
