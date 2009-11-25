@@ -1,6 +1,6 @@
 <?php
 /**
- * Textarea Widget
+ * URLField Test
  *
  * PHP version 5
  *
@@ -11,48 +11,51 @@
  * through the web, please send a note to the author and a copy will be provided
  * for you.
  *
- * @category   HTML
+ * @category   Testing
  * @package    Phorms
- * @subpackage Widgets
+ * @subpackage Tests
  * @author     Jeff Ober <jeffober@gmail.com>
  * @author     Greg Thornton <xdissent@gmail.com>
  * @copyright  2009 Jeff Ober
  * @license    http://www.opensource.org/licenses/mit-license.php MIT
  * @link       http://www.artfulcode.net/articles/phorms-a-php-form-library/
  */
- 
+
 /**
- * Phorms_Widgets_Textarea
- * 
- * @category   HTML
+ * Include the base field test.
+ */
+require_once dirname(__FILE__) . '/field_test.php';
+
+/**
+ * A URLField test case.
+ *
+ * @category   Testing
  * @package    Phorms
- * @subpackage Widgets
+ * @subpackage Tests
  * @author     Jeff Ober <jeffober@gmail.com>
  * @author     Greg Thornton <xdissent@gmail.com>
  * @copyright  2009 Jeff Ober
  * @license    http://www.opensource.org/licenses/mit-license.php MIT
  * @link       http://www.artfulcode.net/articles/phorms-a-php-form-library/
+ *
+ * @abstract
  */
-class Phorms_Widgets_Textarea extends Phorms_Widgets_Widget
+class URLFieldTestCase extends FieldTestCase
 {
     /**
-     * Returns the field as serialized HTML.
+     * Sets up the test case before each test.
      *
-     * @param mixed $value      The form widget's value attribute.
-     * @param array $attributes Key=>value pairs corresponding to HTML 
-     *                          attributes' name=>value
-     *
-     * @access protected
-     * @return string
+     * @access public
+     * @return void
      */
-    protected function serialize($value, array $attributes=array())
+    public function setUp()
     {
-        return sprintf(
-            '<textarea %s>%s</textarea>', 
-            $this->serializeAttributes($attributes), 
-            $value
-        );
+        $this->field_class = 'Phorms_Fields_URLField';
+        $this->test_label = 'Test field';
+        $this->test_help = 'Enter your test value.';
+        $this->entities_help = 'Enter & win.';
+        $this->valid_value = 'http://example.com/test/';
+        $this->invalid_value = 'DEADBEEF';
     }
 }
-
 ?>
