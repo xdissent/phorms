@@ -207,7 +207,6 @@ class SimpleFormTestCase extends UnitTestCase
         );
         
         $this->assertTrue($form->isBound());
-        $this->expectException();
         $this->assertFalse($form->isValid());
     }
     
@@ -250,9 +249,36 @@ class SimpleFormTestCase extends UnitTestCase
         );
         
         $this->assertTrue($form->isBound());
-        $this->expectException();
         $this->assertFalse($form->isValid());
         $this->assertNull($form->cleanedData());
+    }
+    
+    /**
+     * Tests to ensure the generated form uses the POST method when appropriate.
+     */
+    public function testHTMLFormPOSTMethod()
+    {
+        $form = new TestForm(
+            Phorms_Forms_Form::POST, 
+            false, 
+            $this->default_data
+        );
+        
+        $this->assertPattern('/method=[\'"]POST[\'"]/i', $form->open());
+    }
+    
+    /**
+     * Tests to ensure the generated form uses the GET method when appropriate.
+     */
+    public function testHTMLFormGETMethod()
+    {
+        $form = new TestForm(
+            Phorms_Forms_Form::GET, 
+            false, 
+            $this->default_data
+        );
+        
+        $this->assertPattern('/method=[\'"]GET[\'"]/i', $form->open());
     }
 }
 
