@@ -51,6 +51,8 @@ class Phorms_Fields_URLField extends Phorms_Fields_CharField
      */
     public function prepareValue($value)
     {
+        if (empty($value)) return '';
+
         if (!preg_match('@^(http|ftp)s?://@', $value))
             return sprintf('http://%s', $value);
         else
@@ -69,6 +71,9 @@ class Phorms_Fields_URLField extends Phorms_Fields_CharField
     public function validate($value)
     {
         parent::validate($value);
+        
+        if (empty($value)) return;
+        
         if (!preg_match(
             '@^(http|ftp)s?://(\w+(:\w+)?\@)?(([-_\.a-zA-Z0-9]+)\.)+[-_\.a-zA-Z0-9]+(\w*)@', 
             $value
