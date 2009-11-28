@@ -64,6 +64,17 @@ class CommentForm extends Phorms_Forms_Form
             40,
             array('required')
         );
+        
+        $this->source = new Phorms_Fields_ChoiceField(
+            'How you found us',
+            'Choose how you found this site.',
+            array(
+                'search' => 'A search engine',
+                'mouth' => 'Word of mouth',
+                'ad' => 'An advertisement',
+                'other' => 'Other'
+            )
+        );
 
 
         $this->notify = new Phorms_Fields_BooleanField('Reply notification', 'Check to receive a notification.');
