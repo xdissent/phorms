@@ -27,10 +27,9 @@
 require_once dirname(__FILE__) . '/../simpletest/autorun.php';
 
 /**
- * Include and register the Phorms auto-loader.
+ * Init Phorms.
  */
-require_once dirname(__FILE__) . '/../../src/Phorms/Utilities/AutoLoader.php';
-Phorms_Utilities_AutoLoader::register();
+require_once dirname(__FILE__) . '/../../src/Phorms/init.php';
 
 /**
  * A field test case base class.

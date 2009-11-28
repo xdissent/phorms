@@ -2,8 +2,10 @@
 
 error_reporting(6143|2048);
 
-require_once dirname(__FILE__) . '/../src/Phorms/Utilities/AutoLoader.php';
-Phorms_Utilities_AutoLoader::register();
+/**
+ * Include Phorms.
+ */
+require_once dirname(__FILE__) . '/../src/Phorms/init.php';
 
 function required($value)
 {
