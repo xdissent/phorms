@@ -46,9 +46,7 @@ class CommentForm extends Phorms_Forms_Form
 
         $this->url = new Phorms_Fields_URLField(
             'Home page', 
-            'Enter the URL of your homepage.',
-            25, 
-            255
+            'Enter the URL of your homepage.'
         );
         
         $this->number = new Phorms_Fields_IntegerField(
