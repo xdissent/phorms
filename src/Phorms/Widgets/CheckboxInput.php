@@ -69,7 +69,9 @@ class Phorms_Widgets_CheckboxInput extends Phorms_Widgets_Widget
     protected function serialize($value, array $attributes=array())
     {
         $attributes['type'] = 'checkbox';
-        if ($this->checked) $attributes['checked'] = 'checked';
+        if ($this->checked) {
+            $attributes['checked'] = 'checked';
+        }
         return parent::serialize($value, $attributes);
     }
 }
