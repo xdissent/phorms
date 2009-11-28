@@ -49,18 +49,24 @@ class Phorms_Fields_PasswordField extends Phorms_Fields_CharField
      * The password field constructor. 
      *
      * @param string   $label         The field's text label.
+     * @param string   $help_text     The hash function to use.
      * @param callback $hash_function A (string) function or array (instance, 
      *                                string method) callback.
      * @param int      $size          The field's size attribute.
      * @param int      $max_length    The maximum size in characters.
-     * @param array    $validators    A list of callbacks to validate the field data.
-     * @param array    $attributes    Alist of key/value pairs representing HTML attributes.
+     * @param array    $validators    A list of callbacks to validate the field 
+     *                                data.
+     * @param array    $attributes    Alist of key/value pairs representing HTML 
+     *                                attributes.
      *
      * @access public
      * @return void
+     *
+     * @todo Remove the hashing functionality.
      */
     public function __construct($label, $help_text='', $hash_function='crypt', 
-    $size=25, $max_length=255, array $validators=array(), array $attributes=array()) {
+    $size=25, $max_length=255, $validators=array(), $attributes=array()) {
+    
         $this->hash_function = $hash_function;
         parent::__construct(
             $label, 
@@ -86,7 +92,7 @@ class Phorms_Fields_PasswordField extends Phorms_Fields_CharField
     /**
      * Returns a hash-encoded value.
      *
-     * @param string $value
+     * @param string $value The value to import.
      *
      * @access public
      * @return string

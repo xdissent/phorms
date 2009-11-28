@@ -39,7 +39,8 @@ class Phorms_Fields_HiddenField extends Phorms_Fields_CharField
      * The field constructor.
      *
      * @param array $validators A list of callbacks to validate the field data.
-     * @param array $attributes A list of key/value pairs representing HTML attributes.
+     * @param array $attributes A list of key/value pairs representing HTML 
+     *                          attributes.
      *
      * @access public
      * @return void

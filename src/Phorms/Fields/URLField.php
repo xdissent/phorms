@@ -51,12 +51,15 @@ class Phorms_Fields_URLField extends Phorms_Fields_CharField
      */
     public function prepareValue($value)
     {
-        if (empty($value)) return '';
+        if (empty($value)) {
+            return '';
+        }
 
-        if (!preg_match('@^(http|ftp)s?://@', $value))
+        if (!preg_match('@^(http|ftp)s?://@', $value)) {
             return sprintf('http://%s', $value);
-        else
+        } else {
             return $value;
+        }
     }
     
     /**
@@ -72,12 +75,14 @@ class Phorms_Fields_URLField extends Phorms_Fields_CharField
     {
         parent::validate($value);
         
-        if (empty($value)) return;
+        if (empty($value)) {
+            return;
+        }
         
-        if (!preg_match(
-            '@^(http|ftp)s?://(\w+(:\w+)?\@)?(([-_\.a-zA-Z0-9]+)\.)+[-_\.a-zA-Z0-9]+(\w*)@', 
-            $value
-        )) {
+        $re = '@^(http|ftp)s?://(\w+(:\w+)?\@)?' .
+            '(([-_\.a-zA-Z0-9]+)\.)+[-_\.a-zA-Z0-9]+(\w*)@';
+        
+        if (!preg_match($re, $value)) {
             throw new Phorms_Validation_Error('Invalid URL.');
         }
     }

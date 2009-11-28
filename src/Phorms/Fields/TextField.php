@@ -41,10 +41,12 @@ class Phorms_Fields_TextField extends Phorms_Fields_Field
      * The text field constructor.
      *
      * @param string $label      The field's text label.
+     * @param string $help_text  The field's help text.
      * @param int    $rows       The number of rows.
      * @param int    $cols       The number of columns.
      * @param array  $validators A list of callbacks to validate the field data.
-     * @param array  $attributes A list of key/value pairs representing HTML attributes.
+     * @param array  $attributes A list of key/value pairs representing HTML 
+     *                           attributes.
      *
      * @access public
      * @return void
@@ -82,7 +84,7 @@ class Phorms_Fields_TextField extends Phorms_Fields_Field
     /**
      * Imports the value by decoding HTML entities.
      * 
-     * @param string $value
+     * @param string $value The value to import.
      *
      * @access public
      * @return string

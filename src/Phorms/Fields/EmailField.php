@@ -48,8 +48,11 @@ class Phorms_Fields_EmailField extends Phorms_Fields_CharField
     public function validate($value)
     {
         parent::validate($value);
-        if ( !preg_match('@^([-_\.a-zA-Z0-9]+)\@(([-_\.a-zA-Z0-9]+)\.)+[-_\.a-zA-Z0-9]+$@', $value) )
+        
+        $re = '@^([-_\.a-zA-Z0-9]+)\@(([-_\.a-zA-Z0-9]+)\.)+[-_\.a-zA-Z0-9]+$@';
+        if (!preg_match($re, $value)) {
             throw new Phorms_Validation_Error("Invalid email address.");
+        }
     }
 }
 ?>

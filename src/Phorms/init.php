@@ -11,13 +11,13 @@
  * through the web, please send a note to the author and a copy will be provided
  * for you.
  *
- * @category   HTML
- * @package    Phorms
- * @author     Jeff Ober <jeffober@gmail.com>
- * @author     Greg Thornton <xdissent@gmail.com>
- * @copyright  2009 Jeff Ober
- * @license    http://www.opensource.org/licenses/mit-license.php MIT
- * @link       http://www.artfulcode.net/articles/phorms-a-php-form-library/
+ * @category  HTML
+ * @package   Phorms
+ * @author    Jeff Ober <jeffober@gmail.com>
+ * @author    Greg Thornton <xdissent@gmail.com>
+ * @copyright 2009 Jeff Ober
+ * @license   http://www.opensource.org/licenses/mit-license.php MIT
+ * @link      http://www.artfulcode.net/articles/phorms-a-php-form-library/
  */
 
 /**

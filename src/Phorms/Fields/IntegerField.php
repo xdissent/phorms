@@ -73,22 +73,32 @@ class Phorms_Fields_IntegerField extends Phorms_Fields_CharField
     /**
      * Validates that the value is parsable as an integer and that it is fewer
      * than $this->max_digits digits.
-     * @author Jeff Ober
-     * @param string $value
+     *
+     * @param string $value The value to validate.
+     *
+     * @throws Phorms_Validation_Error
      * @return void
-     * @throws ValidationError
      */
     public function validate($value)
     {
-        if (preg_match('/\D/', $value) || strlen((string)$value) > $this->max_digits)
-            throw new Phorms_Validation_Error("Must be a number with fewer than {$this->max_digits} digits.");
+        if (preg_match('/\D/', $value) 
+            || strlen((string)$value) > $this->max_digits
+        ) {
+            throw new Phorms_Validation_Error(
+                sprintf(
+                    'Must be a number with fewer than %d digits.',
+                    $this->max_digits
+                )
+            );
+        }
     }
     
     /**
      * Parses the value as an integer.
-     * @author Jeff Ober
-     * @param string $value
-     * @return int
+     *
+     * @param string $value The value to import.
+     *
+     * @return integer
      */
     public function importValue($value)
     {
