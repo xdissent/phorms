@@ -61,14 +61,14 @@ class Phorms_Fields_ChoiceField extends Phorms_Fields_Field
     }
     
     /**
-     * Returns a new Phorms_Widgets_SelectWidget.
+     * Returns a new Phorms_Widgets_Select.
      *
      * @access public
-     * @return Phorms_Widgets_SelectWidget
+     * @return Phorms_Widgets_Select
      */
     public function getWidget()
     {
-        return new Phorms_Widgets_SelectWidget($this->choices);
+        return new Phorms_Widgets_Select($this->choices);
     }
     
     /**
