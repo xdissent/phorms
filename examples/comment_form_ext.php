@@ -17,8 +17,8 @@ class CommentForm extends PhormExt
 	{
 		// Define form fields
 		$this->post_id = new HiddenField(array('required'));
-		$this->first_name = new TextField("First name", 25, 255, array('required'));
-		$this->last_name = new TextField("Last name", 25, 255, array('required'));
+		$this->first_name = new AlphaField("First name", 25, 255, array('required'));
+		$this->last_name = new AlphaField("Last name", 25, 255, array('required'));
 		$this->email = new EmailField("Email address", 25, 255, array('required'));
 		$this->url = new URLField("Home page", 25, 255);
 		$this->number = new IntegerField("Favorite number", 7, array('required'));

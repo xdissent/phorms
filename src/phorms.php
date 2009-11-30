@@ -25,6 +25,10 @@
 define('PHORMS_ROOT', dirname(__FILE__) . '/');
 
 /**
+ * Language file
+ **/
+require_once(PHORMS_ROOT . 'lang/fr/phorms.php');
+/**
  * Widget classes used to serialize form elements.
  **/
 require_once(PHORMS_ROOT . 'widgets.php');
@@ -116,7 +120,7 @@ abstract class Phorm
         if ($this->multi_part && $method != Phorm::POST)
         {
             $method = Phorm::POST;
-            trigger_error('Multi-part form method changed to POST.', E_USER_WARNING);
+            trigger_error($GLOBALS['phorms_tr']['multipart_to_post'], E_USER_WARNING);
         }
         
         // Set up fields
