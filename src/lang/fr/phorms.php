@@ -10,9 +10,9 @@ $phorms_tr['textfield_sizelimit'] = 'Doit comporter moins de %s caractères.';
 
 $phorms_tr['integerfield_sizelimit'] = 'Doit comporter moins de %s chiffres.';
 
-$phorms_tr['alphafield_invalid'] = 'Doit contenir des caractères aplhabétiques uniquement.';
+$phorms_tr['alphafield_invalid'] = 'Doit contenir des caractères alphabétiques uniquement.';
 
-$phorms_tr['alphanumfield_invalid'] = 'Doit contenir des caractères aplhabétiques ou numériques uniquement.';
+$phorms_tr['alphanumfield_invalid'] = 'Doit contenir des caractères alphabétiques ou numériques uniquement.';
 
 $phorms_tr['decimalfield_invalid'] = 'Valeur décimale incorrecte.';
 
