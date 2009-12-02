@@ -61,7 +61,6 @@ class Phorms_Fields_BooleanField extends Phorms_Fields_Field
     array $validators=array(), array $attributes=array()) {
     
         parent::__construct($label, $help_text, $validators, $attributes);
-        parent::setValue('on');
         $this->checked = false;
     }
     
@@ -75,7 +74,11 @@ class Phorms_Fields_BooleanField extends Phorms_Fields_Field
      */
     public function setValue($value)
     {
-        $this->checked = (boolean)$value;
+        if ($value == 'false') {
+            $this->checked = false;
+        } else {
+            $this->checked = true;
+        }
     }
     
     /**

@@ -2,21 +2,23 @@
 
 error_reporting(6143|2048);
 
-require_once('../src/phorms.php');
+require_once('../src/Phorms/init.php');
 
 function required($value)
 {
 	if ($value == '' || is_null($value))
-		throw new ValidationError('This field is required.');
+		throw new Phorms_Validation_Error('This field is required.');
 }
 
-class ProfileForm extends FieldsetPhorm
+class ProfileForm extends Phorms_Forms_FieldsetForm
 {
 	protected function defineFields()
 	{
 		// Define form fields
-		$this->user_id = new HiddenField(array('required'));
-		$this->first_name = new TextField('First name', 25, 255, array('required'));
+		$this->user_id = new Phorms_Fields_HiddenField(array('required'));
+		$this->first_name = new Phorms_Fields_CharField('First name', 'Enter your first name', 25, 255, array('required'));
+		
+/*
 		$this->last_name = new TextField('Last name', 25, 255, array('required'));
 		$this->email = new EmailField('Email address', 25, 255, array('required'));
 		$this->url = new URLField('Home page', 25, 255);
@@ -37,34 +39,37 @@ class ProfileForm extends FieldsetPhorm
         );
 		
 		// Add some help text
-		$this->email->set_help_text('We will never give out your email address.');
+		$this->email->set_help_text();
+*/
 	}
 	
 	protected function defineFieldsets()
 	{
         $this->fieldsets = array(
-            new Fieldset(
+            new Phorms_Fieldsets_Fieldset(
                 'name',
                 'Name',
-                array('user_id', 'first_name', 'last_name')
-            ),
-            new Fieldset('extra', 'Extra', array('email', 'url', 'bio')),
-            new Fieldset('display', 'Display', array('display'))
+                array('user_id', 'first_name')
+            )
+            /*
+            new Phorms_Fieldsets_Fieldset('extra', 'Extra', array('email', 'url', 'bio')),
+            new Phorms_Fieldsets_Fieldset('display', 'Display', array('display'))
+            */
         );
 	}
 	
 	public function report()
 	{
-		var_dump( $this->cleaned_data() );
+		var_dump( $this->cleanedData() );
 	}
 }
 
 // Set up the form
 $post_id = 42;
-$form = new ProfileForm(Phorm::POST, false, array('post_id'=>$post_id));
+$form = new ProfileForm(Phorms_Forms_Form::POST, false, array('user_id'=> '123', 'post_id'=>$post_id));
 
 // Check form validity
-$valid = $form->is_valid();
+$valid = $form->isValid();
 
 ?>
 <html>
@@ -82,7 +87,7 @@ $valid = $form->is_valid();
 			<table>
 				<thead>
 					<tr><th colspan="2">Add a comment</th></tr>
-					<?php if ( $form->has_errors() ): ?>
+					<?php if ( $form->hasErrors() ): ?>
 					<tr><th class="phorm_error" colspan="2">Please correct the following errors.</th></tr>
 					<?php endif ?>
 				</thead>
@@ -103,12 +108,12 @@ $valid = $form->is_valid();
 	
 		<hr />
 	
-		<?php if ($form->is_bound() && $valid): ?>
+		<?php if ($form->isBound() && $valid): ?>
 			<h4>Processed and cleaned form data:</h4>
 			<? $form->report() ?>
-		<?php elseif ($form->has_errors()): ?>
+		<?php elseif ($form->hasErrors()): ?>
 			<h4>Errors:</h4>
-			<?php var_dump($form->get_errors()); ?>
+			<?php var_dump($form->getErrors()); ?>
 		<?php else: ?>
 			<p><em>The form is unbound.</em></p>
 		<?php endif ?>
