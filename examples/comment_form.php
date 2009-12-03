@@ -75,6 +75,15 @@ class CommentForm extends Phorms_Forms_Form
                 'other' => 'Other'
             )
         );
+        
+        $this->weight = new Phorms_Fields_DecimalField(
+            'Your exact weight',
+            'Enter your weight as a decimal.',
+            5,
+            25,
+            255,
+            array('required')
+        );
 
         $this->notify = new Phorms_Fields_BooleanField(
             'Reply notification', 
