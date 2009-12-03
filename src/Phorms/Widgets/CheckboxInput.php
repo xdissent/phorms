@@ -72,7 +72,12 @@ class Phorms_Widgets_CheckboxInput extends Phorms_Widgets_Widget
         if ($this->checked) {
             $attributes['checked'] = 'checked';
         }
-        return parent::serialize($value, $attributes);
+        return sprintf(
+            '<input type="hidden" value="false" name="%s" />' .
+            '<input value="true" %s />',  
+            $attributes['name'],
+            $this->serializeAttributes($attributes)
+        );
     }
 }
 ?>
