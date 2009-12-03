@@ -46,6 +46,10 @@ class FieldTests extends TestSuite
         $this->addFile(dirname(__FILE__) . '/field_tests/integerfield_test.php');
 
         $this->addFile(dirname(__FILE__) . '/field_tests/urlfield_test.php');
+        
+        $this->addFile(dirname(__FILE__) . '/field_tests/booleanfield_test.php');
+
+        $this->addFile(dirname(__FILE__) . '/field_tests/decimalfield_test.php');
     }
 }
 ?>
