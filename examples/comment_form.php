@@ -76,9 +76,13 @@ class CommentForm extends Phorms_Forms_Form
             )
         );
 
+        $this->notify = new Phorms_Fields_BooleanField(
+            'Reply notification', 
+            'Check to receive a notification.'
+        );
 
-/*        $this->notify = new Phorms_Fields_BooleanField('Reply notification', 'Check to receive a notification.');        
         // Add some help text
+/*
         $this->notify->set_help_text('Email me when my comment receives a response.');
         $this->email->set_help_text('We will never give out your email address.');
         
