@@ -74,10 +74,10 @@ class Phorms_Fields_BooleanField extends Phorms_Fields_Field
      */
     public function setValue($value)
     {
-        if ($value == 'false') {
+        if ($value === 'false') {
             $this->checked = false;
         } else {
-            $this->checked = true;
+            $this->checked = (boolean)$value;
         }
     }
     
