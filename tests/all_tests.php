@@ -29,6 +29,10 @@ class AllTests extends TestSuite
         $this->addFile(dirname(__FILE__) . '/field_tests/booleanfield_test.php');
 
         $this->addFile(dirname(__FILE__) . '/field_tests/decimalfield_test.php');
+
+        $this->addFile(dirname(__FILE__) . '/field_tests/choicefield_test.php');
+
+        $this->addFile(dirname(__FILE__) . '/field_tests/multiplechoicefield_test.php');
     }
 }
 
