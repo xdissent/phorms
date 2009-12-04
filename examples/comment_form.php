@@ -9,8 +9,10 @@ require_once dirname(__FILE__) . '/../src/Phorms/init.php';
 
 function required($value)
 {
-    if ($value == '' || is_null($value))
+    if ((is_array($value) && empty($value))
+        || ($value == '' || is_null($value))) {
         throw new Phorms_Validation_Error('This field is required.');
+    }
 }
 
 class CommentForm extends Phorms_Forms_Form
@@ -88,6 +90,20 @@ class CommentForm extends Phorms_Forms_Form
         $this->notify = new Phorms_Fields_BooleanField(
             'Reply notification', 
             'Check to receive a notification.'
+        );
+        
+        $this->foods = new Phorms_Fields_MultipleChoiceField(
+            'Favorite foods',
+            'Select the foods you like.',
+            array(
+                'apples' => 'Apples',
+                'bananas' => 'Bananas',
+                'steak' => 'Steak',
+                'broccoli' => 'Broccoli',
+                'cheese' => 'Cheese',
+                'bread' => 'Bread'
+            ),
+            array('required')
         );
 
         // Add some help text
