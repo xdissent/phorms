@@ -6,7 +6,7 @@ Introduction
 
 Phorms is a general purpose HTML form factory for PHP. Its goal is to 
 provide a simple way to create easily extensible forms. Its usage is 
-vaguely similar to Django’s forms library.
+vaguely similar to Django's forms library.
 
 At the moment, documentation is a little sparse, but the API docs are 
 complete and there are two examples showing the most common usage included 
