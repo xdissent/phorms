@@ -173,7 +173,7 @@ deemed irrelevant or even impossible in the future.
 
 
 Notes
------
+~~~~~
 
 .. [1] Mediatemple runs PHP 5.2.6 and 4.4.8.
 
