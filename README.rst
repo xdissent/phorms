@@ -87,15 +87,16 @@ as well. Now we start to think about calling our class something like
 portable. It doesn't really begin to be a huge risk until the project becomes 
 larger with many internal class names, but the point is that there is *always* a
 chance of collision if you have a global namespace. Luckily, PHP 5.3.0 includes
-support for namespacing, and this is what we should ideally be using. 
-Unfortunately, because it's a *huge* untertaking to convert a package to it's 
-own namespace and since I don't know every internal detail of Phorms yet, I 
-really wouldn't be comfortable doing it myself at this point. Plus it would 
-commit Phorms to PHP versions 5.3.0 and higher only, which is a dealbreaker for
-most large shared hosting situations (MediaTemple for example [1]_). So we're stuck
-with prefixes as pseudo-namespaces, but what naming convention should we choose?
-Well, it doesn't matter all that much as long as we're consistent, but we really
-should be trying to be as compatible as possible with whatever we consider to be
+support for `namespacing <http://php.net/manual/en/language.namespaces.php>`_, 
+and this is what we should ideally be using. Unfortunately, because it's a 
+*huge* untertaking to convert a package to it's own namespace and since I don't 
+know every internal detail of Phorms yet, I really wouldn't be comfortable 
+doing it myself at this point. Plus it would  commit Phorms to PHP versions 
+5.3.0 and higher only, which is a dealbreaker for most large shared hosting 
+situations (MediaTemple for example [1]_). So we're stuck with prefixes as 
+pseudo-namespaces, but what naming convention should we choose? Well, it 
+doesn't matter all that much as long as we're consistent, but we really should 
+be trying to be as compatible as possible with whatever we consider to be
 a de-facto standard. In my mind, that's PEAR, and luckily they have a coding 
 standard that gives us some pretty good guidelines to follow about namespacing.
 It is suggested that class names be defined as `Package_Subpackage_ClassName`, 
