@@ -16,10 +16,10 @@ pear-style-guide
 * Most privates became protected (these will all be reviewed later).
 
 * `BooleanField` can now be required and passed an initial value of true.
-  See http://github.com/xdissent/phorms/issues/closed/#issue/2
+  See `issue #2 <http://github.com/xdissent/phorms/issues/closed/#issue/2>`_.
 
 * `URLField` can now accept an empty value without throwing a validation error.
-  See http://github.com/xdissent/phorms/issues/closed/#issue/2
+  See `issue #3 <http://github.com/xdissent/phorms/issues/closed/#issue/3>`_.
 
 * `ValidationError` renamed `Phorms_Validation_Error`.
  
