@@ -125,7 +125,7 @@ We use phpDoc everywhere.
 
 
 Testing
--------
+~~~~~~~
 
 We use SimpleTest for testing.
 
