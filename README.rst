@@ -23,7 +23,7 @@ Documentation
 Documentation for the latest stable release of Phorms is always located at
 `http://static.artfulcode.net/phorms/doc/ 
 <http://static.artfulcode.net/phorms/doc/>`_. The current development version
-contains more recent documentation, but must be built using the `phpdoc` 
+contains more recent documentation, but must be built using the ``phpdoc`` 
 command.
 
 
@@ -80,10 +80,10 @@ Namespacing
 
 The first problem to tackle was namespacing. Until fairly recently, PHP has 
 always had a single global namespace in which all classes are defined. The 
-obvious problem arises when someone wants to use the class name `Field` but he
-also wants to use our forms package, which probably will define a `Field` class
+obvious problem arises when someone wants to use the class name ``Field`` but he
+also wants to use our forms package, which probably will define a ``Field`` class
 as well. Now we start to think about calling our class something like 
-`PhormField` to prevent the name collision, but that's not as intuitive or 
+``PhormField`` to prevent the name collision, but that's not as intuitive or 
 portable. It doesn't really begin to be a huge risk until the project becomes 
 larger with many internal class names, but the point is that there is *always* a
 chance of collision if you have a global namespace. Luckily, PHP 5.3.0 includes
@@ -99,8 +99,8 @@ doesn't matter all that much as long as we're consistent, but we really should
 be trying to be as compatible as possible with whatever we consider to be
 a de-facto standard. In my mind, that's PEAR, and luckily they have a coding 
 standard that gives us some pretty good guidelines to follow about namespacing.
-It is suggested that class names be defined as `Package_Subpackage_ClassName`, 
-where the `Subpackage` element is optional. The downside is that names can get 
+It is suggested that class names be defined as ``Package_Subpackage_ClassName``,
+where the ``Subpackage`` element is optional. The downside is that names can get 
 to be pretty long, but they're extremely clear and dramatically reduce the risk
 of a name collision. The terms "package" and "subpackage" may also refer to the
 phpDoc package and subpackage, which is a bonus because we use that for our 
@@ -149,9 +149,9 @@ deemed irrelevant or even impossible in the future.
 
 * Refactor validation:
 
-  * Add `Empty Value` as argument like Django.
+  * Add ``Empty Value`` as argument like Django.
 
-  * Add `required` as argument to the field like Django.
+  * Add ``required`` as argument to the field like Django.
  
   * Review passing validators to fields in Django to see how (or if) we should 
     do that.
@@ -162,7 +162,7 @@ deemed irrelevant or even impossible in the future.
 
   * Password fields should not have a hash function.
   
-  * Decimalfield should have a minimum value and maximum value.
+  * Decimal field should have a minimum value and maximum value.
   
 * Add Paver scripts:
 
