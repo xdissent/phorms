@@ -44,6 +44,8 @@ pear-style-guide
   * `ScanField`
 
   * `OptionsField`
+
+* Added initial support for fieldsets.
  
 
 1.02
