@@ -45,7 +45,7 @@ where this branch is going.
 The Future
 ----------
 
-By: Greg Thornton
+*(according to Greg Thornton)*
 
 
 Preface
@@ -104,7 +104,8 @@ to be pretty long, but they're extremely clear and dramatically reduce the risk
 of a name collision. The terms "package" and "subpackage" may also refer to the
 phpDoc package and subpackage, which is a bonus because we use that for our 
 documentation anyway. The other possible standard I'd choose over PEAR is 
-Zend's, and we may well switch to it in the future. Both share enough 
+`Zend's <http://framework.zend.com/manual/en/coding-standard.coding-style.html>`_, 
+and we may well switch to it in the future. Both share enough 
 conventions to make it feasible if not reasonable to do so if Zend is 
 determined to be superior.
 
