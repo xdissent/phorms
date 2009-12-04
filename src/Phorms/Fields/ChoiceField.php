@@ -46,13 +46,13 @@ class Phorms_Fields_ChoiceField extends Phorms_Fields_Field
     /**
      * The choice field constructor.
      *
-     * @param string $label     The field's text label.
-     * @param string $help_text The field's help text.
-     * @param array $choices    A list of choices as 
-     *                          actual_value=>display_value.
-     * @param array $validators A list of callbacks to validate the field data.
-     * @param array $attributes A list of key/value pairs representing HTML 
-     *                          attributes.
+     * @param string $label      The field's text label.
+     * @param string $help_text  The field's help text.
+     * @param array  $choices    A list of choices as 
+     *                           actual_value=>display_value.
+     * @param array  $validators A list of callbacks to validate the field data.
+     * @param array  $attributes A list of key/value pairs representing HTML 
+     *                           attributes.
      */
     public function __construct($label, $help_text='', array $choices, 
     array $validators=array(), array $attributes=array()) {
