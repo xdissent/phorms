@@ -175,6 +175,8 @@ deemed irrelevant or even impossible in the future.
   * Release package generator.
   
   * Documentation builder.
+  
+* Add media support to form fields. Possibly similarly to Django admin forms.
 
 
 Notes
