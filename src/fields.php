@@ -1254,7 +1254,7 @@ class MultipleChoiceField extends PhormField
     /**
      * Stores the field options as actual_value=>display_value.
      **/
-    private $choices;
+    public $choices;
     
     /**
      * @author Jeff Ober
