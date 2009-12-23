@@ -1340,7 +1340,7 @@ class OptionsField extends MultipleChoiceField
      **/
     public function get_widget()
     {
-        return new OptionGroupWidget($this->options);
+        return new OptionGroupWidget($this->choices);
     }
 }
 
