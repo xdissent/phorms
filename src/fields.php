@@ -1309,6 +1309,20 @@ class MultipleChoiceField extends PhormField
                 $val = html_entity_decode($val);
         return $value;
     }
+    
+    /**
+     * Pre-processes an array of values for validation, handling magic quotes if used.
+     * @author Aaron Stone
+     * @param array $value the value from the form array
+     * @return array the pre-processed value
+     **/
+    public function prepare_value($value)
+    {
+        if (is_array($value) && get_magic_quotes_gpc())
+            foreach ($value as $key => &$val)
+                $val = stripslashes($val);
+        return $value;
+    }
 }
 
 /**
