@@ -976,8 +976,9 @@ class DropDownField extends PhormField
      **/
     public function validate($value)
     {
-        if (!in_array($value, array_keys($this->choices)))
-            throw new ValidationError("Invalid selection.");
+        if (is_array($value))
+            if (!in_array($value, array_keys($this->choices)))
+                throw new ValidationError("Invalid selection.");
     }
     
     /**
@@ -1288,12 +1289,10 @@ class MultipleChoiceField extends PhormField
      **/
     public function validate($value)
     {
-        if (!is_array($value))
-            throw new ValidationError('Invalid selection');
-        
-        foreach ($value as $v)
-            if (!in_array($v, array_keys($this->choices)))
-                throw new ValidationError("Invalid selection.");
+        if (is_array($value))
+            foreach ($value as $v)
+                if (!in_array($v, array_keys($this->choices)))
+                    throw new ValidationError("Invalid selection.");
     }
     
     /**
