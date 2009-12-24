@@ -284,10 +284,10 @@ class CheckboxWidget extends PhormWidget
 /**
  * OptionGroupWidget
  * 
- * A compound widget made up of multiple CheckboxWidgets.
+ * A compound widget made up of multiple CheckboxWidgets or RadioWidgets.
  * @author Jeff Ober
  * @package Widgets
- * @see CheckboxWidget
+ * @see CheckboxWidget,RadioWidget
  **/
 class OptionGroupWidget extends PhormWidget
 {
@@ -295,15 +295,21 @@ class OptionGroupWidget extends PhormWidget
      * The options for this field as an array of actual=>display values.
      **/
     private $options;
+
+    /**
+     * The options for this field as an array of actual=>display values.
+     **/
+    private $widget;
     
     /**
      * @author Jeff Ober
      * @param array $options the options as an array of actual=>display values
      * @return null
      **/
-    public function __construct(array $options)
+    public function __construct(array $options, $widget='CheckboxWidget')
     {
         $this->options = $options;
+        $this->widget = $widget;
     }
     
     /**

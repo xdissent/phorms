@@ -261,7 +261,7 @@ abstract class PhormField
      * @param string $value the value from the form array
      * @return string the pre-processed value
      **/
-    protected function prepare_value($value)
+    public function prepare_value($value)
     {
         return ( get_magic_quotes_gpc() ) ? stripslashes($value) : $value;
     }
@@ -1341,6 +1341,26 @@ class OptionsField extends MultipleChoiceField
     public function get_widget()
     {
         return new OptionGroupWidget($this->choices);
+    }
+}
+
+/**
+ * OptionField
+ * 
+ * A selection of choices represented as a series of labeled radiobuttons.
+ * @author Jeff Ober
+ * @package Fields
+ **/
+class OptionField extends MultipleChoiceField
+{
+    /**
+     * Returns a new OptionGroupWidget.
+     * @author Aaron Stone
+     * @return OptionGroupWidget
+     **/
+    public function get_widget()
+    {
+        return new OptionGroupWidget($this->choices, 'RadioWidget');
     }
 }
 
