@@ -321,7 +321,7 @@ abstract class Phorm
      * @return string the form's opening tag
      * @author Jeff Ober
      **/
-    public function open($target=null)
+    public function open($target=null, $attributes=null)
     {
         if ( is_null($target) ) $target = $_SERVER['PHP_SELF'];
         
@@ -338,11 +338,19 @@ abstract class Phorm
             default:
             $method = "GET";
         }
+
+        $form_attributes = '';
+        if (is_array($attributes)) {
+          foreach ($attributes as $k => $v) {
+            $form_attributes .= ' ' . $k . '="' . htmlentities($v) . '"';
+          }
+        }
         
-        return sprintf('<form method="%s" action="%s"%s>',
+        return sprintf('<form method="%s" action="%s"%s%s>' . "\n",
             $method,
             htmlentities((string)$target),
-            ($this->multi_part) ? ' enctype="multipart/form-data"' : ''
+            ($this->multi_part) ? ' enctype="multipart/form-data"' : '',
+            $form_attributes
         );
     }
     
@@ -353,7 +361,7 @@ abstract class Phorm
      **/
     public function close()
     {
-        return '</form>';
+        return "</form>\n";
     }
     
     /**
@@ -380,7 +388,11 @@ abstract class Phorm
         {
             $label = $field->label();
             if ($label !== '')
-                $elts[] = sprintf('<tr><th>%s:</th><td>%s</td></tr>', $field->label(), $field); 
+                $elts[] = sprintf("<tr><th%s>%s</th><td%s>%s</td></tr>\n",
+                                  $label_attrs,
+                                  $field->label(),
+                                  $field_attrs,
+                                  $field); 
             else
                 $elts[] = strval($field);
         }
@@ -400,7 +412,7 @@ abstract class Phorm
         {
             $label = $field->label();
             if ($label !== '')
-                $elts[] = sprintf('<li>%s: %s</li>', $field->label(), $field);
+                $elts[] = sprintf("<li>%s: %s</li>\n", $field->label(), $field);
             else
                 $elts[] = strval($field);
         }

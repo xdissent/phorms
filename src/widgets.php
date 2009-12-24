@@ -379,7 +379,7 @@ class SelectWidget extends PhormWidget
         {
             $option_attributes = array('value' => $this->clean_string($actual));
             if ($actual == $value) $option_attributes['selected'] = 'selected';
-            $options[] = sprintf('<option %s>%s</option>',
+            $options[] = sprintf("<option %s>%s</option>\n",
                 $this->serialize_attributes($option_attributes),
                 $this->clean_string($display));
         }
@@ -449,7 +449,7 @@ class MultiSelectWidget extends PhormWidget
         {
             $option_attributes = array('value' => $this->clean_string($actual));
             if (in_array($actual, $value)) $option_attributes['selected'] = 'selected';
-            $options[] = sprintf('<option %s>%s</option>',
+            $options[] = sprintf("<option %s>%s</option>\n",
                 $this->serialize_attributes($option_attributes),
                 $this->clean_string($display));
         }
