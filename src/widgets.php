@@ -333,8 +333,8 @@ class OptionGroupWidget extends PhormWidget
         $html = "";
         foreach ($this->options as $actual => $display)
         {
-            $option = new CheckboxWidget( in_array($actual, $value) );
-            $html .= sprintf('%s %s', htmlentities($display), $option->html($actual, $attributes));
+            $option = new $this->widget( in_array($actual, $value) );
+            $html .= sprintf("<label>%s %s</label>\n", $option->html($actual, $attributes), htmlentities($display));
         }
         
         return $html;
