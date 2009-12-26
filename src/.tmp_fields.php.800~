@@ -671,7 +671,7 @@ class PasswordField extends TextField
      **/
     public function import_value($value)
     {
-        return call_user_func($this->hash_function, $value);
+        return call_user_func($this->hash_function, array($value));
     }
 }
 

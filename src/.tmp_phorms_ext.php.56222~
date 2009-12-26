@@ -29,21 +29,12 @@ abstract class PhormExt extends Phorm
         {
             $label = $field->label();
             if ($label !== '')
-                $elts[] = sprintf("<p>\n\t%s\n\t%s\n</p>\n", str_replace('</', ' :</', $field->label()), $field); 
+                $elts[] = sprintf('<p>%s%s</p>', str_replace('</', ' :</', $field->label()), $field); 
             else
                 $elts[] = strval($field);
         }
         return implode($elts);
     }
-	
-	public function buttons()
-	{
-		return '<p>
-					<input type="submit" class="phorms-submit" value="Valider" />
-					<input type="reset" class="phorms-reset" value="R&eacute;initialiser" />
-				</p>
-		';
-	}
 }
 
 abstract class FieldsetPhormExt extends FieldsetPhorm
@@ -75,13 +66,13 @@ abstract class FieldsetPhormExt extends FieldsetPhorm
         $elts = array();
         foreach ($this->fieldsets as $fieldset)
         {
-            $elts[] = sprintf("<fieldset>\n\t<legend>%s</legend>\n", $fieldset->label);
+            $elts[] = sprintf('<fieldset><legend>%s</legend>', $fieldset->label);
             foreach ($fieldset->field_names as $field_name) {
                 $field = $this->$field_name;
                 $label = $field->label();
 
                 if ($label !== '')
-                    $elts[] = sprintf("<p>\n\t%s\n\t%s\n</p>\n", str_replace('</', ' :</', $label), $field);
+                    $elts[] = sprintf('<p>%s%s</p>', str_replace('</', ' :</', $label), $field);
                 else
                     $elts[] = strval($field);
             }
@@ -89,14 +80,5 @@ abstract class FieldsetPhormExt extends FieldsetPhorm
         }
         return implode($elts, "\n");
     }
-
-	public function buttons()
-	{
-		return '<p>
-					<input type="submit" class="phorms-submit" value="Valider" />
-					<input type="reset" class="phorms-reset" value="R&eacute;initialiser" />
-				</p>
-		';
-	}
 }
 ?>

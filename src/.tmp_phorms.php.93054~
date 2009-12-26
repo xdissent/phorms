@@ -342,22 +342,21 @@ abstract class Phorm
         switch ($this->method)
         {
             case Phorm::GET:
-            $method = 'get';
+            $method = "GET";
             break;
             
             case Phorm::POST:
-            $method = 'post';
+            $method = "POST";
             break;
             
             default:
-            $method = 'get';
+            $method = "GET";
         }
         
-        return sprintf('<form method="%s" action="%s"%s id="%s">' . "\n",
+        return sprintf('<form method="%s" action="%s"%s>',
             $method,
             htmlentities((string)$target),
-            ($this->multi_part) ? ' enctype="multipart/form-data"' : '',
-			strtolower(get_class($this))
+            ($this->multi_part) ? ' enctype="multipart/form-data"' : ''
         );
     }
     
