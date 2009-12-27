@@ -86,18 +86,16 @@ abstract class PhormField
      **/
     public function __construct($label, array $validators=array(), array $attributes=array())
     {
-        if(!isset($attributes['class']))
-        {
-            $attributes['class'] = strtolower(get_class($this));
-        }
-        else
-        {
-            $attributes['class'] .= ' ' . strtolower(get_class($this));
-        }
-		
         if(in_array(PhormValidation::Required, $validators))
         {
-            $attributes['class'] .= ' ' . strtolower(substr(PhormValidation::Required, 17));
+            if(!isset($attributes['class']))
+            {
+                $attributes['class'] = 'required';
+            }
+            else
+            {
+                $attributes['class'] .= ' required';
+            }
         }
         
         $this->label = (string)$label;
@@ -180,7 +178,7 @@ abstract class PhormField
      **/
     public function help_text()
     {
-        return sprintf("\n\t" . '<span class="phorm_help">%s</span>', htmlentities($this->help_text));
+        return sprintf('<p class="phorm_help">%s</p>', htmlentities($this->help_text));
     }
     
     /**
@@ -213,12 +211,18 @@ abstract class PhormField
     public function errors()
     {
         $elts = array();
-        if (is_array($this->errors) && !empty($this->errors))
+        /*if (is_array($this->errors) && count($this->errors) > 0)
+            foreach ($this->errors as $error)
+                $elts[] = sprintf('<li>%s</li>', $error);
+        return sprintf('<ul class="phorm_error">%s</ul>', implode($elts));*/
+        if (is_array($this->errors) && count($this->errors) > 0)
         {
-            foreach ($this->errors as $valid => $error)
-            	$elts[] = sprintf('<div class="validation-advice" id="advice-%s-%s">%s</div>', $error[0], (string)$this->get_attribute('id'), $error[1]);
+            foreach ($this->errors as $error)
+            {
+                $elts[] = sprintf('<li>%s</li>', $error);
+            }
         }
-        return implode("\n\t", $elts);
+        return sprintf('<ul class="phorm_error">%s</ul>', implode($elts));
     }
     
     /**
@@ -256,16 +260,16 @@ abstract class PhormField
             foreach($v as $f)
             {
                 try { call_user_func($f, $value); }
-                catch (ValidationError $e) { $this->errors[] = array($f, $e->getMessage()); }
+                catch (ValidationError $e) { $this->errors[] = $e->getMessage(); }
             }
             
             if ( $value !== '' )
             {
                 try { $this->validate($value); }
-                catch (ValidationError $e) { $this->errors[] = array(strtolower(get_class($this)), $e->getMessage()); }
+                catch (ValidationError $e) { $this->errors[] = $e->getMessage(); }
             }
 
-            if ( $this->valid = empty($this->errors) )
+            if ( $this->valid = ( count($this->errors) === 0 ) )
                 $this->imported = $this->import_value($value);
         }
         return $this->valid;
@@ -643,8 +647,10 @@ class PasswordField extends TextField
      **/
     public function __construct($label, $size, $max_length, $hash_function, array $validators=array(), array $attributes=array())
     {
+        $this->max_length = $max_length;
         $this->hash_function = $hash_function;
-        parent::__construct($label,  $size, $max_length, $validators, $attributes);
+        $attributes['size'] = $size;
+        parent::__construct($label, $validators, $attributes);
     }
     
     /**
@@ -749,6 +755,14 @@ class IntegerField extends PhormField
     public function __construct($label, $max_digits, array $validators=array(), array $attributes=array())
     {
         $attributes['size'] = 20;
+        if(!isset($attributes['class']))
+        {
+            $attributes['class'] = 'validate-digits';
+        }
+        else
+        {
+            $attributes['class'] .= ' validate-digits';
+        }
         parent::__construct($label, $validators, $attributes);
         $this->max_digits = $max_digits;
     }
@@ -773,9 +787,7 @@ class IntegerField extends PhormField
      **/
     public function validate($value)
     {
-        if (preg_match('/\D/', $value))
-            throw new ValidationError(sprintf($GLOBALS['phorms_tr']['integerfield_notint'], $this->max_digits));
-        if (strlen((string)$value) > $this->max_digits)
+        if (preg_match('/\D/', $value) || strlen((string)$value) > $this->max_digits)
             throw new ValidationError(sprintf($GLOBALS['phorms_tr']['integerfield_sizelimit'], $this->max_digits));
     }
     
@@ -801,6 +813,28 @@ class IntegerField extends PhormField
 class AlphaField extends TextField
 {
     /**
+     * @author Thomas Lété
+     * @param string $label the field's text label
+     * @param int $size the field's size attribute
+     * @param int $max_length the maximum size in characters
+     * @param array $validators a list of callbacks to validate the field data
+     * @param array $attributes a list of key/value pairs representing HTML attributes
+     **/
+    public function __construct($label, $size, $max_length, array $validators=array(), array $attributes=array())
+    {
+        if(!isset($attributes['class']))
+        {
+            $attributes['class'] = 'validate-alpha';
+        }
+        else
+        {
+            $attributes['class'] .= ' validate-alpha';
+        }
+        
+        parent::__construct($label, $size, $max_length, $validators, $attributes);
+    }
+    
+    /**
      * Validates that the value is alpha only.
      * @author Thomas Lété
      * @param string $value
@@ -824,6 +858,28 @@ class AlphaField extends TextField
  **/
 class AlphaNumField extends TextField
 {
+    /**
+     * @author Thomas Lété
+     * @param string $label the field's text label
+     * @param int $size the field's size attribute
+     * @param int $max_length the maximum size in characters
+     * @param array $validators a list of callbacks to validate the field data
+     * @param array $attributes a list of key/value pairs representing HTML attributes
+     **/
+    public function __construct($label, $size, $max_length, array $validators=array(), array $attributes=array())
+    {
+        if(!isset($attributes['class']))
+        {
+            $attributes['class'] = 'validate-alphanum';
+        }
+        else
+        {
+            $attributes['class'] .= ' validate-alphanum';
+        }
+        
+        parent::__construct($label, $size, $max_length, $validators, $attributes);
+    }
+    
     /**
      * Validates that the value is alpha or numeric only.
      * @author Thomas Lété
@@ -862,6 +918,15 @@ class DecimalField extends PhormField
      **/
     public function __construct($label, $precision, array $validators=array(), array $attributes=array())
     {
+        if(!isset($attributes['class']))
+        {
+            $attributes['class'] = 'validate-number';
+        }
+        else
+        {
+            $attributes['class'] .= ' validate-number';
+        }
+        
         $attributes['size'] = 20;
         parent::__construct($label, $validators, $attributes);
         $this->precision = $precision;
@@ -1069,6 +1134,28 @@ class DropDownField extends PhormField
 class URLField extends TextField
 {
     /**
+     * @author Thomas Lété
+     * @param string $label the field's text label
+     * @param int $size the field's size attribute
+     * @param int $max_length the maximum size in characters
+     * @param array $validators a list of callbacks to validate the field data
+     * @param array $attributes a list of key/value pairs representing HTML attributes
+     **/
+    public function __construct($label, $size, $max_length, array $validators=array(), array $attributes=array())
+    {
+        if(!isset($attributes['class']))
+        {
+            $attributes['class'] = 'validate-url';
+        }
+        else
+        {
+            $attributes['class'] .= ' validate-url';
+        }
+        
+        parent::__construct($label, $size, $max_length, $validators, $attributes);
+    }
+    
+    /**
      * Prepares the value by inserting http:// to the beginning if missing.
      * @author Jeff Ober
      * @param string $value
@@ -1076,7 +1163,7 @@ class URLField extends TextField
      **/
     public function prepare_value($value)
     {
-        if (!empty($value) && !preg_match('@^(http|ftp)s?://@', $value))
+        if (!preg_match('@^(http|ftp)s?://@', $value))
             return sprintf('http://%s', $value);
         else
             return $value;
@@ -1106,6 +1193,28 @@ class URLField extends TextField
  **/
 class EmailField extends TextField
 {
+    /**
+     * @author Thomas Lété
+     * @param string $label the field's text label
+     * @param int $size the field's size attribute
+     * @param int $max_length the maximum size in characters
+     * @param array $validators a list of callbacks to validate the field data
+     * @param array $attributes a list of key/value pairs representing HTML attributes
+     **/
+    public function __construct($label, $size, $max_length, array $validators=array(), array $attributes=array())
+    {
+        if(!isset($attributes['class']))
+        {
+            $attributes['class'] = 'validate-email';
+        }
+        else
+        {
+            $attributes['class'] .= ' validate-email';
+        }
+        
+        parent::__construct($label, $size, $max_length, $validators, $attributes);
+    }
+    
     /**
      * Validates that the value is a valid email address.
      * @author Jeff Ober
@@ -1141,6 +1250,15 @@ class DateTimeField extends TextField
      **/
     public function __construct($label, array $validators=array(), array $attributes=array())
     {
+        if(!isset($attributes['class']))
+        {
+            $attributes['class'] = 'validate-date';
+        }
+        else
+        {
+            $attributes['class'] .= ' validate-date';
+        }
+        
         parent::__construct($label, 25, 100, $validators, $attributes);
     }
     
@@ -1154,9 +1272,7 @@ class DateTimeField extends TextField
     public function validate($value)
     {
         parent::validate($value);
-		if(preg_match($GLOBALS['phorms_tr']['dateformat_validation'], $value))
-			$value = preg_replace($GLOBALS['phorms_tr']['dateformat_validation'], $GLOBALS['phorms_tr']['dateformat_replace'], $value);
-		if (!strtotime($value))
+        if (!strtotime($value))
             throw new ValidationError($GLOBALS['phorms_tr']['datetimefield_badformat']);
     }
     
@@ -1170,8 +1286,6 @@ class DateTimeField extends TextField
     public function import_value($value)
     {
         $value = parent::import_value($value);
-		if(preg_match($GLOBALS['phorms_tr']['dateformat_validation'], $value))
-			$value = preg_replace($GLOBALS['phorms_tr']['dateformat_validation'], $GLOBALS['phorms_tr']['dateformat_replace'], $value);
         return strtotime($value);
     }
 }
@@ -1290,7 +1404,7 @@ class ScanField extends TextField
     {
         parent::validate($value);
         $this->matched = sscanf($value, $this->format);
-        if ( empty($this->matched) )
+        if ( count($this->matched) === 0 )
             throw new ValidationError($this->message);
     }
     

@@ -8,7 +8,6 @@ $phorms_tr['filefield_sizelimit'] = 'La taille du fichier est limit&eacute;e à 
 
 $phorms_tr['textfield_sizelimit'] = 'Doit comporter moins de %s caractères.';
 
-$phorms_tr['integerfield_notint'] = 'Cet entier n\'est pas correct.';
 $phorms_tr['integerfield_sizelimit'] = 'Doit comporter moins de %s chiffres.';
 
 $phorms_tr['alphafield_invalid'] = 'Doit contenir des caractères alphab&eacute;tiques uniquement.';
@@ -33,7 +32,4 @@ $phorms_tr['buttons_validate'] = 'Valider';
 $phorms_tr['buttons_reset'] = 'R&eacute;initialiser';
 
 $phorms_tr['validation_required'] = 'Ce champs est requis.';
-
-$phorms_tr['dateformat_validation'] = '`^([0-9]{2})/([0-9]{2})/([0-9]{4})$`';
-$phorms_tr['dateformat_replace'] = '$3-$2-$1';
 ?>

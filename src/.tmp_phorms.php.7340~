@@ -367,14 +367,13 @@ abstract class Phorm
     
     /**
      * Returns the form's closing HTML tag.
-     * @param bool $js include or not the javascript tag for live validation.
      * @return string the form's closing tag
      * @author Jeff Ober
      **/
-    public function close($js = true)
+    public function close()
     {
         return "</form>\n"
-			 . ($js) ? '<script type="text/javascript">new Validation(\'' . strtolower(get_class($this)) . '\', {immediate : true});</script>' : '';
+			 . '<script type="text/javascript">new Validation(\'' . strtolower(get_class($this)) . '\', {immediate : true});</script>';
     }
 	
 	/**
@@ -421,16 +420,15 @@ abstract class Phorm
 	
     /**
      * Print the form completely.
-     * @param bool $js include or not the javascript tag for live validation.
-     * @return null
+     * @return string the HTML form
      * @author Thomas Lété
      **/
-    public function display($js = true)
+    public function p()
     {
         echo $form->open()
 		   . $form
 		   . $form->buttons()
-		   . $form->close($js);
+		   . $form->close();
     }
 }
 

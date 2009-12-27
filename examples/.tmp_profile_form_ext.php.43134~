@@ -4,24 +4,30 @@ error_reporting(6143|2048);
 
 require_once('../src/phorms.php');
 
-class CommentForm extends Phorm
+class ProfileForm extends FieldsetPhorm
 {
 	protected function define_fields()
 	{
 		// Define form fields
-		$this->post_id = new HiddenField(array(PhormValidation::Required));
-		$this->first_name = new AlphaField("First name", 25, 255, array(PhormValidation::Required));
-		$this->last_name = new AlphaField("Last name", 25, 255, array(PhormValidation::Required));
-		$this->email = new EmailField("Email address", 25, 255, array(PhormValidation::Required));
+		$this->user_id = new HiddenField(array('required'));
+		$this->first_name = new AlphaField("First name", 25, 255, array('required'));
+		$this->last_name = new AlphaField("Last name", 25, 255, array('required'));
+		$this->email = new EmailField("Email address", 25, 255, array('required'));
 		$this->url = new URLField("Home page", 25, 255);
-		$this->number = new IntegerField("Favorite number", 7, array(PhormValidation::Required));
-		$this->message = new LargeTextField('Message', 5, 40, array(PhormValidation::Required));
-		$this->notify = new BooleanField('Reply notification');
-		$this->date = new DateTimeField('Date', array(PhormValidation::Required));
+		$this->bio = new LargeTextField('Bio', 5, 40, array('required'));
 		
 		// Add some help text
-		$this->notify->set_help_text('Email me when my comment receives a response.');
 		$this->email->set_help_text('We will never give out your email address.');
+	}
+	
+	protected function define_fieldsets()
+	{
+        $this->fieldsets = array(new Fieldset('name', 'Name', array('user_id', 
+                                                                    'first_name', 
+                                                                    'last_name')),
+                                 new Fieldset('extra', 'Extra', array('email', 
+                                                                      'url', 
+                                                                      'bio')));
 	}
 	
 	public function report()
@@ -32,16 +38,17 @@ class CommentForm extends Phorm
 
 // Set up the form
 $post_id = 42;
-$form = new CommentForm(Phorm::POST, false, array('post_id'=>$post_id, 'notify'=>true));
+$form = new ProfileForm(Phorm::POST, false, array('post_id'=>$post_id));
 
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr" dir="ltr">
+// Check form validity
+$valid = $form->is_valid();
+
+?>
+<html>
 	<head>
-		<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-		<title>Comment form</title>
 		<script src="../src/javascript/scriptaculous/lib/prototype.js" type="text/javascript"></script>
 		<script src="../src/javascript/scriptaculous/src/effects.js" type="text/javascript"></script>
-		<script src="../src/javascript/validation.php" type="text/javascript"></script>
+		<script src="../src/javascript/validation.js" type="text/javascript"></script>
 		<style type="text/css">
 			form .phorm_help {
 				margin: 0;
@@ -159,7 +166,10 @@ $form = new CommentForm(Phorm::POST, false, array('post_id'=>$post_id, 'notify'=
 		<p class="phorm_error">Please correct the following errors.</p>
 		<?php endif ?>
 		<?= $form ?>
-		<?= $form->buttons() ?>
+			<p>
+				<input type="reset" value="Clear form" />
+				<input type="submit" value="Submit" />
+			</p>
 		<?= $form->close() ?>
 		
 		<h4>Raw POST data:</h4>
@@ -167,9 +177,7 @@ $form = new CommentForm(Phorm::POST, false, array('post_id'=>$post_id, 'notify'=
 	
 		<hr />
 	
-		<?php
-		// Check form validity
-		if ($form->is_bound() && $form->is_valid()): ?>
+		<?php if ($form->is_bound() && $valid): ?>
 			<h4>Processed and cleaned form data:</h4>
 			<? $form->report() ?>
 		<?php elseif ($form->has_errors()): ?>

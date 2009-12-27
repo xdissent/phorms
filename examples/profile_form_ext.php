@@ -3,25 +3,18 @@
 error_reporting(6143|2048);
 
 require_once('../src/phorms.php');
-require_once('../src/phorms_ext.php');
 
-function required($value)
-{
-	if ($value == '' || is_null($value))
-		throw new ValidationError('This field is required.');
-}
-
-class ProfileForm extends FieldsetPhormExt
+class ProfileForm extends FieldsetPhorm
 {
 	protected function define_fields()
 	{
 		// Define form fields
 		$this->user_id = new HiddenField(array('required'));
-		$this->first_name = new AlphaField("First name", 25, 255, array('required'));
-		$this->last_name = new AlphaField("Last name", 25, 255, array('required'));
-		$this->email = new EmailField("Email address", 25, 255, array('required'));
+		$this->first_name = new AlphaField("First name", 25, 255, array(PhormValidation::Required));
+		$this->last_name = new AlphaField("Last name", 25, 255, array(PhormValidation::Required));
+		$this->email = new EmailField("Email address", 25, 255, array(PhormValidation::Required));
 		$this->url = new URLField("Home page", 25, 255);
-		$this->bio = new LargeTextField('Bio', 5, 40, array('required'));
+		$this->bio = new LargeTextField('Bio', 5, 40, array(PhormValidation::Required));
 		
 		// Add some help text
 		$this->email->set_help_text('We will never give out your email address.');
@@ -47,20 +40,23 @@ class ProfileForm extends FieldsetPhormExt
 $post_id = 42;
 $form = new ProfileForm(Phorm::POST, false, array('post_id'=>$post_id));
 
-// Check form validity
-$valid = $form->is_valid();
-
-?>
-<html>
+?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr" dir="ltr">
 	<head>
+		<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+		<title>Profile form</title>
 		<script src="../src/javascript/scriptaculous/lib/prototype.js" type="text/javascript"></script>
 		<script src="../src/javascript/scriptaculous/src/effects.js" type="text/javascript"></script>
 		<script src="../src/javascript/validation.js" type="text/javascript"></script>
-	</head>
-	<body>
-		<style>
-			.phorm_error { color: #bb0000; font-size: 10pt; text-align: left; font-style: oblique; }
-			.phorm_help { margin: 0; padding: 2px; font-size: 10pt; font-style: oblique; color: #666; }
+		<style type="text/css">
+			form .phorm_help {
+				margin: 0;
+				padding: 2px;
+				font-size: 10pt;
+				font-style: oblique;
+				color: #666;
+				display: block;
+			}
 			
 			form
 			{
@@ -100,11 +96,6 @@ $valid = $form->is_valid();
 				letter-spacing: 1px;
 			}
 
-			form .form_label_nostyle
-			{
-				background: none;
-			}
-
 			/* Input */
 			form input, form select
 			{
@@ -115,16 +106,6 @@ $valid = $form->is_valid();
 			form input[type="text"], form select
 			{
 				width: 58%;
-			}
-
-			form .form_input_day_month
-			{
-				width: 3%;
-			}
-
-			form .form_input_year
-			{
-				width: 6%;
 			}
 
 			/* Textarea */
@@ -159,9 +140,14 @@ $valid = $form->is_valid();
 				background-color: #E6484D;
 				cursor: pointer;
 			}
+
+			form .required
+			{
+				border-width: 2px;
+			}
 			
 			/* Validation */
-			.validation-advice {
+			form .validation-advice {
 				margin: 5px 0;
 				padding: 5px;
 				background-color: #FF3300;
@@ -170,6 +156,8 @@ $valid = $form->is_valid();
 			}
 
 		</style>
+	</head>
+	<body>
 
 		<?= $form->open() ?>
 		<h2>Add a comment</h2>
@@ -177,10 +165,7 @@ $valid = $form->is_valid();
 		<p class="phorm_error">Please correct the following errors.</p>
 		<?php endif ?>
 		<?= $form ?>
-			<p>
-				<input type="reset" value="Clear form" />
-				<input type="submit" value="Submit" />
-			</p>
+		<?= $form->buttons() ?>
 		<?= $form->close() ?>
 		
 		<h4>Raw POST data:</h4>
@@ -188,7 +173,9 @@ $valid = $form->is_valid();
 	
 		<hr />
 	
-		<?php if ($form->is_bound() && $valid): ?>
+		<?php
+		// Check form validity
+		if ($form->is_bound() && $form->is_valid()): ?>
 			<h4>Processed and cleaned form data:</h4>
 			<? $form->report() ?>
 		<?php elseif ($form->has_errors()): ?>
@@ -197,8 +184,5 @@ $valid = $form->is_valid();
 		<?php else: ?>
 			<p><em>The form is unbound.</em></p>
 		<?php endif ?>
-		<script type="text/javascript">
-			new Validation(document.forms[0], {immediate : true}); // OR new Validation('form-id');
-		</script>
 	</body>
 </html>

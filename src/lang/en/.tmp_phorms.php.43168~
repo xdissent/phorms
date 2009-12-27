@@ -29,8 +29,5 @@ $phorms_tr['multiplechoicefield_badformat'] = 'Invalid selection.';
 $phorms_tr['multipart_to_post'] = 'Multi-part form method changed to POST.';
 
 $phorms_tr['buttons_validate'] = 'Validate';
-$phorms_tr['buttons_reset'] = 'Clear form';
-
-$phorms_tr['dateformat_validation'] = '`^([0-9]{4})-([0-9]{2})-([0-9]{2})$`';
-$phorms_tr['dateformat_replace'] = '$1-$2-$3';
+$phorms_tr['buttons_reset'] = 'Reinitialize';
 ?>

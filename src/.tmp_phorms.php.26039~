@@ -46,6 +46,10 @@ require_once(PHORMS_ROOT . 'fields.php');
  * form validation.
  **/
 require_once(PHORMS_ROOT . 'fieldsets.php');
+/**
+ * Field static validation methods.
+ **/
+require_once(PHORMS_ROOT . 'validation.php');
 
 /**
  * Phorm
@@ -342,21 +346,22 @@ abstract class Phorm
         switch ($this->method)
         {
             case Phorm::GET:
-            $method = "GET";
+            $method = 'get';
             break;
             
             case Phorm::POST:
-            $method = "POST";
+            $method = 'post';
             break;
             
             default:
-            $method = "GET";
+            $method = 'get';
         }
         
-        return sprintf('<form method="%s" action="%s"%s>',
+        return sprintf('<form method="%s" action="%s"%s id="%s">' . "\n",
             $method,
             htmlentities((string)$target),
-            ($this->multi_part) ? ' enctype="multipart/form-data"' : ''
+            ($this->multi_part) ? ' enctype="multipart/form-data"' : '',
+			strtolower(get_class($this))
         );
     }
     
@@ -369,6 +374,18 @@ abstract class Phorm
     {
         return '</form>';
     }
+	
+	/**
+     * Returns the buttons for submitting or resetting the form.
+     * @return string the form's closing tag
+     * @author Jeff Ober
+     **/
+    public function buttons()
+	{
+		return "<p>\n\t<input type=\"submit\" class=\"phorms-submit\" value=\"" . $GLOBALS['phorms_tr']['buttons_validate'] . "\" />"
+			 . "\n\t<input type=\"reset\" class=\"phorms-reset\" value=\"" . $GLOBALS['phorms_tr']['buttons_reset'] . "\" />"
+			 . "\n</p>\n";
+	}
     
     /**
      * Returns a string of all of the form's fields' HTML tags as a table.
@@ -378,7 +395,27 @@ abstract class Phorm
      **/
     public function __toString()
     {
-        return $this->as_table();
+        return $this->as_labels();
+		//return $this->as_table();
+    }
+    
+    /**
+     * Returns the form fields as a series of paragraphs.
+     * @return string the HTML form
+     * @author Thomas Lété
+     **/
+    public function as_labels()
+    {
+        $elts = array();
+        foreach ($this->getFields() as $name => $field)
+        {
+            $label = $field->label();
+            if ($label !== '')
+                $elts[] = sprintf("<p>\n\t%s\n\t%s\n</p>\n", str_replace('</', ' :</', $field->label()), $field); 
+            else
+                $elts[] = strval($field);
+        }
+        return implode($elts);
     }
     
     /**
@@ -387,7 +424,7 @@ abstract class Phorm
      * @return string the HTML form
      * @author Jeff Ober
      **/
-    public function as_table()
+    /*public function as_table()
     {
         $elts = array();
         foreach ($this->fields as $name => $field)
@@ -399,7 +436,7 @@ abstract class Phorm
                 $elts[] = strval($field);
         }
         return implode($elts);
-    }
+    }*/
     
     /**
      * Returns the form fields as a series of list items. Does not include the
@@ -407,7 +444,7 @@ abstract class Phorm
      * @return string the HTML form
      * @author Jeff Ober
      **/
-    public function as_list()
+    /*public function as_list()
     {
         $elts = array();
         foreach ($this->fields as $name => $field)
@@ -419,7 +456,7 @@ abstract class Phorm
                 $elts[] = strval($field);
         }
         return implode($elts);
-    }
+    }*/
 }
 
 
@@ -442,6 +479,31 @@ abstract class FieldsetPhorm extends Phorm
         parent::__construct($method, $multi_part, $data);
         $this->define_fieldsets();
     }
+    
+    /**
+     * Returns the form fields as a series of paragraphs.
+     * @return string the HTML form
+     * @author Thomas Lété
+     **/
+    public function as_labels()
+    {
+        $elts = array();
+        foreach ($this->fieldsets as $fieldset)
+        {
+            $elts[] = sprintf("<fieldset>\n\t<legend>%s</legend>\n", $fieldset->label);
+            foreach ($fieldset->field_names as $field_name) {
+                $field = $this->$field_name;
+                $label = $field->label();
+
+                if ($label !== '')
+                    $elts[] = sprintf("<p>\n\t%s\n\t%s\n</p>\n", str_replace('</', ' :</', $label), $field);
+                else
+                    $elts[] = strval($field);
+            }
+            $elts[] = '</fieldset>';
+        }
+        return implode($elts, "\n");
+    }
 
     /**
      * Returns the form fields as a series of HTML table rows. Does not include
@@ -449,7 +511,7 @@ abstract class FieldsetPhorm extends Phorm
      * @return string the HTML form
      * @author Greg Thornton
      **/
-    public function as_table()
+    /*public function as_table()
     {
         $elts = array();
         foreach ($this->fieldsets as $fieldset)
@@ -467,7 +529,7 @@ abstract class FieldsetPhorm extends Phorm
             $elts[] = '</table></fieldset></td></tr>';
         }
         return implode($elts, "\n");
-    }
+    }*/
 }
 
 ?>

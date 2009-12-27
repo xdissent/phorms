@@ -154,7 +154,7 @@ class HiddenWidget extends PhormWidget
     protected function serialize($value, array $attributes=array())
     {
         $attributes['type'] = 'hidden';
-        return '<div>' . parent::serialize($value, $attributes) . '</div>';
+        return parent::serialize($value, $attributes);
     }
 }
 

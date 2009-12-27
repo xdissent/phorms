@@ -1,4 +1,6 @@
 <?php
+setlocale(LC_TIME, 'fr_FR');
+
 $phorms_tr['filefield_toolarge'] = 'Le fichier envoy&eacute; est trop volumineux.';
 $phorms_tr['filefield_uploaderror'] = 'Une erreur s\'est produite lors de l\'envoi du fichier, veuillez r&eacute;essayer.';
 $phorms_tr['filefield_notsent'] = 'Le fichier n\'a pas &eacute;t&eacute; envoy&eacute;, veuillez r&eacute;essayer.';
@@ -8,7 +10,6 @@ $phorms_tr['filefield_sizelimit'] = 'La taille du fichier est limit&eacute;e à 
 
 $phorms_tr['textfield_sizelimit'] = 'Doit comporter moins de %s caractères.';
 
-$phorms_tr['integerfield_notint'] = 'Cet entier n\'est pas correct.';
 $phorms_tr['integerfield_sizelimit'] = 'Doit comporter moins de %s chiffres.';
 
 $phorms_tr['alphafield_invalid'] = 'Doit contenir des caractères alphab&eacute;tiques uniquement.';
