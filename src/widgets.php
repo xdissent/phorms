@@ -340,7 +340,10 @@ class OptionGroupWidget extends PhormWidget
         foreach ($this->options as $actual => $display)
         {
             $option = new $this->widget( in_array($actual, $value) );
-            $html .= sprintf("<label>%s %s</label>\n", $option->html($actual, $attributes), htmlentities($display));
+            $html .= sprintf("<label>%s %s</label>\n",
+                             $option->html($actual, $attributes),
+                             htmlentities($display));
+
         }
         
         return $html;
