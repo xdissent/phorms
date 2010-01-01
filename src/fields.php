@@ -1254,31 +1254,54 @@ class MultipleChoiceField extends PhormField
     /**
      * Stores the field options as actual_value=>display_value.
      **/
-    public $choices;
-    
+    private $choices;
+    /**
+     * Which widget should we use for displaying the choices?
+     * Defauls to select multiple tag, can also be a field of radio or check
+     * boxes (yes, radio is select-one; just think multiple-choice like a
+     * school exam).
+     **/
+     private $widget;
+
     /**
      * @author Jeff Ober
      * @param string $label the field's text label
      * @param array $choices a list of choices as actual_value=>display_value
+     * @param array $widget is one of MultiSelectWidget (default), RadioWidget, or CheckboxWidget
      * @param array $validators a list of callbacks to validate the field data
      * @param array $attributes a list of key/value pairs representing HTML attributes
      **/
-    public function __construct($label, array $choices, array $validators=array(), array $attributes=array())
+    public function __construct($label, array $choices, $widget='MultiSelectWidget', array $validators=array(), array $attributes=array())
     {
         parent::__construct($label, $validators, $attributes);
         $this->choices = $choices;
+        $this->widget = $widget;
     }
-    
+
     /**
-     * Returns a new MultiSelectWidget.
-     * @author Jeff Ober
-     * @return MultiSelectWidget
+     * Returns a new instance of the widget specified in the constructor
+     * @author Aaron Stone
+     * @return a Widget
+     * @throws Exception
      **/
     public function get_widget()
     {
-        return new MultiSelectWidget($this->choices);
+        switch ($this->widget)
+        {
+            case 'MultiSelectWidget':
+            return new MultiSelectWidget($this->choices);
+
+            case 'RadioWidget':
+            return new OptionGroupWidget($this->choices, 'RadioWidget');
+
+            case 'CheckboxWidget':
+            return new OptionGroupWidget($this->choices, 'CheckboxWidget');
+
+            default:
+            throw new Exception('Invalid widget: ' . (string)$this->widget);
+        }
     }
-    
+
     /**
      * Validates that each of the selected choice exists in $this->choices.
      * @author Jeff Ober
@@ -1321,46 +1344,6 @@ class MultipleChoiceField extends PhormField
             foreach ($value as $key => &$val)
                 $val = stripslashes($val);
         return $value;
-    }
-}
-
-/**
- * OptionsField
- * 
- * A selection of choices represented as a series of labeled checkboxes.
- * @author Jeff Ober
- * @package Fields
- **/
-class OptionsField extends MultipleChoiceField
-{
-    /**
-     * Returns a new OptionGroupWidget.
-     * @author Jeff Ober
-     * @return OptionGroupWidget
-     **/
-    public function get_widget()
-    {
-        return new OptionGroupWidget($this->choices);
-    }
-}
-
-/**
- * OptionField
- * 
- * A selection of choices represented as a series of labeled radiobuttons.
- * @author Jeff Ober
- * @package Fields
- **/
-class OptionField extends MultipleChoiceField
-{
-    /**
-     * Returns a new OptionGroupWidget.
-     * @author Aaron Stone
-     * @return OptionGroupWidget
-     **/
-    public function get_widget()
-    {
-        return new OptionGroupWidget($this->choices, 'RadioWidget');
     }
 }
 
