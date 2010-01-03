@@ -237,10 +237,22 @@ abstract class PhormField
             $this->errors = array();
             $v = $this->validators;
 
-            foreach($v as $f)
+            foreach($v as $k => $a)
             {
-                try { call_user_func($f, $value); }
-                catch (ValidationError $e) { $this->errors[] = $e->getMessage(); }
+                try {
+                    if (is_numeric($k)) {
+                        // If the key is numeric, the value is the validation
+                        // function with no user args
+                        call_user_func($a, $value);
+                    } else {
+                        // If the key is not numeric, then it is the user function
+                        // and its value is an argument to the validation function.
+                        call_user_func($k, $value, $a);
+                    }
+                }
+                catch (ValidationError $e) {
+                    $this->errors[] = $e->getMessage();
+                }
             }
             
             if ( $value !== '' )
