@@ -338,10 +338,10 @@ abstract class Phorm
         }
 
         $form_attributes = '';
-        if (is_array($attributes)) {
-          foreach ($attributes as $k => $v) {
-            $form_attributes .= ' ' . $k . '="' . htmlentities($v) . '"';
-          }
+        if ( is_array($attributes) ) {
+            foreach ($attributes as $k => $v) {
+                $form_attributes .= ' ' . $k . '="' . htmlentities($v) . '"';
+            }
         }
         
         return sprintf('<form method="%s" action="%s"%s%s>' . "\n",
