@@ -327,16 +327,14 @@ abstract class Phorm
         
         switch ($this->method)
         {
-            case Phorm::GET:
-            $method = "GET";
-            break;
-            
             case Phorm::POST:
-            $method = "POST";
+            $method = "post";
             break;
             
+            case Phorm::GET:
             default:
-            $method = "GET";
+            $method = "get";
+            break;
         }
 
         $form_attributes = '';
