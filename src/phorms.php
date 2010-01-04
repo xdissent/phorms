@@ -176,6 +176,13 @@ abstract class Phorm
     abstract protected function define_fields();
     
     /**
+     * Abstract method to post-validate a Phorm after its fields are validated.
+     * @return boolean
+     * @author Aaron Stone
+     **/
+    abstract protected function post_validate();
+    
+    /**
      * Returns true if any of the field's names exist in the source data (or
      * in $_FILES if this is a multi-part form.)
      * @return boolean
@@ -230,12 +237,22 @@ abstract class Phorm
     /**
      * Returns an associative array of the imported form data on a bound, valid
      * form. Returns null if the form is not yet bound or if the form is not
-     * valid.
+     * valid. Calls each field's get_value method, caching the values in the
+     * Phorm instance. If reprocess is true, the cache is rebuilt.
      * @return array|null
-     * @author Jeff Ober
+     * @author Aaron Stone
      **/
-    public function cleaned_data()
+    public function cleaned_data($reprocess=false)
     {
+        if ( !$this->is_bound() && !$this->is_valid() )
+            return null;
+
+        if ( !is_array($this->clean) || $reprocess ) {
+            $this->clean = array();
+            foreach ($this->fields as $name => &$field)
+                $this->clean[$name] = $field->get_value();
+        }
+
         return $this->clean;
     }
     
@@ -267,6 +284,10 @@ abstract class Phorm
      **/
     public function get_errors()
     {
+        foreach ($this->fields as $name => &$field) {
+            if ( $errors = $field->get_errors() )
+                $this->errors[$name] = $errors;
+        }
         return $this->errors;
     }
     
@@ -282,27 +303,20 @@ abstract class Phorm
         {
             if ( $this->is_bound() )
             {
-                foreach($this->fields as $name => &$field)
+                $this->valid = true;
+                foreach ($this->fields as $name => &$field)
                     if ( !$field->is_valid($reprocess) )
-                        $this->errors[$name] = $field->get_errors();
-                $this->valid = ( count($this->errors) === 0 );
+                        $this->valid = false;
+
+                // Always call post_validate, then AND it into the valid status.
+                $this->valid = $this->post_validate() && $this->valid;
+
+                // Set up the errors array.
+                $this->get_errors();
             }
-            if ( $this->valid && $this->is_bound() ) $this->clean_data();
         }
+
         return $this->valid;
-    }
-    
-    /**
-     * Processes each field's data in turn, calling it's get_value method to
-     * access its "cleaned" data.
-     * @return null
-     * @author Jeff Ober
-     **/
-    private function clean_data()
-    {
-        $this->clean = array();
-        foreach($this->fields as $name => &$field)
-            $this->clean[$name] = $field->get_value();
     }
     
     /**

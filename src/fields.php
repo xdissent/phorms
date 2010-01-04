@@ -124,6 +124,16 @@ abstract class PhormField
     }
     
     /**
+     * Returns the "raw" value of the field.
+     * @author Aaron Stone
+     * @return mixed the field's "cleaned" value
+     **/
+    public function get_raw_value()
+    {
+        return $this->value;
+    }
+    
+    /**
      * Sets an HTML attribute of the field.
      * @author Jeff Ober
      * @param string $key the attribute name
