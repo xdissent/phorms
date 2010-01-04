@@ -160,6 +160,16 @@ abstract class PhormField
     }
     
     /**
+     * Adds to the error list.
+     * @author Aaron Stone
+     * @return null
+     **/
+    public function add_error($error)
+    {
+        $this->errors[] = $error;
+    }
+    
+    /**
      * Returns an HTML string containing the field's help text.
      * @author Jeff Ober
      * @return string the HTML help text paragraph
@@ -249,16 +259,18 @@ abstract class PhormField
                         // and its value is an argument to the validation function.
                         call_user_func($k, $value, $a);
                     }
-                }
-                catch (ValidationError $e) {
-                    $this->errors[] = $e->getMessage();
+                } catch (ValidationError $e) {
+                    $this->add_error($e->getMessage());
                 }
             }
             
             if ( $value !== '' )
             {
-                try { $this->validate($value); }
-                catch (ValidationError $e) { $this->errors[] = $e->getMessage(); }
+                try {
+                    $this->validate($value);
+                } catch (ValidationError $e) {
+                    $this->add_error($e->getMessage());
+                }
             }
 
             if ( $this->valid = ( count($this->errors) === 0 ) )
