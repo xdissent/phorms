@@ -1,253 +1,155 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-  <html xmlns="http://www.w3.org/1999/xhtml">
-		<head>
-			<!-- template designed by Marco Von Ballmoos -->
-			<title>Docs for page fields.php</title>
-			<link rel="stylesheet" href="../media/stylesheet.css" />
-			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
-		</head>
-		<body>
-			<div class="page-body">			
-<h2 class="file-name">/fields.php</h2>
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+<title>Docs for page fields.php</title>
+<link rel="stylesheet" type="text/css" href="../media/style.css">
+</head>
+<body>
 
-<a name="sec-description"></a>
-<div class="info-box">
-	<div class="info-box-title">Description</div>
-	<div class="nav-bar">
-					<span class="disabled">Description</span> |
-							<a href="#sec-classes">Classes</a>
-			|							<a href="#sec-includes">Includes</a>
-												</div>
-	<div class="info-box-body">	
-		<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Fields</p>
-<p class="description"><p>Field classes that are used to compose a Phorm instance.</p></p>
-	<ul class="tags">
-				<li><span class="field">author:</span> Jeff Ober</li>
-				<li><span class="field">see:</span> <a href="../default/Phorm.html">Phorm</a>, Widget</li>
-			</ul>
-		
-			</div>
+<table border="0" cellspacing="0" cellpadding="0" height="48" width="100%">
+  <tr>
+    <td class="header_top">Fields</td>
+  </tr>
+  <tr><td class="header_line"><img src="../media/empty.png" width="1" height="1" border="0" alt=""  /></td></tr>
+  <tr>
+    <td class="header_menu">
+        
+                                                        
+                                                                      		  [ <a href="../classtrees_Fields.html" class="menu">class tree: Fields</a> ]
+		  [ <a href="../elementindex_Fields.html" class="menu">index: Fields</a> ]
+		  	    [ <a href="../elementindex.html" class="menu">all elements</a> ]
+    </td>
+  </tr>
+  <tr><td class="header_line"><img src="../media/empty.png" width="1" height="1" border="0" alt=""  /></td></tr>
+</table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="200" class="menu">
+      <b>Packages:</b><br />
+              <a href="../li_default.html">default</a><br />
+              <a href="../li_Fields.html">Fields</a><br />
+              <a href="../li_Fieldsets.html">Fieldsets</a><br />
+              <a href="../li_Widgets.html">Widgets</a><br />
+            <br /><br />
+                        <b>Files:</b><br />
+      	  <div class="package">
+			<a href="../Fields/_fields.php.html">		fields.php
+		</a><br>
+	  </div><br />
+      
+      
+            <b>Classes:</b><br />
+        <div class="package">
+		    		<a href="../Fields/AlphaField.html">AlphaField</a><br />
+	    		<a href="../Fields/AlphaNumField.html">AlphaNumField</a><br />
+	    		<a href="../Fields/BooleanField.html">BooleanField</a><br />
+	    		<a href="../Fields/DateTimeField.html">DateTimeField</a><br />
+	    		<a href="../Fields/DecimalField.html">DecimalField</a><br />
+	    		<a href="../Fields/DropDownField.html">DropDownField</a><br />
+	    		<a href="../Fields/EmailField.html">EmailField</a><br />
+	    		<a href="../Fields/FileField.html">FileField</a><br />
+	    		<a href="../Fields/HiddenField.html">HiddenField</a><br />
+	    		<a href="../Fields/ImageField.html">ImageField</a><br />
+	    		<a href="../Fields/IntegerField.html">IntegerField</a><br />
+	    		<a href="../Fields/LargeTextField.html">LargeTextField</a><br />
+	    		<a href="../Fields/MultipleChoiceField.html">MultipleChoiceField</a><br />
+	    		<a href="../Fields/OptionsField.html">OptionsField</a><br />
+	    		<a href="../Fields/PasswordField.html">PasswordField</a><br />
+	    		<a href="../Fields/PhormField.html">PhormField</a><br />
+	    		<a href="../Fields/RegexField.html">RegexField</a><br />
+	    		<a href="../Fields/ScanField.html">ScanField</a><br />
+	    		<a href="../Fields/TextField.html">TextField</a><br />
+	    		<a href="../Fields/URLField.html">URLField</a><br />
+	    		<a href="../Fields/ValidationError.html">ValidationError</a><br />
+	  </div>
+                </td>
+    <td>
+      <table cellpadding="10" cellspacing="0" width="100%" border="0"><tr><td valign="top">
+
+<h1>Procedural File: fields.php</h1>
+Source Location: /fields.php<br /><br />
+
+<br>
+<br>
+
+<div class="contents">
+<h2>Classes:</h2>
+<dt><a href="../Fields/ValidationError.html">ValidationError</a></dt>
+	<dd>ValidationError</dd>
+<dt><a href="../Fields/PhormField.html">PhormField</a></dt>
+	<dd>PhormField</dd>
+<dt><a href="../Fields/FileField.html">FileField</a></dt>
+	<dd>FileField</dd>
+<dt><a href="../Fields/ImageField.html">ImageField</a></dt>
+	<dd>ImageField</dd>
+<dt><a href="../Fields/TextField.html">TextField</a></dt>
+	<dd>TextField</dd>
+<dt><a href="../Fields/HiddenField.html">HiddenField</a></dt>
+	<dd>HiddenField</dd>
+<dt><a href="../Fields/PasswordField.html">PasswordField</a></dt>
+	<dd>PasswordField</dd>
+<dt><a href="../Fields/LargeTextField.html">LargeTextField</a></dt>
+	<dd>LargeTextField</dd>
+<dt><a href="../Fields/IntegerField.html">IntegerField</a></dt>
+	<dd>IntegerField</dd>
+<dt><a href="../Fields/AlphaField.html">AlphaField</a></dt>
+	<dd>AlphaField</dd>
+<dt><a href="../Fields/AlphaNumField.html">AlphaNumField</a></dt>
+	<dd>AlphaNumField</dd>
+<dt><a href="../Fields/DecimalField.html">DecimalField</a></dt>
+	<dd>DecimalField</dd>
+<dt><a href="../Fields/BooleanField.html">BooleanField</a></dt>
+	<dd>BooleanField</dd>
+<dt><a href="../Fields/DropDownField.html">DropDownField</a></dt>
+	<dd>DropDownField</dd>
+<dt><a href="../Fields/URLField.html">URLField</a></dt>
+	<dd>URLField</dd>
+<dt><a href="../Fields/EmailField.html">EmailField</a></dt>
+	<dd>EmailField</dd>
+<dt><a href="../Fields/DateTimeField.html">DateTimeField</a></dt>
+	<dd>DateTimeField</dd>
+<dt><a href="../Fields/RegexField.html">RegexField</a></dt>
+	<dd>RegexField</dd>
+<dt><a href="../Fields/ScanField.html">ScanField</a></dt>
+	<dd>ScanField</dd>
+<dt><a href="../Fields/MultipleChoiceField.html">MultipleChoiceField</a></dt>
+	<dd>MultipleChoiceField</dd>
+<dt><a href="../Fields/OptionsField.html">OptionsField</a></dt>
+	<dd>OptionsField</dd>
+</div><br /><br />
+
+<h2>Page Details:</h2>
+Fields<br /><br /><p>Field classes that are used to compose a Phorm instance.</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>author:</b>&nbsp;&nbsp;</td><td>Jeff Ober</td>
+  </tr>
+  <tr>
+    <td><b>see:</b>&nbsp;&nbsp;</td><td><a href="../default/Phorm.html">Phorm</a>, Widget</td>
+  </tr>
+</table>
 </div>
-		
-	<a name="sec-classes"></a>	
-	<div class="info-box">
-		<div class="info-box-title">Classes</div>
-		<div class="nav-bar">
-			<a href="#sec-description">Description</a> |
-			<span class="disabled">Classes</span>
-			|							<a href="#sec-includes">Includes</a>
-																		</div>
-		<div class="info-box-body">	
-			<table cellpadding="2" cellspacing="0" class="class-table">
-				<tr>
-					<th class="class-table-header">Class</th>
-					<th class="class-table-header">Description</th>
-				</tr>
-								<tr>
-					<td style="padding-right: 2em; vertical-align: top">
-						<a href="../Fields/ValidationError.html">ValidationError</a>
-					</td>
-					<td>
-											ValidationError
-										</td>
-				</tr>
-								<tr>
-					<td style="padding-right: 2em; vertical-align: top">
-						<a href="../Fields/PhormField.html">PhormField</a>
-					</td>
-					<td>
-											PhormField
-										</td>
-				</tr>
-								<tr>
-					<td style="padding-right: 2em; vertical-align: top">
-						<a href="../Fields/FileField.html">FileField</a>
-					</td>
-					<td>
-											FileField
-										</td>
-				</tr>
-								<tr>
-					<td style="padding-right: 2em; vertical-align: top">
-						<a href="../Fields/ImageField.html">ImageField</a>
-					</td>
-					<td>
-											ImageField
-										</td>
-				</tr>
-								<tr>
-					<td style="padding-right: 2em; vertical-align: top">
-						<a href="../Fields/TextField.html">TextField</a>
-					</td>
-					<td>
-											TextField
-										</td>
-				</tr>
-								<tr>
-					<td style="padding-right: 2em; vertical-align: top">
-						<a href="../Fields/HiddenField.html">HiddenField</a>
-					</td>
-					<td>
-											HiddenField
-										</td>
-				</tr>
-								<tr>
-					<td style="padding-right: 2em; vertical-align: top">
-						<a href="../Fields/PasswordField.html">PasswordField</a>
-					</td>
-					<td>
-											PasswordField
-										</td>
-				</tr>
-								<tr>
-					<td style="padding-right: 2em; vertical-align: top">
-						<a href="../Fields/LargeTextField.html">LargeTextField</a>
-					</td>
-					<td>
-											LargeTextField
-										</td>
-				</tr>
-								<tr>
-					<td style="padding-right: 2em; vertical-align: top">
-						<a href="../Fields/IntegerField.html">IntegerField</a>
-					</td>
-					<td>
-											IntegerField
-										</td>
-				</tr>
-								<tr>
-					<td style="padding-right: 2em; vertical-align: top">
-						<a href="../Fields/DecimalField.html">DecimalField</a>
-					</td>
-					<td>
-											DecimalField
-										</td>
-				</tr>
-								<tr>
-					<td style="padding-right: 2em; vertical-align: top">
-						<a href="../Fields/BooleanField.html">BooleanField</a>
-					</td>
-					<td>
-											BooleanField
-										</td>
-				</tr>
-								<tr>
-					<td style="padding-right: 2em; vertical-align: top">
-						<a href="../Fields/DropDownField.html">DropDownField</a>
-					</td>
-					<td>
-											DropDownField
-										</td>
-				</tr>
-								<tr>
-					<td style="padding-right: 2em; vertical-align: top">
-						<a href="../Fields/URLField.html">URLField</a>
-					</td>
-					<td>
-											URLField
-										</td>
-				</tr>
-								<tr>
-					<td style="padding-right: 2em; vertical-align: top">
-						<a href="../Fields/EmailField.html">EmailField</a>
-					</td>
-					<td>
-											EmailField
-										</td>
-				</tr>
-								<tr>
-					<td style="padding-right: 2em; vertical-align: top">
-						<a href="../Fields/DateTimeField.html">DateTimeField</a>
-					</td>
-					<td>
-											DateTimeField
-										</td>
-				</tr>
-								<tr>
-					<td style="padding-right: 2em; vertical-align: top">
-						<a href="../Fields/RegexField.html">RegexField</a>
-					</td>
-					<td>
-											RegexField
-										</td>
-				</tr>
-								<tr>
-					<td style="padding-right: 2em; vertical-align: top">
-						<a href="../Fields/ScanField.html">ScanField</a>
-					</td>
-					<td>
-											ScanField
-										</td>
-				</tr>
-								<tr>
-					<td style="padding-right: 2em; vertical-align: top">
-						<a href="../Fields/MultipleChoiceField.html">MultipleChoiceField</a>
-					</td>
-					<td>
-											MultipleChoiceField
-										</td>
-				</tr>
-								<tr>
-					<td style="padding-right: 2em; vertical-align: top">
-						<a href="../Fields/OptionsField.html">OptionsField</a>
-					</td>
-					<td>
-											OptionsField
-										</td>
-				</tr>
-							</table>
-		</div>
-	</div>
+<br /><br />
+<h4>Includes:</h4>
+<div class="tags">
+require_once(<a href="../Widgets/_widgets.php.html">PHORMS_ROOT.'widgets.php'</a>) [line 16]<br />
+Widget classes used to serialize form elements.<br /><br />require_once(<a href="../default/_types.php.html">PHORMS_ROOT.'types.php'</a>) [line 20]<br />
+Various helper types.<br /><br /></div>
+<br /><br />
+<br /><br />
+<br />
 
-	<a name="sec-includes"></a>	
-	<div class="info-box">
-		<div class="info-box-title">Includes</div>
-		<div class="nav-bar">
-			<a href="#sec-description">Description</a> |
-							<a href="#sec-classes">Classes</a>
-				|						<span class="disabled">Includes</span>
-														</div>
-		<div class="info-box-body">	
-			<a name="_widgets_php"><!-- --></a>
-<div class="evenrow">
-	
-	<div>
-		<span class="include-title">
-			<span class="include-type">require_once</span>
-			(<span class="include-name"><a href="../Widgets/_widgets.php.html">'widgets.php'</a></span>)
-			(line <span class="line-number">16</span>)
-		</span>
-	</div>
+        <div class="credit">
+		    <hr />
+		    Documentation generated on Sun, 27 Dec 2009 23:59:22 +0100 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.0</a>
+	      </div>
+      </td></tr></table>
+    </td>
+  </tr>
+</table>
 
-	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Widget classes used to serialize form elements.</p>
-	
-</div>
-<a name="_types_php"><!-- --></a>
-<div class="oddrow">
-	
-	<div>
-		<span class="include-title">
-			<span class="include-type">require_once</span>
-			(<span class="include-name"><a href="../default/_types.php.html">'types.php'</a></span>)
-			(line <span class="line-number">20</span>)
-		</span>
-	</div>
-
-	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Various helper types.</p>
-	
-</div>
-		</div>
-	</div>
-	
-	
-	
-	
-	<p class="notes" id="credit">
-		Documentation generated on Mon, 20 Apr 2009 08:29:20 -0400 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.2</a>
-	</p>
-	</div></body>
-</html>
+</body>
+</html>

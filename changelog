@@ -1,3 +1,11 @@
+2.0
+ * Some api changes
+ * Bug fixes
+ * Small improvements
+ * Add javascript for client-side data validation
+ * Uses a new validation system based on classes (see PhormValidation)
+ * Documentation update
+
 1.02
  * fixed bug in Phorm where default data may sometimes be overwritten incorrectly
  * fixed bug in HiddenField where parent class was instantiated incorrectly

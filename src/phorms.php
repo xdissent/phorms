@@ -382,11 +382,26 @@ abstract class Phorm
      * @return string the form's closing tag
      * @author Jeff Ober
      **/
-    public function buttons()
+    public function buttons($buttons = array())
 	{
-		return "<p>\n\t<input type=\"submit\" class=\"phorms-submit\" value=\"" . $GLOBALS['phorms_tr']['buttons_validate'] . "\" />"
-			 . "\n\t<input type=\"reset\" class=\"phorms-reset\" value=\"" . $GLOBALS['phorms_tr']['buttons_reset'] . "\" />"
-			 . "\n</p>\n";
+		if(empty($buttons) || !is_array($buttons))
+		{
+			$reset = new ResetWidget();
+			$submit = new SubmitWidget();
+			return "<p>\n\t" . $reset->html($GLOBALS['phorms_tr']['buttons_reset'], array('class' => 'phorms-reset'))
+				 . "\n\t" . $submit->html($GLOBALS['phorms_tr']['buttons_validate'], array('class' => 'phorms-submit'))
+				 . "\n</p>\n";
+		}
+		else
+		{
+			$out = '<p>';
+			foreach($buttons as $button)
+			{
+				$out .= "\n\t" . $button[1]->html($button[0]);
+			}
+			$out .= "\n</p>\n";
+			return $out;
+		}
 	}
     
     /**
@@ -421,16 +436,17 @@ abstract class Phorm
 	
     /**
      * Print the form completely.
+     * @param string $target the form target ($_SERVER['PHP_SELF'] by default)
      * @param bool $js include or not the javascript tag for live validation.
      * @return null
      * @author Thomas Lété
      **/
-    public function display($js = true)
+    public function display($target=null, $js = true)
     {
-        echo $form->open()
-		   . $form
-		   . $form->buttons()
-		   . $form->close($js);
+        echo $this->open($target)
+		   . $this
+		   . $this->buttons()
+		   . $this->close($js);
     }
 }
 
@@ -479,32 +495,6 @@ abstract class FieldsetPhorm extends Phorm
         }
         return implode($elts, "\n");
     }
-
-    /**
-     * Returns the form fields as a series of HTML table rows. Does not include
-     * the table's opening and closing tags, nor the table's tbody tags.
-     * @return string the HTML form
-     * @author Greg Thornton
-     **/
-    /*public function as_table()
-    {
-        $elts = array();
-        foreach ($this->fieldsets as $fieldset)
-        {
-            $elts[] = sprintf('<tr><td colspan="2"><fieldset><legend>%s</legend><table>', $fieldset->label);
-            foreach ($fieldset->field_names as $field_name) {
-                $field = $this->$field_name;
-                $label = $field->label();
-
-                if ($label !== '')
-                    $elts[] = sprintf('<tr><th>%s:</th><td>%s</td></tr>', $label, $field);
-                else
-                    $elts[] = strval($field);
-            }
-            $elts[] = '</table></fieldset></td></tr>';
-        }
-        return implode($elts, "\n");
-    }*/
 }
 
 ?>

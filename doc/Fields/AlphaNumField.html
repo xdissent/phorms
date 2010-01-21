@@ -1,7 +1,7 @@
 <html>
 <head>
 <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-<title>Docs For Class MultipleChoiceField</title>
+<title>Docs For Class AlphaNumField</title>
 <link rel="stylesheet" type="text/css" href="../media/style.css">
 </head>
 <body>
@@ -67,7 +67,7 @@
     <td>
       <table cellpadding="10" cellspacing="0" width="100%" border="0"><tr><td valign="top">
 
-<h1>Class: MultipleChoiceField</h1>
+<h1>Class: AlphaNumField</h1>
 Source Location: /fields.php<br /><br />
 
 
@@ -77,11 +77,13 @@ Source Location: /fields.php<br /><br />
 <h3><a href="#class_details">Class Overview</a></h3>
 <pre><a href="../Fields/PhormField.html">PhormField</a>
    |
-   --MultipleChoiceField</pre><br />
-<div class="description">MultipleChoiceField</div><br /><br />
+   --<a href="../Fields/TextField.html">TextField</a>
+      |
+      --AlphaNumField</pre><br />
+<div class="description">AlphaNumField</div><br /><br />
 <h4>Author(s):</h4>
 <ul>
-          <li>Jeff Ober</li>
+          <li>Lété Thomas</li>
       </ul>
 
 
@@ -92,21 +94,12 @@ Source Location: /fields.php<br /><br />
         
 </td>
 
-<td valign="top">
-<h3><a href="#class_vars">Variables</a></h3>
-<ul>
-    <li><a href="../Fields/MultipleChoiceField.html#var$multi_field">$multi_field</a></li>
-  </ul>
-</td>
 
 
 <td valign="top">
 <h3><a href="#class_methods">Methods</a></h3>
 <ul>
-    <li><a href="../Fields/MultipleChoiceField.html#method__construct">__construct</a></li>
-    <li><a href="../Fields/MultipleChoiceField.html#methodget_widget">get_widget</a></li>
-    <li><a href="../Fields/MultipleChoiceField.html#methodimport_value">import_value</a></li>
-    <li><a href="../Fields/MultipleChoiceField.html#methodvalidate">validate</a></li>
+    <li><a href="../Fields/AlphaNumField.html#methodvalidate">validate</a></li>
   </ul>
 </td>
 
@@ -116,21 +109,53 @@ Source Location: /fields.php<br /><br />
 <table width="100%" border="0"><tr>
 
 
+
+
 <td valign="top">
-<h3>Child classes:</h3>
+<h3>Inherited Variables</h3>
 <div class="tags">
+<h4>Class: <a href="../Fields/PhormField.html">PhormField</a></h4>
 <dl>
-<dt><a href="../Fields/OptionsField.html">OptionsField</a></dt>
-	<dd>OptionsField</dd>
+<dt>
+  <a href="../Fields/PhormField.html#var$multi_field">PhormField::$multi_field</a>
+  </dt>
+<dd>
+   
+</dd>
 </dl>
 </div>
 </td>
 
-
-
 <td valign="top">
 <h3>Inherited Methods</h3>
 <div class="tags">
+<h4>Class: <a href="../Fields/TextField.html">TextField</a></h4>
+<dl>
+    <dt>
+    <a href="../Fields/TextField.html#method__construct">TextField::__construct()</a>
+  </dt>
+  <dd>
+    
+  </dd>
+    <dt>
+    <a href="../Fields/TextField.html#methodget_widget">TextField::get_widget()</a>
+  </dt>
+  <dd>
+    Returns a new CharWidget.
+  </dd>
+    <dt>
+    <a href="../Fields/TextField.html#methodimport_value">TextField::import_value()</a>
+  </dt>
+  <dd>
+    Imports the value by decoding HTML entities.
+  </dd>
+    <dt>
+    <a href="../Fields/TextField.html#methodvalidate">TextField::validate()</a>
+  </dt>
+  <dd>
+    Validates that the value is less than $this-&gt;max_length;
+  </dd>
+  </dl>
 <h4>Class: <a href="../Fields/PhormField.html">PhormField</a></h4>
 <dl>
     <dt>
@@ -245,52 +270,19 @@ Source Location: /fields.php<br /><br />
 <a name="class_details"></a>
 <h3>Class Details</h3>
 <div class="tags">
-[line 1315]<br />
-MultipleChoiceField<br /><br /><p>A compound field offering multiple choices as a select multiple tag.</p><br /><br /><br />
+[line 825]<br />
+AlphaNumField<br /><br /><p>A text field that only accepts alpha (a-z) or numeric (0-9) characters.</p><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>author:</b>&nbsp;&nbsp;</td><td>Jeff Ober</td>
+    <td><b>author:</b>&nbsp;&nbsp;</td><td>Lété Thomas</td>
   </tr>
 </table>
 </div>
 </div><br /><br />
 <div class="top">[ <a href="#top">Top</a> ]</div><br />
 
-<hr />
-<a name="class_vars"></a>
-<h3>Class Variables</h3>
-<div class="tags">
-	<a name="var$multi_field"></a>
-	<p></p>
-	<h4>$multi_field = <span class="value">&nbsp;true</span></h4>
-	<p>[line 1320]</p>
-  Specifies that this field's name attribute must be post-fixed by [].<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
-  </tr>
-</table>
-</div>
-
-  <br />
-	<div class="tags">
-  <table border="0" cellspacing="0" cellpadding="0">
-    <tr>
-      <td><b>Type:</b>&nbsp;&nbsp;</td>
-      <td>mixed</td>
-    </tr>
-        <tr>
-      <td><b>Overrides:</b>&nbsp;&nbsp;</td>
-      <td>Array</td>
-    </tr>
-      </table>
-	</div><br /><br />
-	<div class="top">[ <a href="#top">Top</a> ]</div><br />
-</div><br />
 
 <hr />
 <a name="class_methods"></a>
@@ -298,156 +290,23 @@ MultipleChoiceField<br /><br /><p>A compound field offering multiple choices as 
 <div class="tags">
 
   <hr />
-	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line 1333]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>MultipleChoiceField __construct(
-string
-$label, 
-$choices, [
-$validators = array()], [
-$attributes = array()])</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		<br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>author:</b>&nbsp;&nbsp;</td><td>Jeff Ober</td>
-  </tr>
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
-  </tr>
-</table>
-</div>
-<br /><br />
-
-	Overrides <a href="../Fields/PhormField.html#method__construct">PhormField::__construct()</a> (parent method not documented)<br /><br />
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$label</b>&nbsp;&nbsp;</td>
-        <td>the field's text label</td>
-      </tr>
-          <tr>
-        <td class="type">array&nbsp;&nbsp;</td>
-        <td><b>$choices</b>&nbsp;&nbsp;</td>
-        <td>a list of choices as actual_value=&gt;display_value</td>
-      </tr>
-          <tr>
-        <td class="type">array&nbsp;&nbsp;</td>
-        <td><b>$validators</b>&nbsp;&nbsp;</td>
-        <td>a list of callbacks to validate the field data</td>
-      </tr>
-          <tr>
-        <td class="type">array&nbsp;&nbsp;</td>
-        <td><b>$attributes</b>&nbsp;&nbsp;</td>
-        <td>a list of key/value pairs representing HTML attributes</td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="methodget_widget"></a>
-	<h3>method get_widget <span class="smalllinenumber">[line 1344]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code><a href="../Widgets/MultiSelectWidget.html">MultiSelectWidget</a> get_widget(
-)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Returns a new MultiSelectWidget.<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>author:</b>&nbsp;&nbsp;</td><td>Jeff Ober</td>
-  </tr>
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
-  </tr>
-</table>
-</div>
-<br /><br />
-
-	<p>Overridden in child classes as:<br />
-		<dl>
-	<dt><a href="../Fields/OptionsField.html#methodget_widget">OptionsField::get_widget()</a></dt>
-		<dd>Returns a new OptionGroupWidget.</dd>
-	</dl>
-	</p>
-	Overrides <a href="../Fields/PhormField.html#methodget_widget">PhormField::get_widget()</a> (Defined in derived classes; must return an instance of PhormWidget.)<br /><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="methodimport_value"></a>
-	<h3>method import_value <span class="smalllinenumber">[line 1373]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>array import_value(
-array
-$value)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Imports the value as an array of the actual values (from $this-&gt;choices.)<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>author:</b>&nbsp;&nbsp;</td><td>Jeff Ober</td>
-  </tr>
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
-  </tr>
-</table>
-</div>
-<br /><br />
-
-	Overrides <a href="../Fields/PhormField.html#methodimport_value">PhormField::import_value()</a> (Returns the field's &quot;imported&quot; value, if any processing is required. For  example, this function may be used to convert a date/time field's string  into a unix timestamp or a numeric string into an integer or float.)<br /><br />
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">array&nbsp;&nbsp;</td>
-        <td><b>$value</b>&nbsp;&nbsp;</td>
-        <td></td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
 	<a name="methodvalidate"></a>
-	<h3>method validate <span class="smalllinenumber">[line 1357]</span></h3>
+	<h3>method validate <span class="smalllinenumber">[line 834]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
 		<code>null validate(
-array
+string
 $value)</code>
     </td></tr></table>
     </td></tr></table><br />
 	
-		Validates that each of the selected choice exists in $this-&gt;choices.<br /><br /><br /><br />
+		Validates that the value is alpha or numeric only.<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>author:</b>&nbsp;&nbsp;</td><td>Jeff Ober</td>
-  </tr>
-  <tr>
-    <td><b>see:</b>&nbsp;&nbsp;</td><td>MultipleChoiceField::$choices</td>
+    <td><b>author:</b>&nbsp;&nbsp;</td><td>Thomas Lété</td>
   </tr>
   <tr>
     <td><b>throws:</b>&nbsp;&nbsp;</td><td>ValidationError</td>
@@ -459,12 +318,12 @@ $value)</code>
 </div>
 <br /><br />
 
-	Overrides <a href="../Fields/PhormField.html#methodvalidate">PhormField::validate()</a> (Raises a ValidationError if $value is invalid.)<br /><br />
+	Overrides <a href="../Fields/TextField.html#methodvalidate">TextField::validate()</a> (Validates that the value is less than $this-&gt;max_length;)<br /><br />
         <h4>Parameters:</h4>
     <div class="tags">
     <table border="0" cellspacing="0" cellpadding="0">
           <tr>
-        <td class="type">array&nbsp;&nbsp;</td>
+        <td class="type">string&nbsp;&nbsp;</td>
         <td><b>$value</b>&nbsp;&nbsp;</td>
         <td></td>
       </tr>
@@ -477,7 +336,7 @@ $value)</code>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Sun, 27 Dec 2009 23:59:24 +0100 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.0</a>
+		    Documentation generated on Sun, 27 Dec 2009 23:59:22 +0100 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.0</a>
 	      </div>
       </td></tr></table>
     </td>
