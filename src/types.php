@@ -85,11 +85,15 @@ class Image extends File
      * The image's height in pixels.
      **/
     public $height;
+    /**
+     * The image's type constant.
+     **/
+    public $type;
     
     public function __construct($file_data)
     {
         parent::__construct($file_data);
-        list($this->width, $this->height) = getimagesize($this->tmp_name);
+        list($this->width, $this->height, $this->type) = getimagesize($this->tmp_name);
     }
 }
 

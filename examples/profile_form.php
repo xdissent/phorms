@@ -10,7 +10,7 @@ function required($value)
 		throw new ValidationError('This field is required.');
 }
 
-class ProfileForm extends FieldsetPhorm
+class ProfileForm extends FieldsetPhormExt
 {
 	protected function define_fields()
 	{

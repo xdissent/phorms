@@ -25,6 +25,10 @@
 define('PHORMS_ROOT', dirname(__FILE__) . '/');
 
 /**
+ * Language file
+ **/
+require_once(PHORMS_ROOT . 'lang/fr/phorms.php');
+/**
  * Widget classes used to serialize form elements.
  **/
 require_once(PHORMS_ROOT . 'widgets.php');
@@ -42,6 +46,10 @@ require_once(PHORMS_ROOT . 'fields.php');
  * form validation.
  **/
 require_once(PHORMS_ROOT . 'fieldsets.php');
+/**
+ * Field static validation methods.
+ **/
+require_once(PHORMS_ROOT . 'validation.php');
 
 /**
  * Phorm
@@ -116,7 +124,7 @@ abstract class Phorm
         if ($this->multi_part && $method != Phorm::POST)
         {
             $method = Phorm::POST;
-            trigger_error('Multi-part form method changed to POST.', E_USER_WARNING);
+            trigger_error($GLOBALS['phorms_tr']['multipart_to_post'], E_USER_WARNING);
         }
         
         // Set up fields
@@ -274,7 +282,7 @@ abstract class Phorm
      **/
     public function has_errors()
     {
-        return count($this->errors) > 0;
+        return !empty($this->errors);
     }
     
     /**
@@ -330,6 +338,16 @@ abstract class Phorm
     }
     
     /**
+     * Returns an the fields' array.
+     * @return Array
+     * @author Thomas Lété
+     **/
+    public function getFields()
+    {
+        return $this->fields;
+    }
+    
+    /**
      * Returns the form's opening HTML tag.
      * @param string $target the form target ($_SERVER['PHP_SELF'] by default)
      * @return string the form's opening tag
@@ -339,42 +357,55 @@ abstract class Phorm
     {
         if ( is_null($target) ) $target = $_SERVER['PHP_SELF'];
         
-        switch ($this->method)
-        {
-            case Phorm::POST:
-            $method = "post";
-            break;
-            
-            case Phorm::GET:
-            default:
-            $method = "get";
-            break;
-        }
-
-        $form_attributes = '';
-        if ( is_array($attributes) ) {
-            foreach ($attributes as $k => $v) {
-                $form_attributes .= ' ' . $k . '="' . htmlentities($v) . '"';
-            }
-        }
+        $method = ($this->method == Phorm::POST )? 'post': 'get';
         
-        return sprintf('<form method="%s" action="%s"%s%s>' . "\n",
+        return sprintf('<form method="%s" action="%s"%s id="%s">' . "\n",
             $method,
             htmlentities((string)$target),
             ($this->multi_part) ? ' enctype="multipart/form-data"' : '',
-            $form_attributes
+			strtolower(get_class($this))
         );
     }
     
     /**
      * Returns the form's closing HTML tag.
+     * @param bool $js include or not the javascript tag for live validation.
      * @return string the form's closing tag
      * @author Jeff Ober
      **/
-    public function close()
+    public function close($js = true)
     {
-        return "</form>\n";
+        return "</form>\n"
+			 . ($js) ? '<script type="text/javascript">new Validation(\'' . strtolower(get_class($this)) . '\', {immediate : true});</script>' : '';
+
     }
+	
+	/**
+     * Returns the buttons for submitting or resetting the form.
+     * @return string the form's closing tag
+     * @author Jeff Ober
+     **/
+    public function buttons($buttons = array())
+	{
+		if(empty($buttons) || !is_array($buttons))
+		{
+			$reset = new ResetWidget();
+			$submit = new SubmitWidget();
+			return "<p>\n\t" . $reset->html($GLOBALS['phorms_tr']['buttons_reset'], array('class' => 'phorms-reset'))
+				 . "\n\t" . $submit->html($GLOBALS['phorms_tr']['buttons_validate'], array('class' => 'phorms-submit'))
+				 . "\n</p>\n";
+		}
+		else
+		{
+			$out = '<p>';
+			foreach($buttons as $button)
+			{
+				$out .= "\n\t" . $button[1]->html($button[0]);
+			}
+			$out .= "\n</p>\n";
+			return $out;
+		}
+	}
     
     /**
      * Returns a string of all of the form's fields' HTML tags as a table.
@@ -384,51 +415,41 @@ abstract class Phorm
      **/
     public function __toString()
     {
-        return $this->as_table();
+        return $this->as_labels();
     }
     
     /**
-     * Returns the form fields as a series of HTML table rows. Does not include
-     * the table's opening and closing tags, nor the table's tbody tags.
+     * Returns the form fields as a series of paragraphs.
      * @return string the HTML form
-     * @author Jeff Ober
+     * @author Thomas Lété
      **/
-    public function as_table()
+    public function as_labels()
     {
         $elts = array();
-        foreach ($this->fields as $name => $field)
+        foreach ($this->getFields() as $name => $field)
         {
             $label = $field->label();
             if ($label !== '')
-                $elts[] = sprintf("<tr><th%s>%s</th><td%s>%s</td></tr>\n",
-                                  $label_attrs,
-                                  $field->label(),
-                                  $field_attrs,
-                                  $field); 
+                $elts[] = sprintf("<p>\n\t%s\n\t%s\n</p>\n", str_replace('</', ' :</', $field->label()), $field); 
             else
                 $elts[] = strval($field);
         }
         return implode($elts);
     }
-    
+	
     /**
-     * Returns the form fields as a series of list items. Does not include the
-     * list's opening and closing tags.
-     * @return string the HTML form
-     * @author Jeff Ober
+     * Print the form completely.
+     * @param string $target the form target ($_SERVER['PHP_SELF'] by default)
+     * @param bool $js include or not the javascript tag for live validation.
+     * @return null
+     * @author Thomas Lété
      **/
-    public function as_list()
+    public function display($target=null, $js = true)
     {
-        $elts = array();
-        foreach ($this->fields as $name => $field)
-        {
-            $label = $field->label();
-            if ($label !== '')
-                $elts[] = sprintf("<li>%s: %s</li>\n", $field->label(), $field);
-            else
-                $elts[] = strval($field);
-        }
-        return implode($elts);
+        echo $this->open($target)
+		   . $this
+		   . $this->buttons()
+		   . $this->close($js);
     }
 }
 
@@ -452,29 +473,28 @@ abstract class FieldsetPhorm extends Phorm
         parent::__construct($method, $multi_part, $data);
         $this->define_fieldsets();
     }
-
+    
     /**
-     * Returns the form fields as a series of HTML table rows. Does not include
-     * the table's opening and closing tags, nor the table's tbody tags.
+     * Returns the form fields as a series of paragraphs.
      * @return string the HTML form
-     * @author Greg Thornton
+     * @author Thomas Lété
      **/
-    public function as_table()
+    public function as_labels()
     {
         $elts = array();
         foreach ($this->fieldsets as $fieldset)
         {
-            $elts[] = sprintf('<tr><td colspan="2"><fieldset><legend>%s</legend><table>', $fieldset->label);
+            $elts[] = sprintf("<fieldset>\n\t<legend>%s</legend>\n", $fieldset->label);
             foreach ($fieldset->field_names as $field_name) {
                 $field = $this->$field_name;
                 $label = $field->label();
 
                 if ($label !== '')
-                    $elts[] = sprintf('<tr><th>%s:</th><td>%s</td></tr>', $label, $field);
+                    $elts[] = sprintf("<p>\n\t%s\n\t%s\n</p>\n", str_replace('</', ' :</', $label), $field);
                 else
                     $elts[] = strval($field);
             }
-            $elts[] = '</table></fieldset></td></tr>';
+            $elts[] = '</fieldset>';
         }
         return implode($elts, "\n");
     }

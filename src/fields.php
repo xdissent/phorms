@@ -86,6 +86,20 @@ abstract class PhormField
      **/
     public function __construct($label, array $validators=array(), array $attributes=array())
     {
+        if(!isset($attributes['class']))
+        {
+            $attributes['class'] = strtolower(get_class($this));
+        }
+        else
+        {
+            $attributes['class'] .= ' ' . strtolower(get_class($this));
+        }
+		
+        if(in_array(PhormValidation::Required, $validators))
+        {
+            $attributes['class'] .= ' ' . strtolower(substr(PhormValidation::Required, 17));
+        }
+        
         $this->label = (string)$label;
         $this->attributes = $attributes;
         $this->validators = $validators;
@@ -186,7 +200,7 @@ abstract class PhormField
      **/
     public function help_text()
     {
-        return sprintf('<p class="phorm_help">%s</p>', htmlentities($this->help_text));
+        return sprintf("\n\t" . '<span class="phorm_help">%s</span>', htmlentities($this->help_text));
     }
     
     /**
@@ -219,10 +233,12 @@ abstract class PhormField
     public function errors()
     {
         $elts = array();
-        if (is_array($this->errors) && count($this->errors) > 0)
-            foreach ($this->errors as $error)
-                $elts[] = sprintf('<li>%s</li>', $error);
-        return sprintf('<ul class="phorm_error">%s</ul>', implode($elts));
+        if (is_array($this->errors) && !empty($this->errors))
+        {
+            foreach ($this->errors as $valid => $error)
+            	$elts[] = sprintf('<div class="validation-advice" id="advice-%s-%s">%s</div>', $error[0], (string)$this->get_attribute('id'), $error[1]);
+        }
+        return implode("\n\t", $elts);
     }
     
     /**
@@ -259,31 +275,17 @@ abstract class PhormField
 
             foreach($v as $k => $a)
             {
-                try {
-                    if (is_numeric($k)) {
-                        // If the key is numeric, the value is the validation
-                        // function with no user args
-                        call_user_func($a, $value);
-                    } else {
-                        // If the key is not numeric, then it is the user function
-                        // and its value is an argument to the validation function.
-                        call_user_func($k, $value, $a);
-                    }
-                } catch (ValidationError $e) {
-                    $this->add_error($e->getMessage());
-                }
+                try { call_user_func($f, $value); }
+                catch (ValidationError $e) { $this->errors[] = array($f, $e->getMessage()); }
             }
             
             if ( $value !== '' )
             {
-                try {
-                    $this->validate($value);
-                } catch (ValidationError $e) {
-                    $this->add_error($e->getMessage());
-                }
+                try { $this->validate($value); }
+                catch (ValidationError $e) { $this->errors[] = array(strtolower(get_class($this)), $e->getMessage()); }
             }
 
-            if ( $this->valid = ( count($this->errors) === 0 ) )
+            if ( $this->valid = empty($this->errors) )
                 $this->imported = $this->import_value($value);
         }
         return $this->valid;
@@ -383,18 +385,18 @@ class FileField extends PhormField
         {
             case UPLOAD_ERR_INI_SIZE:
             case UPLOAD_ERR_FORM_SIZE:
-            return "The file sent was too large.";
+            return $GLOBALS['phorms_tr']['filefield_toolarge'];
             
             case UPLOAD_ERR_PARTIAL:
-            return "There was an error uploading the file; please try again.";
+            return $GLOBALS['phorms_tr']['filefield_uploaderror'];
             
             case UPLOAD_ERR_NO_FILE:
-            return "The file was not sent; please try again.";
+            return $GLOBALS['phorms_tr']['filefield_notsent'];
             
             case UPLOAD_ERR_NO_TMP_DIR:
             case UPLOAD_ERR_CANT_WRITE:
             case UPLOAD_ERR_EXTENSION:
-            return "There was a system error during upload; please contact the webmaster (error number {$errno}).";
+            return sprintf($GLOBALS['phorms_tr']['filefield_syserror'], $errno);
             
             case UPLOAD_ERR_OK:
             default:
@@ -480,10 +482,10 @@ class FileField extends PhormField
             throw new ValidationError($file['error']);
         
         if (is_array($this->types) && !in_array($file['type'], $this->types))
-            throw new ValidationError("Files of type ${file['type']} are not accepted.");
+            throw new ValidationError(sprintf($GLOBALS['phorms_tr']['filefield_badtype'], $file['type']));
         
         if ($file['size'] > $this->max_size)
-            throw new ValidationError(sprintf("Files are limited to %s bytes.", number_format($this->max_size)));
+            throw new ValidationError(sprintf($GLOBALS['phorms_tr']['filefield_sizelimit'], number_format($this->max_size)));
     }
 }
 
@@ -571,7 +573,7 @@ class TextField extends PhormField
     protected function validate($value)
     {
         if (strlen($value) > $this->max_length)
-            throw new ValidationError('Must be fewer than {$this->max_length} characters in length.');
+            throw new ValidationError(sprintf($GLOBALS['phorms_tr']['textfield_sizelimit'], $this->max_length));
     }
     
     /**
@@ -661,10 +663,8 @@ class PasswordField extends TextField
      **/
     public function __construct($label, $size, $max_length, $hash_function, array $validators=array(), array $attributes=array())
     {
-        $this->max_length = $max_length;
         $this->hash_function = $hash_function;
-        $attributes['size'] = $size;
-        parent::__construct($label, $validators, $attributes);
+        parent::__construct($label,  $size, $max_length, $validators, $attributes);
     }
     
     /**
@@ -685,7 +685,7 @@ class PasswordField extends TextField
      **/
     public function import_value($value)
     {
-        return call_user_func($this->hash_function, array($value));
+        return call_user_func($this->hash_function, $value);
     }
 }
 
@@ -793,8 +793,10 @@ class IntegerField extends PhormField
      **/
     public function validate($value)
     {
-        if (preg_match('/\D/', $value) || strlen((string)$value) > $this->max_digits)
-            throw new ValidationError("Must be a number with fewer than {$this->max_digits} digits.");
+        if (preg_match('/\D/', $value))
+            throw new ValidationError(sprintf($GLOBALS['phorms_tr']['integerfield_notint'], $this->max_digits));
+        if (strlen((string)$value) > $this->max_digits)
+            throw new ValidationError(sprintf($GLOBALS['phorms_tr']['integerfield_sizelimit'], $this->max_digits));
     }
     
     /**
@@ -806,6 +808,54 @@ class IntegerField extends PhormField
     public function import_value($value)
     {
         return (int)(html_entity_decode((string)$value));
+    }
+}
+
+/**
+ * AlphaField
+ * 
+ * A text field that only accepts alpha (a-z) characters.
+ * @author Lété Thomas
+ * @package Fields
+ **/
+class AlphaField extends TextField
+{
+    /**
+     * Validates that the value is alpha only.
+     * @author Thomas Lété
+     * @param string $value
+     * @return null
+     * @throws ValidationError
+     **/
+    public function validate($value)
+    {
+        parent::validate($value);
+        if ( !preg_match('@^[a-z]+$@i', $value) )
+            throw new ValidationError($GLOBALS['phorms_tr']['alphafield_invalid']);
+    }
+}
+
+/**
+ * AlphaNumField
+ * 
+ * A text field that only accepts alpha (a-z) or numeric (0-9) characters.
+ * @author Lété Thomas
+ * @package Fields
+ **/
+class AlphaNumField extends TextField
+{
+    /**
+     * Validates that the value is alpha or numeric only.
+     * @author Thomas Lété
+     * @param string $value
+     * @return null
+     * @throws ValidationError
+     **/
+    public function validate($value)
+    {
+        parent::validate($value);
+        if ( !preg_match('@^[a-z0-9]+$@i', $value) )
+            throw new ValidationError($GLOBALS['phorms_tr']['alphanumfield_invalid']);
     }
 }
 
@@ -857,7 +907,7 @@ class DecimalField extends PhormField
     public function validate($value)
     {
         if (!is_numeric($value))
-            throw new ValidationError("Invalid decimal value.");
+            throw new ValidationError($GLOBALS['phorms_tr']['decimalfield_invalid']);
     }
     
     /**
@@ -1010,9 +1060,8 @@ class DropDownField extends PhormField
      **/
     public function validate($value)
     {
-        if (is_array($value))
-            if (!in_array($value, array_keys($this->choices)))
-                throw new ValidationError("Invalid selection.");
+        if (!in_array($value, array_keys($this->choices)))
+            throw new ValidationError($GLOBALS['phorms_tr']['dropdownfield_invalid']);
     }
     
     /**
@@ -1047,7 +1096,7 @@ class URLField extends TextField
      **/
     public function prepare_value($value)
     {
-        if (!preg_match('@^(http|ftp)s?://@', $value))
+        if (!empty($value) && !preg_match('@^(http|ftp)s?://@', $value))
             return sprintf('http://%s', $value);
         else
             return $value;
@@ -1064,7 +1113,7 @@ class URLField extends TextField
     {
         parent::validate($value);
         if ( !preg_match('@^(http|ftp)s?://(\w+(:\w+)?\@)?(([-_\.a-zA-Z0-9]+)\.)+[-_\.a-zA-Z0-9]+(\w*)@', $value) )
-            throw new ValidationError("Invalid URL.");
+            throw new ValidationError($GLOBALS['phorms_tr']['urlfield_invalid']);
     }
 }
 
@@ -1088,7 +1137,7 @@ class EmailField extends TextField
     {
         parent::validate($value);
         if ( !preg_match('@^([-_\.a-zA-Z0-9]+)\@(([-_\.a-zA-Z0-9]+)\.)+[-_\.a-zA-Z0-9]+$@', $value) )
-            throw new ValidationError("Invalid email address.");
+            throw new ValidationError($GLOBALS['phorms_tr']['emailfield_invalid']);
     }
 }
 
@@ -1125,8 +1174,10 @@ class DateTimeField extends TextField
     public function validate($value)
     {
         parent::validate($value);
-        if (!strtotime($value))
-            throw new ValidationError("Date/time format not recognized.");
+		if(preg_match($GLOBALS['phorms_tr']['dateformat_validation'], $value))
+			$value = preg_replace($GLOBALS['phorms_tr']['dateformat_validation'], $GLOBALS['phorms_tr']['dateformat_replace'], $value);
+		if (!strtotime($value))
+            throw new ValidationError($GLOBALS['phorms_tr']['datetimefield_badformat']);
     }
     
     /**
@@ -1139,6 +1190,8 @@ class DateTimeField extends TextField
     public function import_value($value)
     {
         $value = parent::import_value($value);
+		if(preg_match($GLOBALS['phorms_tr']['dateformat_validation'], $value))
+			$value = preg_replace($GLOBALS['phorms_tr']['dateformat_validation'], $GLOBALS['phorms_tr']['dateformat_replace'], $value);
         return strtotime($value);
     }
 }
@@ -1257,7 +1310,7 @@ class ScanField extends TextField
     {
         parent::validate($value);
         $this->matched = sscanf($value, $this->format);
-        if ( count($this->matched) === 0 )
+        if ( empty($this->matched) )
             throw new ValidationError($this->message);
     }
     
@@ -1346,10 +1399,13 @@ class MultipleChoiceField extends PhormField
      **/
     public function validate($value)
     {
-        if (is_array($value))
-            foreach ($value as $v)
-                if (!in_array($v, array_keys($this->choices)))
-                    throw new ValidationError("Invalid selection.");
+
+        if (!is_array($value))
+            throw new ValidationError($GLOBALS['phorms_tr']['multiplechoicefield_badformat']);
+        
+        foreach ($value as $v)
+            if (!in_array($v, array_keys($this->choices)))
+                throw new ValidationError($GLOBALS['phorms_tr']['multiplechoicefield_badformat']);
     }
     
     /**
