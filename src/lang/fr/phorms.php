@@ -1,4 +1,5 @@
 <?php
+
 $GLOBALS['phorms_tr']['filefield_toolarge'] = 'Le fichier envoy&eacute; est trop volumineux.';
 $GLOBALS['phorms_tr']['filefield_uploaderror'] = 'Une erreur s\'est produite lors de l\'envoi du fichier, veuillez r&eacute;essayer.';
 $GLOBALS['phorms_tr']['filefield_notsent'] = 'Le fichier n\'a pas &eacute;t&eacute; envoy&eacute;, veuillez r&eacute;essayer.';
@@ -36,4 +37,5 @@ $GLOBALS['phorms_tr']['validation_required'] = 'Ce champs est requis.';
 
 $GLOBALS['phorms_tr']['dateformat_validation'] = '`^([0-9]{2})/([0-9]{2})/([0-9]{4})$`';
 $GLOBALS['phorms_tr']['dateformat_replace'] = '$3-$2-$1';
+
 ?>

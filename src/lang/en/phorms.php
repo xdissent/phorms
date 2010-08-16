@@ -1,4 +1,5 @@
 <?php
+
 $GLOBALS['phorms_tr']['filefield_toolarge'] = 'The file sent was too large.';
 $GLOBALS['phorms_tr']['filefield_uploaderror'] = 'There was an error uploading the file; please try again.';
 $GLOBALS['phorms_tr']['filefield_notsent'] = 'The file was not sent; please try again.';
@@ -33,4 +34,5 @@ $GLOBALS['phorms_tr']['buttons_reset'] = 'Clear form';
 
 $GLOBALS['phorms_tr']['dateformat_validation'] = '`^([0-9]{4})-([0-9]{2})-([0-9]{2})$`';
 $GLOBALS['phorms_tr']['dateformat_replace'] = '$1-$2-$3';
+
 ?>
