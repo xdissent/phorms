@@ -36,7 +36,7 @@ class Phorm_Field_Numeric extends Phorm_Field
 
 	/**
 	 * Returns a new CharWidget.
-	 * 
+	 *
 	 * @return CharWidget
 	 */
 	public function get_widget()
@@ -47,7 +47,7 @@ class Phorm_Field_Numeric extends Phorm_Field
 	/**
 	 * Validates that the value is parsable as an integer and that it is fewer
 	 * than $this->max_digits digits.
-	 * 
+	 *
 	 * @param string $value
 	 * @return null
 	 * @throws Phorm_ValidationError
@@ -58,7 +58,7 @@ class Phorm_Field_Numeric extends Phorm_Field
 		{
 			throw new Phorm_ValidationError('field_invalid_numeric');
 		}
-		
+
 		if( strlen((string) $value) > $this->max_digits )
 		{
 			throw new Phorm_ValidationError(serialize(array('field_invalid_numeric_sizelimit', $this->max_digits)));
@@ -67,7 +67,7 @@ class Phorm_Field_Numeric extends Phorm_Field
 
 	/**
 	 * Parses the value as an integer.
-	 * 
+	 *
 	 * @param string $value
 	 * @return int
 	 */

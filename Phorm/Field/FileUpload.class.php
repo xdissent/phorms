@@ -135,7 +135,7 @@ class Phorm_Field_FileUpload extends Phorm_Field
 
 	/**
 	 * Returns the file's $_FILES data array or false if the file was not uploaded.
-	 * 
+	 *
 	 * @param mixed $value
 	 * @return boolean|File
 	 */

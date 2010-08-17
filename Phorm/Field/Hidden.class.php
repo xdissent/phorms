@@ -26,7 +26,7 @@ class Phorm_Field_Hidden extends Phorm_Field_Text
 
 	/**
 	 * Does not print out a label.
-	 * 
+	 *
 	 * @return string an empty string
 	 */
 	public function label()
@@ -36,7 +36,7 @@ class Phorm_Field_Hidden extends Phorm_Field_Text
 
 	/**
 	 * Does not print out the help text.
-	 * 
+	 *
 	 * @return string an empty string.
 	 */
 	public function help_text()
@@ -46,7 +46,7 @@ class Phorm_Field_Hidden extends Phorm_Field_Text
 
 	/**
 	 * Returns a new HiddenWidget.
-	 * 
+	 *
 	 * @return HiddenWidget
 	 */
 	protected function get_widget()

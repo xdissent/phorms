@@ -19,7 +19,7 @@ class Phorm_Validation
 	public static function required($value)
 	{
 		global $phorms_tr;
-		
+
 		if( $value == '' || is_null($value) )
 		{
 			throw new PhormException($phorms_tr['validation_required']);
@@ -27,5 +27,3 @@ class Phorm_Validation
 	}
 
 }
-
-?>

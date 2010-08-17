@@ -53,7 +53,7 @@ class Phorm_Type_File
 	/**
 	 * Moves the files from the temporary directory to another location. The new
 	 * file will have the original file's name.
-	 * 
+	 *
 	 * @return boolean true on success, false on error
 	 * @see File::$tmp_name,File::$name
 	 */
@@ -65,4 +65,3 @@ class Phorm_Type_File
 	}
 
 }
-?>

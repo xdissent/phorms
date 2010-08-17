@@ -35,7 +35,7 @@ class Phorm_Field_Checkbox extends Phorm_Field
 
 	/**
 	 * Sets the value of the field.
-	 * 
+	 *
 	 * @param boolean $value
 	 * @return null
 	 */
@@ -46,7 +46,7 @@ class Phorm_Field_Checkbox extends Phorm_Field
 
 	/**
 	 * Returns true if the field is checked.
-	 * 
+	 *
 	 * @return boolean
 	 */
 	public function get_value()
@@ -56,7 +56,7 @@ class Phorm_Field_Checkbox extends Phorm_Field
 
 	/**
 	 * Returns a new CheckboxWidget.
-	 * 
+	 *
 	 * @return CheckboxWidget
 	 */
 	public function get_widget()
@@ -66,7 +66,7 @@ class Phorm_Field_Checkbox extends Phorm_Field
 
 	/**
 	 * Returns null.
-	 * 
+	 *
 	 * @return null
 	 */
 	public function validate($value)
@@ -77,7 +77,7 @@ class Phorm_Field_Checkbox extends Phorm_Field
 	/**
 	 * Returns true if the field was checked in the user-submitted data, false
 	 * otherwise.
-	 * 
+	 *
 	 * @return boolean
 	 */
 	public function import_value($value)
@@ -87,7 +87,7 @@ class Phorm_Field_Checkbox extends Phorm_Field
 
 	/**
 	 * Returns the value.
-	 * 
+	 *
 	 * @param string $value
 	 * @param string
 	 */

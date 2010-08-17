@@ -18,7 +18,7 @@ class Phorm_Field_Email extends Phorm_Field_Text
 
 	/**
 	 * Validates that the value is a valid email address.
-	 * 
+	 *
 	 * @param string $value
 	 * @return null
 	 * @throws Phorm_ValidationError

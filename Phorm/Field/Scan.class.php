@@ -31,7 +31,7 @@ class Phorm_Field_Scan extends Phorm_Field_Text
 	private $matched;
 
 	/**
-	 * 
+	 *
 	 * @param string $label the field's text label
 	 * @param string $format the sscanf format used to validate and parse the field
 	 * @param string $error_msg the message thrown on a mismatch
@@ -47,7 +47,7 @@ class Phorm_Field_Scan extends Phorm_Field_Text
 
 	/**
 	 * Validates that the value matches the sscanf format.
-	 * 
+	 *
 	 * @param string $value
 	 * @return null
 	 * @throws Phorm_ValidationError
@@ -74,4 +74,3 @@ class Phorm_Field_Scan extends Phorm_Field_Text
 	}
 
 }
-

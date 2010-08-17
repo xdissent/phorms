@@ -4,7 +4,7 @@
  */
 /**
  * Phorm_Language
- * 
+ *
  * Responsible for the messages of the Phorms.
  *
  * @author George Petsagourakis <petsagouris@gmail.com>
@@ -17,13 +17,13 @@ class Phorm_Language
 	 * @var array
 	 */
 	private $lang = array();
-	
+
 	/**
 	 * The strings in the fallback language (English recommended).
 	 * @var array
-	 */	
+	 */
 	private $fallback = array();
-	
+
 	/**
 	 * Public constructor makes arrangements for the strings to load.
 	 *
@@ -42,7 +42,7 @@ class Phorm_Language
 			$this->lang = $english;
 		}
 	}
-	
+
 	/**
 	 * Public getter for the language strings.
 	 *
@@ -56,7 +56,7 @@ class Phorm_Language
 			$name = array_shift($args);
 
 		}
-		
+
 		if(!strstr($name,' '))
 		{
 			if (isset($this->lang[$name]))
@@ -72,17 +72,17 @@ class Phorm_Language
 				throw new Exception('Phorms could not retrieve string for "'.$name.'", please review your code.');
 			}
 		}
-		
+
 		if(!empty($args))
 		{
 			array_unshift($args, $name);
 			return call_user_func_array( 'sprintf', $args );
 		}
-		
+
 		return $name;
 
 	}
-	
+
 	/**
 	 * Loads the strings from the 'lang' directory.
 	 *
@@ -95,4 +95,3 @@ class Phorm_Language
 		return $lang;
 	}
 }
-?>

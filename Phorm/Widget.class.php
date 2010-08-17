@@ -28,7 +28,7 @@ class Phorm_Widget
 		{
 			return '';
 		}
-		
+
 		$attr = array();
 		foreach( $attributes as $key => $val )
 		{
@@ -70,14 +70,13 @@ class Phorm_Widget
 	public function html($value, array $attributes=array())
 	{
 		$value = $this->clean_string($value);
-		
+
 		foreach( $attributes as $key => $val )
 		{
 			$attributes[$this->clean_string($key)] = $this->clean_string($val);
 		}
-		
+
 		return $this->serialize($this->clean_string($value), $attributes);
 	}
 
 }
-?>

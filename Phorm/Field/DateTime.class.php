@@ -28,7 +28,7 @@ class Phorm_Field_DateTime extends Phorm_Field_Text
 
 	/**
 	 * Validates that the value is parsable as a date/time value.
-	 * 
+	 *
 	 * @param string $value
 	 * @return null
 	 * @throws Phorm_ValidationError
@@ -51,7 +51,7 @@ class Phorm_Field_DateTime extends Phorm_Field_Text
 	/**
 	 * Imports the value and returns a unix timestamp (the number of seconds
 	 * since the epoch.)
-	 * 
+	 *
 	 * @param string $value
 	 * @return int the date/time as a unix timestamp
 	 */

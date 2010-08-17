@@ -32,7 +32,7 @@ class Phorm_Field_Textarea extends Phorm_Field
 
 	/**
 	 * Returns a new TextWidget.
-	 * 
+	 *
 	 * @return TextWidget
 	 */
 	protected function get_widget()
@@ -42,7 +42,7 @@ class Phorm_Field_Textarea extends Phorm_Field
 
 	/**
 	 * Returns true.
-	 * 
+	 *
 	 * @return boolean
 	 */
 	public function validate($value)
@@ -52,7 +52,7 @@ class Phorm_Field_Textarea extends Phorm_Field
 
 	/**
 	 * Imports the value by decoding HTML entities.
-	 * 
+	 *
 	 * @param string $value
 	 * @return string the decoded value
 	 */

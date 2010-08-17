@@ -20,5 +20,3 @@ $lang['field_invalid_multiplechoice_badformat'] = 'Invalid selection.';
 $lang['buttons_validate'] = 'Validate';
 $lang['buttons_reset'] = 'Clear form';
 $lang['validation_required'] = 'This field is required.';
-
-?>

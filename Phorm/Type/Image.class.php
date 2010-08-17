@@ -36,5 +36,3 @@ class Phorm_Type_Image extends Phorm_Type_File
 	}
 
 }
-
-?>

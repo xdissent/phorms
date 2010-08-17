@@ -35,7 +35,7 @@ class Phorm_Field_Decimal extends Phorm_Field
 
 	/**
 	 * Returns a new CharWidget.
-	 * 
+	 *
 	 * @return CharWidget
 	 */
 	public function get_widget()
@@ -45,7 +45,7 @@ class Phorm_Field_Decimal extends Phorm_Field
 
 	/**
 	 * Validates that the value is parsable as a float.
-	 * 
+	 *
 	 * @param string value
 	 * @return null
 	 * @throws Phorm_ValidationError
@@ -60,7 +60,7 @@ class Phorm_Field_Decimal extends Phorm_Field
 
 	/**
 	 * Returns the parsed float, rounded to $this->precision digits.
-	 * 
+	 *
 	 * @param string $value
 	 * @return float the parsed value
 	 */

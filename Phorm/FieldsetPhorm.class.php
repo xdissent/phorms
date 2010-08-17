@@ -33,12 +33,12 @@ abstract class Phorm_FieldsetPhorm extends Phorm_Phorm
 	public function as_labels()
 	{
 		$elts = array( );
-		
+
 		foreach( $this->fieldsets as $fieldset )
 		{
 			$elts[] = '<fieldset>';
 			$elts[] = '<legend>'.$fieldset->label.'</legend>';
-			
+
 			foreach( $fieldset->field_names as $field_name )
 			{
 				if( !empty($field->label) )
@@ -59,5 +59,3 @@ abstract class Phorm_FieldsetPhorm extends Phorm_Phorm
 	}
 
 }
-
-?>

@@ -72,7 +72,7 @@ class Phorm_Field_MultipleChoice extends Phorm_Field
 
 	/**
 	 * Validates that each of the selected choice exists in $this->choices.
-	 * 
+	 *
 	 * @param array $value
 	 * @return null
 	 * @throws Phorm_ValidationError
@@ -97,7 +97,7 @@ class Phorm_Field_MultipleChoice extends Phorm_Field
 
 	/**
 	 * Imports the value as an array of the actual values (from $this->choices.)
-	 * 
+	 *
 	 * @param array $value
 	 * @return array
 	 */

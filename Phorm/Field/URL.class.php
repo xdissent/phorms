@@ -20,7 +20,7 @@ class Phorm_Field_URL extends Phorm_Field_Text
 
 	/**
 	 * Prepares the value by inserting http:// to the beginning if missing.
-	 * 
+	 *
 	 * @param string $value
 	 * @return string
 	 */
@@ -36,7 +36,7 @@ class Phorm_Field_URL extends Phorm_Field_Text
 
 	/**
 	 * Validates the the value is a valid URL (mostly).
-	 * 
+	 *
 	 * @param string $value
 	 * @return null
 	 * @throws Phorm_ValidationError
@@ -51,4 +51,3 @@ class Phorm_Field_URL extends Phorm_Field_Text
 	}
 
 }
-

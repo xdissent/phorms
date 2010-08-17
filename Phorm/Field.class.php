@@ -349,4 +349,3 @@ abstract class Phorm_Field
 	 */
 	abstract public function import_value($value);
 }
-?>

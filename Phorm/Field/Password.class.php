@@ -22,7 +22,7 @@ class Phorm_Field_Password extends Phorm_Field_Text
 	private $hash_function;
 
 	/**
-	 * 
+	 *
 	 * @param string $label the field's text label
 	 * @param int $size the field's size attribute
 	 * @param int $max_length the maximum size in characters
@@ -38,7 +38,7 @@ class Phorm_Field_Password extends Phorm_Field_Text
 
 	/**
 	 * Returns a PasswordWidget.
-	 * 
+	 *
 	 * @return PasswordWidget
 	 */
 	public function get_widget()
@@ -48,7 +48,7 @@ class Phorm_Field_Password extends Phorm_Field_Text
 
 	/**
 	 * Returns a hash-encoded value.
-	 * 
+	 *
 	 * @param string $value
 	 * @return string the encoded value
 	 */

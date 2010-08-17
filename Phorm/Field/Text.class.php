@@ -48,7 +48,7 @@ class Phorm_Field_Text extends Phorm_Field
 
 	/**
 	 * Validates that the value is less than $this->max_length;
-	 * 
+	 *
 	 * @return null
 	 * @throws Phorm_ValidationError
 	 * @see Phorm_Field_Text::$max_width
@@ -64,7 +64,7 @@ class Phorm_Field_Text extends Phorm_Field
 
 	/**
 	 * Imports the value by decoding HTML entities.
-	 * 
+	 *
 	 * @param string $value
 	 * @return string the decoded value
 	 */

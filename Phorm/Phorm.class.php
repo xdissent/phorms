@@ -1,7 +1,7 @@
 <?php if(!defined('PHORMS_ROOT')) { die('Phorms not loaded properly'); }
 /**
  * Phorms: HTML form widgets with validation
- * 
+ *
  * Phorms is a form library that provides a number of factory classes that
  * generate HTML form data. Forms are defined by extending the base abstract
  * Phorm class with a 'define_fields' method which, when called, defines the
@@ -36,21 +36,21 @@ abstract class Phorm_Phorm
 	 * @var int
 	 */
 	private $method;
-	
+
 	/**
 	 * If true, $_FILES is included in the form data. Makes possible file fields.
 	 *
 	 * @var boolean
 	 */
 	private $multi_part = false;
-	
+
 	/**
 	 * True when the form has user-submitted data.
 	 *
 	 * @var boolean
 	 */
 	public $bound = false;
-	
+
 	/**
 	 * A copy of the superglobal data array merged with any default field values
 	 * provided during class instantiation.
@@ -59,29 +59,29 @@ abstract class Phorm_Phorm
 	 * @var array
 	 */
 	private $data;
-	
+
 	/**
 	 * Private field storage.
 	 *
 	 * @var array
 	 */
 	private $fields = array();
-	
+
 	/**
 	 * Private storage to collect error messages. Stored as $field_name => $msg.
 	 *
 	 * @var array
 	 */
 	private $errors = array();
-	
+
 	/**
 	 * Private storage for cleaned field values.
 	 */
 	private $clean;
-	
+
 	/**
 	 * Memoized return value of the initial is_valid call.
-	 * 
+	 *
 	 * @see Phorm::is_valid()
 	 * @var boolean
 	 */
@@ -93,7 +93,7 @@ abstract class Phorm_Phorm
 	 * @var Phorm_Language
 	 */
 	public $lang;
-	
+
 	/**
 	 * @param Phorm::GET|Phorm::POST $method whether to use GET or POST
 	 * @param boolean $multi_part true if this form accepts files
@@ -104,7 +104,7 @@ abstract class Phorm_Phorm
 	public function __construct($method='get', $multi_part=FALSE, $data=array(), $lang='en')
 	{
 		$this->multi_part = $multi_part;
-		
+
 		if( $this->multi_part && $method != 'post' )
 		{
 			$method = 'post';
@@ -228,7 +228,7 @@ abstract class Phorm_Phorm
 
 	/**
 	 * Returns true if the form has errors.
-	 * 
+	 *
 	 * @return boolean
 	 */
 	public function has_errors()
@@ -238,7 +238,7 @@ abstract class Phorm_Phorm
 
 	/**
 	 * Returns the list of errors.
-	 * 
+	 *
 	 * @return array error messages
 	 */
 	public function get_errors()
@@ -308,10 +308,10 @@ abstract class Phorm_Phorm
 			$target = $_SERVER['PHP_SELF'];
 		}
 
-		return sprintf('<form method="%s" action="%s"%s id="%s">', 
-			$this->method, 
-			htmlentities((string) $target), 
-			($this->multi_part) ? ' enctype="multipart/form-data"' : '', 
+		return sprintf('<form method="%s" action="%s"%s id="%s">',
+			$this->method,
+			htmlentities((string) $target),
+			($this->multi_part) ? ' enctype="multipart/form-data"' : '',
 			strtolower(get_class($this))
 		)."\n";
 	}
@@ -375,7 +375,7 @@ abstract class Phorm_Phorm
 		$elts = array();
 		foreach( $this->fields as $name => $field )
 		{
-			
+
 			$label = $field->label();
 			if(!empty($label))
 			{
@@ -403,7 +403,7 @@ abstract class Phorm_Phorm
 			$template[] = '</tr>';
 			$template = implode("\n", $template);
 		}
-		
+
 		$out[] = '<table class="phorm_table">';
 		$out[] = '<tbody>';
 		$count = 0;
@@ -417,7 +417,7 @@ abstract class Phorm_Phorm
 			}
 			$out[] = str_replace(
 				array('%odd%','%label%','%field%','%errors%','%help_text%'),
-				array($odd, $field->label(FALSE), $field->html(), $field->errors(), $field->help_text()), 
+				array($odd, $field->label(FALSE), $field->html(), $field->errors(), $field->help_text()),
 				$template
 			);
 		}
@@ -425,7 +425,7 @@ abstract class Phorm_Phorm
 		$out[] = '</table>';
 		return implode("\n", $out);
 	}
-	
+
 	/**
 	 * Print the form completely.
 	 *
@@ -440,4 +440,3 @@ abstract class Phorm_Phorm
 	}
 
 }
-?>

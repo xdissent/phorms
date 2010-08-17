@@ -31,7 +31,7 @@ class Phorm_Field_Regex extends Phorm_Field_Text
 	private $matches;
 
 	/**
-	 * 
+	 *
 	 * @param string $label the field's text label
 	 * @param string $regex the (pcre) regex used to validate and parse the field
 	 * @param string $error_msg the message thrown on a regex mismatch
@@ -47,7 +47,7 @@ class Phorm_Field_Regex extends Phorm_Field_Text
 
 	/**
 	 * Validates that the value matches the regular expression.
-	 * 
+	 *
 	 * @param string $value
 	 * @return null
 	 * @throws Phorm_ValidationError
@@ -63,7 +63,7 @@ class Phorm_Field_Regex extends Phorm_Field_Text
 
 	/**
 	 * Returns the captured values that were parsed inside validate().
-	 * 
+	 *
 	 * @param string $value
 	 * @return array the captured matches
 	 */
@@ -73,4 +73,3 @@ class Phorm_Field_Regex extends Phorm_Field_Text
 	}
 
 }
-

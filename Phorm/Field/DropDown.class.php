@@ -36,7 +36,7 @@ class Phorm_Field_DropDown extends Phorm_Field
 
 	/**
 	 * Returns a new SelectWidget.
-	 * 
+	 *
 	 * @return SelectWidget
 	 */
 	public function get_widget()
@@ -46,7 +46,7 @@ class Phorm_Field_DropDown extends Phorm_Field
 
 	/**
 	 * Validates that $value is present in $this->choices.
-	 * 
+	 *
 	 * @param string $value
 	 * @return null
 	 * @throws Phorm_ValidationError
@@ -63,7 +63,7 @@ class Phorm_Field_DropDown extends Phorm_Field
 	/**
 	 * Imports the value by decoding any HTML entities. Returns the "actual"
 	 * value of the option selected.
-	 * 
+	 *
 	 * @param string $value
 	 * @return string the decoded string
 	 */
