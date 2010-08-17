@@ -1,0 +1,8 @@
+table { border: 1px solid #ccc; padding: 2px 4px; }
+th { vertical-align: top; text-align: right; }
+td { vertical-align: top; }
+thead th { text-align: center; font-size: 16pt; background-color: #ccc; }
+.phorm_odd_row { background-color: silver; }
+.phorm_element { clear:both; }
+.phorm_error { color: #bb0000; font-size: 10pt; text-align: left; font-style: oblique; }
+.phorm_help { margin: 0; padding: 2px; font-size: 10pt; font-style: oblique; color: #666; }

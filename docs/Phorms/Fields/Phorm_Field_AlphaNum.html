@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class Phorm_Field_AlphaNum</title>
+			<link rel="stylesheet" href="../../media/stylesheet.css" />
+						<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class Phorm_Field_AlphaNum</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+													<a href="#sec-vars">Vars</a>
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Phorm_Field_AlphaNum</p>
+<p class="description"><p>A text field that only accepts alpha (a-z) or numeric (0-9) characters.</p></p>
+	<ul class="tags">
+				<li><span class="field">author:</span> Lété Thomas</li>
+				<li><span class="field">license:</span> <a href="http://www.opensource.org/licenses/mit-license.php">MIT</a></li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_Phorm---Field---AlphaNum.class.php.html">/Phorm/Field/AlphaNum.class.php</a> (line <span class="field">16</span>)
+		</p>
+		
+				
+		<pre><a href="../../Phorms/Fields/Phorm_Field.html">Phorm_Field</a>
+   |
+   --<a href="../../Phorms/Fields/Phorm_Field_Text.html">Phorm_Field_Text</a>
+      |
+      --Phorm_Field_AlphaNum</pre>
+	
+			</div>
+</div>
+
+
+
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-vars">Vars</a>
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																						
+				<div class="method-definition">
+											<span class="method-result">null</span>
+										<a href="#validate" title="details" class="method-name">validate</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
+									</div>
+											</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			
+							<h4>Inherited Variables</h4>
+				<A NAME='inherited_vars'><!-- --></A>
+									<p>Inherited from <span class="classname"><a href="../../Phorms/Fields/Phorm_Field.html">Phorm_Field</a></span></p>
+					<blockquote>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Phorms/Fields/Phorm_Field.html#var$label">Phorm_Field::$label</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Phorms/Fields/Phorm_Field.html#var$multi_field">Phorm_Field::$multi_field</a></span><br>
+							</span>
+											</blockquote> 
+										
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-vars">Vars</a>
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+<a name="methodvalidate" id="validate"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">validate</span> (line <span class="line-number">26</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Validates that the value is alpha or numeric only.</p>
+	<ul class="tags">
+				<li><span class="field">throws:</span> Phorm_ValidationError</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">null</span>
+		<span class="method-name">
+			validate
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$value</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../../Phorms/Fields/Phorm_Field_Text.html#methodvalidate">Phorm_Field_Text::validate()</a></dt>
+						<dd>Validates that the value is less than $this-&gt;max_length;</dd>
+					</dl>
+			
+	</div>
+							<h4>Inherited Methods</h4>
+				<a name='inherited_methods'><!-- --></a>	
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../../Phorms/Fields/Phorm_Field_Text.html">Phorm_Field_Text</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../../Phorms/Fields/Phorm_Field_Text.html#method__construct">Phorm_Field_Text::__construct()</a></span><br>
+													<span class="method-name"><a href="../../Phorms/Fields/Phorm_Field_Text.html#methodget_widget">Phorm_Field_Text::get_widget()</a></span><br>
+													<span class="method-name"><a href="../../Phorms/Fields/Phorm_Field_Text.html#methodimport_value">Phorm_Field_Text::import_value()</a></span><br>
+													<span class="method-name"><a href="../../Phorms/Fields/Phorm_Field_Text.html#methodvalidate">Phorm_Field_Text::validate()</a></span><br>
+											</blockquote>
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../../Phorms/Fields/Phorm_Field.html">Phorm_Field</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../../Phorms/Fields/Phorm_Field.html#method__construct">Phorm_Field::__construct()</a></span><br>
+													<span class="method-name"><a href="../../Phorms/Fields/Phorm_Field.html#methodadd_error">Phorm_Field::add_error()</a></span><br>
+													<span class="method-name"><a href="../../Phorms/Fields/Phorm_Field.html#methoderrors">Phorm_Field::errors()</a></span><br>
+													<span class="method-name"><a href="../../Phorms/Fields/Phorm_Field.html#methodget_attribute">Phorm_Field::get_attribute()</a></span><br>
+													<span class="method-name"><a href="../../Phorms/Fields/Phorm_Field.html#methodget_errors">Phorm_Field::get_errors()</a></span><br>
+													<span class="method-name"><a href="../../Phorms/Fields/Phorm_Field.html#methodget_raw_value">Phorm_Field::get_raw_value()</a></span><br>
+													<span class="method-name"><a href="../../Phorms/Fields/Phorm_Field.html#methodget_value">Phorm_Field::get_value()</a></span><br>
+													<span class="method-name"><a href="../../Phorms/Fields/Phorm_Field.html#methodget_widget">Phorm_Field::get_widget()</a></span><br>
+													<span class="method-name"><a href="../../Phorms/Fields/Phorm_Field.html#methodhelp_text">Phorm_Field::help_text()</a></span><br>
+													<span class="method-name"><a href="../../Phorms/Fields/Phorm_Field.html#methodhtml">Phorm_Field::html()</a></span><br>
+													<span class="method-name"><a href="../../Phorms/Fields/Phorm_Field.html#methodimport_value">Phorm_Field::import_value()</a></span><br>
+													<span class="method-name"><a href="../../Phorms/Fields/Phorm_Field.html#methodis_valid">Phorm_Field::is_valid()</a></span><br>
+													<span class="method-name"><a href="../../Phorms/Fields/Phorm_Field.html#methodlabel">Phorm_Field::label()</a></span><br>
+													<span class="method-name"><a href="../../Phorms/Fields/Phorm_Field.html#methodprepare_value">Phorm_Field::prepare_value()</a></span><br>
+													<span class="method-name"><a href="../../Phorms/Fields/Phorm_Field.html#methodset_attribute">Phorm_Field::set_attribute()</a></span><br>
+													<span class="method-name"><a href="../../Phorms/Fields/Phorm_Field.html#methodset_value">Phorm_Field::set_value()</a></span><br>
+													<span class="method-name"><a href="../../Phorms/Fields/Phorm_Field.html#methodvalidate">Phorm_Field::validate()</a></span><br>
+													<span class="method-name"><a href="../../Phorms/Fields/Phorm_Field.html#method__toString">Phorm_Field::__toString()</a></span><br>
+											</blockquote>
+										
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Tue, 17 Aug 2010 03:15:17 +0300 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+	</p>
+	</div></body>
+</html>
