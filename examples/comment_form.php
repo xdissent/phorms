@@ -61,7 +61,7 @@ $valid = $form->is_valid();
 		<?php } ?>
 		<?php echo $form->as_table(TRUE); ?>
 		<div>
-			<input type="button" value="Reset form" onclick="this.form.reset()'" />
+			<input type="button" value="Reset form" onclick="this.form.reset();" />
 			<input type="submit" value="Submit" />
 		</div>
 		<?php echo $form->close(); ?>

@@ -26,7 +26,7 @@ class UploadForm extends Phorm_Phorm
 {
 	protected $path;
 	
-	public function __construct($target_directory, $method='get', $multi_part=false, $data=array())
+	public function __construct($target_directory, $method='get', $multi_part=FALSE, $data=array())
 	{
 		if (!file_exists($target_directory))
 		{
@@ -63,19 +63,19 @@ class UploadForm extends Phorm_Phorm
 }
 
 // Init form
-$form = new UploadForm('tmp', 'post', true);
+$form = new UploadForm('tmp', 'post', TRUE);
 
 // If the form is bound and valid, move the file to a more permanent location
-$saved = null;
-$file_error = null;
-$photo_path = null;
+$saved = NULL;
+$file_error = NULL;
+$photo_path = NULL;
 
 if ( ( $valid = $form->is_valid() ) && $form->bound )
 {
 	try
 	{
 		$photo_path = $form->save();
-		$saved = true;
+		$saved = TRUE;
 	}
 	catch (Exception $e)
 	{
@@ -99,7 +99,7 @@ if ( ( $valid = $form->is_valid() ) && $form->bound )
 		<?php } elseif ($saved) { ?>
 		<div class="phorm_message">Your photo has been saved to <?php echo $photo_path ?>.</div>
 		<?php } elseif ($saved === false) { ?>
-		<div class="phorm_error" colspan="2"><?php echo $file_error ?></div>
+		<div class="phorm_error"><?php echo $file_error ?></div>
 		<?php } ?>
 		<?php echo $form; ?>
 		<input type="submit" value="Submit" />

@@ -33,4 +33,3 @@ class Phorm_Field_Alpha extends Phorm_Field_Text
 	}
 
 }
-
