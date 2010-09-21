@@ -95,13 +95,13 @@ abstract class Phorm_Phorm
 	public $lang;
 
 	/**
-	 * @param Phorm::GET|Phorm::POST $method whether to use GET or POST
+	 * @param string $method 'post' or 'get' (defaults to 'post')
 	 * @param boolean $multi_part true if this form accepts files
 	 * @param array $data initial/default data for form fields (e.g. array('first_name'=>'enter your name'))
 	 * @param string $lang the language in which the phorm will respond
 	 * @return void
 	 */
-	public function __construct($method='get', $multi_part=FALSE, $data=array(), $lang='en')
+	public function __construct($method='post', $multi_part=FALSE, $data=array(), $lang='en')
 	{
 		$this->multi_part = $multi_part;
 
@@ -225,7 +225,16 @@ abstract class Phorm_Phorm
 
 		return $this->clean;
 	}
-
+	
+	/**
+	 * Returns an array of the form's field objects
+	 *
+	 * @return array fields
+	 */
+	public function fields() {
+		return $this->fields;
+	}
+	
 	/**
 	 * Returns true if the form has errors.
 	 *
@@ -255,6 +264,24 @@ abstract class Phorm_Phorm
 		}
 		return $this->errors;
 	}
+	
+	/**
+	 * Outputs errors for all fields, with an optional prefix and suffix so you can wrap them in HTML elements.
+	 * Note that if a field has multiple errors, only one of them will be displayed (the last one in the validation array).
+	 *
+	 * @param string $prefix string that will be inserted before each error message (e.g. <li>)
+	 * @param string $suffix string that will be inserted after each error message (e.g. </li>)
+	 * @return void
+	 */
+	public function display_errors($prefix = '', $suffix = '')
+	{	
+		$nested_errors = $this->get_errors();
+		foreach ($nested_errors as $field_name => $field_error) {
+			echo $prefix;
+			echo $this->$field_name->label(false) . ': ' . $field_error[1];
+			echo $suffix;
+		}
+	}
 
 	/**
 	 * Returns true if all fields' data pass validation tests.
@@ -283,16 +310,6 @@ abstract class Phorm_Phorm
 		}
 
 		return $this->valid;
-	}
-
-	/**
-	 * Returns an iterator that returns each field instance in turn.
-	 *
-	 * @return Iterator
-	 */
-	public function getIterator()
-	{
-		return new ArrayIterator($this->fields);
 	}
 
 	/**

@@ -3,14 +3,6 @@ error_reporting( E_ALL);
 
 require_once('../phorms.php');
 
-function required($value)
-{
-	if( $value == '' || is_null($value) )
-	{
-		throw new Phorm_ValidationError('This field is required.');
-	}
-}
-
 class ProfileForm extends Phorm_FieldsetPhorm
 {
 	protected function define_fields()

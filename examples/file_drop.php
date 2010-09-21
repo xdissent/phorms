@@ -5,7 +5,7 @@ require_once('../phorms.php');
 
 define('MAX_HEIGHT', 100);
 define('MAX_WIDTH', 100);
-
+define('UPLOAD_TARGET_DIRECTORY', '~/tmp');
 
 function check_image_size($value)
 {
@@ -63,7 +63,7 @@ class UploadForm extends Phorm_Phorm
 }
 
 // Init form
-$form = new UploadForm('tmp', 'post', TRUE);
+$form = new UploadForm(UPLOAD_TARGET_DIRECTORY, 'post', TRUE);
 
 // If the form is bound and valid, move the file to a more permanent location
 $saved = NULL;

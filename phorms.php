@@ -6,7 +6,7 @@
 /**
  * Constant used to determine path of includes.
  */
-define('PHORMS_ROOT', 'E:/remote/dev/phorms/');
+define('PHORMS_ROOT', dirname(__FILE__).'/');
 
 define('PHORMS_AUTOLOAD', FALSE);
 
@@ -33,7 +33,6 @@ else
 	include(PHORMS_ROOT.'Phorm/Fieldset.class.php');
 	include(PHORMS_ROOT.'Phorm/Widget.class.php');
 	include(PHORMS_ROOT.'Phorm/FieldsetPhorm.class.php');
-	include(PHORMS_ROOT.'Phorm/Validation.class.php');
 	include(PHORMS_ROOT.'Phorm/Field/Text.class.php');
 	include(PHORMS_ROOT.'Phorm/Field/Alpha.class.php');
 	include(PHORMS_ROOT.'Phorm/Field/Email.class.php');
@@ -50,7 +49,7 @@ else
 	include(PHORMS_ROOT.'Phorm/Field/MultipleChoice.class.php');
 	include(PHORMS_ROOT.'Phorm/Field/Textarea.class.php');
 	include(PHORMS_ROOT.'Phorm/Field/DropDown.class.php');
-	include(PHORMS_ROOT.'Phorm/Field/Numeric.class.php');
+	include(PHORMS_ROOT.'Phorm/Field/Integer.class.php');
 	include(PHORMS_ROOT.'Phorm/Field/URL.class.php');
 	include(PHORMS_ROOT.'Phorm/Type/File.class.php');
 	include(PHORMS_ROOT.'Phorm/Type/Image.class.php');

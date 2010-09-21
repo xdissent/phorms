@@ -26,7 +26,6 @@ class Phorm_Field_Email extends Phorm_Field_Text
 	public function validate($value)
 	{
 		parent::validate($value);
-		var_dump( filter_var($value, FILTER_VALIDATE_EMAIL) );
 		if( !filter_var($value, FILTER_VALIDATE_EMAIL) )
 		{
 			throw new Phorm_ValidationError('field_invalid_email');

@@ -3,14 +3,6 @@ error_reporting( E_ALL);
 
 require_once('../phorms.php');
 
-function required($value)
-{
-	if( empty($value) )
-	{
-		throw new Phorm_ValidationError('This field is required.');
-	}
-}
-
 class CommentForm extends Phorm_Phorm
 {
 
@@ -22,7 +14,7 @@ class CommentForm extends Phorm_Phorm
 		$this->last_name = new Phorm_Field_Text("Last name", 25, 255, array( 'required' ));
 		$this->email = new Phorm_Field_Email("Email address", 25, 255, array( 'required' ));
 		$this->url = new Phorm_Field_URL("Home page", 25, 255);
-		$this->number = new Phorm_Field_Numeric("Favorite number", 7, array( 'required' ));
+		$this->number = new Phorm_Field_Integer("Favorite number", 20, 7, array( 'required' ));
 		$this->message = new Phorm_Field_Textarea('Message', 5, 40, array( 'required' ));
 		$this->notify = new Phorm_Field_Checkbox('Reply notification');
 

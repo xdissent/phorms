@@ -80,10 +80,14 @@ abstract class Phorm_Field
 		{
 			$attributes['class'] .= ' '.strtolower(get_class($this));
 		}
-
-		if( in_array(Phorm_Validation::Required, $validators) )
-		{
-			$attributes['class'] .= ' '.strtolower(substr(Phorm_Validation::Required, 17));
+		
+		//Handle "required" validation specially, because:
+		// 1) We want it available to ALL field types
+		// 2) It needs to be implemented as a callback, not a normal validation,
+		//    because normal validation rules are bypassed if field value == ''
+		$required_key = array_search('required', $validators);
+		if ($required_key !== false) {
+			$validators[$required_key] = array($this, 'validate_required_field');
 		}
 
 		$this->label = (string) $label;
@@ -117,7 +121,7 @@ abstract class Phorm_Field
 	 * Returns the "raw" value of the field.
 	 *
 	 * @author Aaron Stone <aaron@serendipity.cx>
-	 * @return mixed the field's "cleaned" value
+	 * @return mixed the field's raw value (unsanitized)
 	 */
 	public function get_raw_value()
 	{
@@ -195,6 +199,7 @@ abstract class Phorm_Field
 	/**
 	 * Returns the HTML field label.
 	 *
+	 * @param boolean $tag determines whether or not label is wrapped in <label> HTML (defaults to TRUE)
 	 * @return string the HTML label tag
 	 */
 	public function label($tag=TRUE)
@@ -218,8 +223,9 @@ abstract class Phorm_Field
 	}
 
 	/**
-	 * Returns the field's errors as an unordered list with the class "phorm_error".
+	 * Returns the field's errors, optionally wrapped in a div
 	 *
+	 * @param boolean $tag determines whether or not to wrap each error message in a <div> (defaults to TRUE)
 	 * @return string the field errors as an unordered list
 	 */
 	public function errors($tag=TRUE)
@@ -283,7 +289,8 @@ abstract class Phorm_Field
 				}
 				catch( Phorm_ValidationError $e )
 				{
-					$this->errors[] = array( $f, $this->lang->{$e->getMessage()} );
+					$rule_name = is_array($f) ? $f[1] : $f;
+					$this->errors[] = array( $rule_name, $this->lang->{$e->getMessage()} );
 				}
 			}
 
@@ -348,4 +355,19 @@ abstract class Phorm_Field
 	 * @return mixed
 	 */
 	abstract public function import_value($value);
+	
+	/**
+	 * Validates that the value isn't null or an empty string.
+	 * This is a built-in validation rule available to all fields
+	 * (and there is logic in the constructor to automatically activate
+	 * this when 'required' is in the validation array).
+	 *
+	 * @param string $value
+	 * @return null
+	 * @throws Phorm_ValidationError
+	 */
+	public function validate_required_field($value) {
+		if ($value == '' || is_null($value))
+			throw new Phorm_ValidationError('validation_required');
+	}
 }

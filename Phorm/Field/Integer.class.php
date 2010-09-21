@@ -4,7 +4,7 @@
  * @subpackage Fields
  */
 /**
- * Phorm_Field_Numeric
+ * Phorm_Field_Integer
  *
  * A field that accepts only integers.
  *
@@ -13,7 +13,7 @@
  * @package Phorms
  * @subpackage Fields
  */
-class Phorm_Field_Numeric extends Phorm_Field
+class Phorm_Field_Integer extends Phorm_Field
 {
 
 	/**
@@ -27,9 +27,9 @@ class Phorm_Field_Numeric extends Phorm_Field
 	 * @param array $validators a list of callbacks to validate the field data
 	 * @param array $attributes a list of key/value pairs representing HTML attributes
 	 */
-	public function __construct($label, $max_digits, array $validators=array(), array $attributes=array())
+	public function __construct($label, $size, $max_digits, array $validators=array(), array $attributes=array())
 	{
-		$attributes['size'] = 20;
+		$attributes['size'] = $size;
 		parent::__construct($label, $validators, $attributes);
 		$this->max_digits = $max_digits;
 	}
@@ -56,12 +56,12 @@ class Phorm_Field_Numeric extends Phorm_Field
 	{
 		if( !filter_var($value,FILTER_VALIDATE_INT) )
 		{
-			throw new Phorm_ValidationError('field_invalid_numeric');
+			throw new Phorm_ValidationError('field_invalid_integer');
 		}
 
 		if( strlen((string) $value) > $this->max_digits )
 		{
-			throw new Phorm_ValidationError(serialize(array('field_invalid_numeric_sizelimit', $this->max_digits)));
+			throw new Phorm_ValidationError(serialize(array('field_invalid_integer_sizelimit', $this->max_digits)));
 		}
 	}
 

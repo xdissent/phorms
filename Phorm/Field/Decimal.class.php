@@ -26,9 +26,9 @@ class Phorm_Field_Decimal extends Phorm_Field
 	 * @param array $validators a list of callbacks to validate the field data
 	 * @param array $attributes a list of key/value pairs representing HTML attributes
 	 */
-	public function __construct($label, $precision, array $validators=array(), array $attributes=array())
+	public function __construct($label, $size, $precision, array $validators=array(), array $attributes=array())
 	{
-		$attributes['size'] = 20;
+		$attributes['size'] = $size;
 		parent::__construct($label, $validators, $attributes);
 		$this->precision = $precision;
 	}
