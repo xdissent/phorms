@@ -13,12 +13,14 @@
 ### Functional Changes:
 * Changed name of Phorm\_Field\_Numeric to Phorm\_Field\_Integer because that's what it is (numeric is misleading because php's is\_numeric() function checks for any kind of number, not just integers).
 * Added $size parameter to Decimal and Integer field types instead of hard-coding "20".
-* Simplified built-in 'required' validation (just add 'required' to any field's validation array) [Implementation Details: I removed the "Validation.class.php" file because it made no sense, and replaced it with a simple built-in function that is automatically added to the field's callbacks during the constructor if 'required' exists in the validation array. Also fixed the is\_valid() function in Field.class.php so it works with class callbacks in the validations array (passed in as array of class and function instead of just function name). ]
+* Simplified built-in 'required' validation (just add 'required' to any field's validation array) [Implementation Details: I removed the "Validation.class.php" file because it made no sense, and replaced it with a simple built-in function that is automatically called when is_valid() is called if the validation array contains 'required'].
 * Changed default form method from 'get' to 'post' in the Phorm\_Phorm constuctor ('post' is a more common use case so it should be the default)
 * Added a display\_errors() function that can be called on your phorm object to output a list of all field errors -- useful if you want to display all errors at the top of the page instead of inline with each feild.
 * Added a new public fields() function to Phorm\_Phorm class so all field objects can be retrieved and looped through.
+* Text and Integer fields now set HTML maxlength attribute based on $max\_length param (in addition to existing server-side validation check).
+* Bugfix: The is\_valid() function in Field.class.php now works with instance callbacks as well as function names, to match documented behaviour.
 
-##### Non-Functional Changes:
+### Non-Functional Changes:
 * Added new designed\_form.php example to demonstrate how to use the class in your own templated / designed HTML form (as opposed to an auto-generated table), and to show off the new display\_errors() and fields() functions.
 * Removed getIterator() function in Phorm/Phorm.class.php becaue it wasn't doing anything (class doesn't implement IteratorAggregate)
 * Removed leftover debugging call to var\_dump() in Phorm/Field/Email.class.php
