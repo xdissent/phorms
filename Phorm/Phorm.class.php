@@ -231,7 +231,8 @@ abstract class Phorm_Phorm
 	 *
 	 * @return array fields
 	 */
-	public function fields() {
+	public function fields()
+	{
 		return $this->fields;
 	}
 	
@@ -276,7 +277,8 @@ abstract class Phorm_Phorm
 	public function display_errors($prefix = '', $suffix = '')
 	{	
 		$nested_errors = $this->get_errors();
-		foreach ($nested_errors as $field_name => $field_error) {
+		foreach ($nested_errors as $field_name => $field_error)
+		{
 			echo $prefix;
 			echo $this->$field_name->label(false) . ': ' . $field_error[1];
 			echo $suffix;

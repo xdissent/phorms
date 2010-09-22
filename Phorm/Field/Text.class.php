@@ -32,6 +32,7 @@ class Phorm_Field_Text extends Phorm_Field
 	public function __construct($label, $size, $max_length, array $validators=array(), array $attributes=array())
 	{
 		$this->max_length = $max_length;
+		$attributes['maxlength'] = $max_length;
 		$attributes['size'] = $size;
 		parent::__construct($label, $validators, $attributes);
 	}

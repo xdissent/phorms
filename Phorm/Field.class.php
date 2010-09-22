@@ -81,15 +81,6 @@ abstract class Phorm_Field
 			$attributes['class'] .= ' '.strtolower(get_class($this));
 		}
 		
-		//Handle "required" validation specially, because:
-		// 1) We want it available to ALL field types
-		// 2) It needs to be implemented as a callback, not a normal validation,
-		//    because normal validation rules are bypassed if field value == ''
-		$required_key = array_search('required', $validators);
-		if ($required_key !== false) {
-			$validators[$required_key] = array($this, 'validate_required_field');
-		}
-
 		$this->label = (string) $label;
 		$this->attributes = $attributes;
 		$this->validators = $validators;
@@ -285,11 +276,15 @@ abstract class Phorm_Field
 			{
 				try
 				{
-					call_user_func($f, $value);
+					if ($f == 'required') { //special case -- available to all field types, and $this->validate() isn't even called if value is empty
+						$this->validate_required_field($value);
+					} else {
+						call_user_func($f, $value);
+					}
 				}
 				catch( Phorm_ValidationError $e )
 				{
-					$rule_name = is_array($f) ? $f[1] : $f;
+					$rule_name = is_array($f) ? $f[1] : $f; //handles both string (function name) and array (instance, function name)
 					$this->errors[] = array( $rule_name, $this->lang->{$e->getMessage()} );
 				}
 			}
@@ -359,15 +354,18 @@ abstract class Phorm_Field
 	/**
 	 * Validates that the value isn't null or an empty string.
 	 * This is a built-in validation rule available to all fields
-	 * (and there is logic in the constructor to automatically activate
-	 * this when 'required' is in the validation array).
+	 * (we have hard-coded logic in the is_valid() function
+	 *  to call this if 'required' exists in the validation array).
 	 *
 	 * @param string $value
 	 * @return null
 	 * @throws Phorm_ValidationError
 	 */
-	public function validate_required_field($value) {
+	public function validate_required_field($value)
+	{
 		if ($value == '' || is_null($value))
+		{
 			throw new Phorm_ValidationError('validation_required');
+		}
 	}
 }
