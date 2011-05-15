@@ -21,7 +21,7 @@ class Phorm_Field_Hidden extends Phorm_Field_Text
 	 */
 	public function __construct(array $validators=array(), array $attributes=array())
 	{
-		parent::__construct('', 255, $validators, $attributes);
+		parent::__construct('', 25, 255, $validators, $attributes);
 	}
 
 	/**
