@@ -75,6 +75,21 @@ class Phorm_Field_Checkbox extends Phorm_Field
 	}
 
 	/**
+	 * Validates that the checkbox is checked.
+	 *
+	 * @param string $value
+	 * @return null
+	 * @throws Phorm_ValidationError
+	 */
+	public function validate_required_field($value)
+	{
+		if (!$this->checked)
+		{
+			throw new Phorm_ValidationError('validation_required');
+		}
+	}
+
+	/**
 	 * Returns true if the field was checked in the user-submitted data, false
 	 * otherwise.
 	 *
