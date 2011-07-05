@@ -49,7 +49,7 @@ class Phorm_Field_FileUpload extends Phorm_Field
 	protected function file_was_uploaded()
 	{
 		$file = $this->get_file_data();
-		return !$file['error'];
+		return !empty($file['tmp_name']) && !$file['error'];
 	}
 
 	/**
