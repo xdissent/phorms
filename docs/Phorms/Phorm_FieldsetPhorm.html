@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class Phorm_FieldsetPhorm</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+						<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class Phorm_FieldsetPhorm</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+													<a href="#sec-vars">Vars</a>
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">FieldsetPhorm</p>
+<p class="description"><p>The abstract FieldsetPhorm class is a subclass of Phorm. It additionally  specifies one abstract method: 'define_fieldsets', which must set the  'fieldsets' attribute. It should be an array of Fieldset instances to  use in the form.</p></p>
+	<ul class="tags">
+				<li><span class="field">author:</span> Greg Thornton &lt;<a href="mailto:xdissent@gmail.com">xdissent@gmail.com</a>&gt;</li>
+				<li><span class="field">see:</span> <a href="../Phorms/Phorm_Fieldset.html">Phorm_Fieldset</a></li>
+				<li><span class="field">abstract:</span> </li>
+				<li><span class="field">example:</span> <a href="../__examplesource/exsource_E__remote_dev_phorms_examples_comment_form.php_f381eb1b336f66f1b5f989465c9e9af0.html">A simple comment form</a></li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_Phorm---FieldsetPhorm.class.php.html">/Phorm/FieldsetPhorm.class.php</a> (line <span class="field">18</span>)
+		</p>
+		
+				
+		<pre><a href="../Phorms/Phorm_Phorm.html">Phorm_Phorm</a>
+   |
+   --Phorm_FieldsetPhorm</pre>
+	
+			</div>
+</div>
+
+
+
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-vars">Vars</a>
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																														
+				<div class="method-definition">
+											<span class="method-result">Phorm_FieldsetPhorm</span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
+											([<span class="var-type"></span>&nbsp;<span class="var-name">$method</span> = <span class="var-default">'get'</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$multi_part</span> = <span class="var-default">false</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$data</span> = <span class="var-default">array( )</span>])
+									</div>
+														
+				<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#as_labels" title="details" class="method-name">as_labels</a>
+										()
+									</div>
+											</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			
+							<h4>Inherited Variables</h4>
+				<A NAME='inherited_vars'><!-- --></A>
+									<p>Inherited from <span class="classname"><a href="../Phorms/Phorm_Phorm.html">Phorm_Phorm</a></span></p>
+					<blockquote>
+													<span class="var-title">
+								<span class="var-name"><a href="../Phorms/Phorm_Phorm.html#var$bound">Phorm_Phorm::$bound</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../Phorms/Phorm_Phorm.html#var$lang">Phorm_Phorm::$lang</a></span><br>
+							</span>
+											</blockquote> 
+										
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-vars">Vars</a>
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">21</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Phorm_FieldsetPhorm</span>
+		<span class="method-name">
+			__construct
+		</span>
+					([<span class="var-type"></span>&nbsp;<span class="var-name">$method</span> = <span class="var-default">'get'</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$multi_part</span> = <span class="var-default">false</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$data</span> = <span class="var-default">array( )</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$method</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$multi_part</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$data</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Phorms/Phorm_Phorm.html#method__construct">Phorm_Phorm::__construct()</a></dt>
+					</dl>
+			
+	</div>
+<a name="methodas_labels" id="as_labels"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">as_labels</span> (line <span class="line-number">33</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Returns the form fields.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> the HTML form</li>
+				<li><span class="field">author:</span> Thomas Lété</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			as_labels
+		</span>
+				()
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Phorms/Phorm_Phorm.html#methodas_labels">Phorm_Phorm::as_labels()</a></dt>
+						<dd>Returns the form fields.</dd>
+					</dl>
+			
+	</div>
+							<h4>Inherited Methods</h4>
+				<a name='inherited_methods'><!-- --></a>	
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../Phorms/Phorm_Phorm.html">Phorm_Phorm</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../Phorms/Phorm_Phorm.html#method__construct">Phorm_Phorm::__construct()</a></span><br>
+													<span class="method-name"><a href="../Phorms/Phorm_Phorm.html#methodas_labels">Phorm_Phorm::as_labels()</a></span><br>
+													<span class="method-name"><a href="../Phorms/Phorm_Phorm.html#methodas_table">Phorm_Phorm::as_table()</a></span><br>
+													<span class="method-name"><a href="../Phorms/Phorm_Phorm.html#methodbuttons">Phorm_Phorm::buttons()</a></span><br>
+													<span class="method-name"><a href="../Phorms/Phorm_Phorm.html#methodcleaned_data">Phorm_Phorm::cleaned_data()</a></span><br>
+													<span class="method-name"><a href="../Phorms/Phorm_Phorm.html#methodclose">Phorm_Phorm::close()</a></span><br>
+													<span class="method-name"><a href="../Phorms/Phorm_Phorm.html#methoddefine_fields">Phorm_Phorm::define_fields()</a></span><br>
+													<span class="method-name"><a href="../Phorms/Phorm_Phorm.html#methoddisplay">Phorm_Phorm::display()</a></span><br>
+													<span class="method-name"><a href="../Phorms/Phorm_Phorm.html#methodgetIterator">Phorm_Phorm::getIterator()</a></span><br>
+													<span class="method-name"><a href="../Phorms/Phorm_Phorm.html#methodget_errors">Phorm_Phorm::get_errors()</a></span><br>
+													<span class="method-name"><a href="../Phorms/Phorm_Phorm.html#methodhas_errors">Phorm_Phorm::has_errors()</a></span><br>
+													<span class="method-name"><a href="../Phorms/Phorm_Phorm.html#methodis_valid">Phorm_Phorm::is_valid()</a></span><br>
+													<span class="method-name"><a href="../Phorms/Phorm_Phorm.html#methodopen">Phorm_Phorm::open()</a></span><br>
+													<span class="method-name"><a href="../Phorms/Phorm_Phorm.html#method__toString">Phorm_Phorm::__toString()</a></span><br>
+											</blockquote>
+										
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Tue, 17 Aug 2010 03:15:19 +0300 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+	</p>
+	</div></body>
+</html>
