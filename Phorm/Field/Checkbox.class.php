@@ -20,6 +20,12 @@ class Phorm_Field_Checkbox extends Phorm_Field
 	 * @var boolean
 	 */
 	private $checked;
+        
+	/**
+	 * True when the user data field is checked.
+	 * @var boolean
+	 */
+	private $user_checked;
 
 	/**
 	 * @param string $label the field's text label
@@ -31,6 +37,7 @@ class Phorm_Field_Checkbox extends Phorm_Field
 		parent::__construct($label, $validators, $attributes);
 		parent::set_value('on');
 		$this->checked = false;
+		$this->user_checked = false;
 	}
 
 	/**
@@ -42,6 +49,7 @@ class Phorm_Field_Checkbox extends Phorm_Field
 	public function set_value($value)
 	{
 		$this->checked = (boolean) $value;
+		$this->user_checked = ($value === 'on');     
 	}
 
 	/**
@@ -97,6 +105,7 @@ class Phorm_Field_Checkbox extends Phorm_Field
 	 */
 	public function import_value($value)
 	{
+		$this->checked = $this->user_checked;
 		return $this->checked;
 	}
 
