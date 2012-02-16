@@ -76,7 +76,7 @@ class Phorm_Widget
 			$attributes[$this->clean_string($key)] = $this->clean_string($val);
 		}
 
-		return $this->serialize($this->clean_string($value), $attributes);
+		return $this->serialize($value, $attributes);
 	}
 
 }
