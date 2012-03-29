@@ -29,7 +29,7 @@ class Phorm_Field_Hidden extends Phorm_Field_Text
 	 *
 	 * @return string an empty string
 	 */
-	public function label()
+	public function label($tag=TRUE)
 	{
 		return '';
 	}
@@ -39,7 +39,7 @@ class Phorm_Field_Hidden extends Phorm_Field_Text
 	 *
 	 * @return string an empty string.
 	 */
-	public function help_text()
+	public function help_text($text='')
 	{
 		return '';
 	}
