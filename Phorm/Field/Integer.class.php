@@ -55,7 +55,7 @@ class Phorm_Field_Integer extends Phorm_Field
 	 */
 	public function validate($value)
 	{
-		if( !filter_var($value,FILTER_VALIDATE_INT) && filter_var($value, FILTER_VALIDATE_INT) !== 0 )
+		if( filter_var($value,FILTER_VALIDATE_INT) === false ) // don't confuse 0 with false!
 		{
 			throw new Phorm_ValidationError('field_invalid_integer');
 		}

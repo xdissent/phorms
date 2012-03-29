@@ -27,6 +27,7 @@ class Phorm_Field_Hidden extends Phorm_Field_Text
 	/**
 	 * Does not print out a label.
 	 *
+	 * @param this param is ignored -- it only exists to prevent warnings (because base class's function has this param)
 	 * @return string an empty string
 	 */
 	public function label($tag=TRUE)
@@ -37,6 +38,7 @@ class Phorm_Field_Hidden extends Phorm_Field_Text
 	/**
 	 * Does not print out the help text.
 	 *
+	 * @param this param is ignored -- it only exists to prevent warnings (because base class's function has this param)
 	 * @return string an empty string.
 	 */
 	public function help_text($text='')
