@@ -225,7 +225,7 @@ abstract class Phorm_Phorm
 
 		return $this->clean;
 	}
-	
+
 	/**
 	 * Returns an array of the form's field objects
 	 *
@@ -235,7 +235,7 @@ abstract class Phorm_Phorm
 	{
 		return $this->fields;
 	}
-	
+
 	/**
 	 * Returns true if the form has errors.
 	 *
@@ -265,7 +265,7 @@ abstract class Phorm_Phorm
 		}
 		return $this->errors;
 	}
-	
+
 	/**
 	 * Outputs errors for all fields, with an optional prefix and suffix so you can wrap them in HTML elements.
 	 * Note that if a field has multiple errors, only one of them will be displayed (the last one in the validation array).
@@ -275,7 +275,7 @@ abstract class Phorm_Phorm
 	 * @return void
 	 */
 	public function display_errors($prefix = '', $suffix = '')
-	{	
+	{
 		$nested_errors = $this->get_errors();
 		foreach ($nested_errors as $field_name => $field_error)
 		{
@@ -327,11 +327,32 @@ abstract class Phorm_Phorm
 			$target = $_SERVER['PHP_SELF'];
 		}
 
-		return sprintf('<form method="%s" action="%s"%s id="%s">',
+		if (!array_key_exists('id', $attributes))
+		{
+			$attributes['id'] = strtolower(get_class($this));
+		}
+
+		if ($this->multi_part)
+		{
+			$attributes['enctype'] = 'multipart/form-data';
+		}
+
+		foreach ($attributes as $key => $value)
+		{
+			if ($value !== FALSE)
+			{
+				$attributes[$key] = sprintf('%s="%s"', $key, $value);
+			}
+			else
+			{
+				unset($attributes[$key]);
+			}
+		}
+
+		return sprintf('<form method="%s" action="%s"%s>',
 			$this->method,
 			htmlentities((string) $target),
-			($this->multi_part) ? ' enctype="multipart/form-data"' : '',
-			strtolower(get_class($this))
+			$attributes ? ' ' . implode(' ', $attributes) : false
 		)."\n";
 	}
 
