@@ -1,99 +1,82 @@
 <?php
+error_reporting( E_ALL);
 
-error_reporting(6143|2048);
+require_once('../phorms.php');
 
-require_once('../src/phorms.php');
-
-function required($value)
-{
-	if ($value == '' || is_null($value))
-		throw new ValidationError('This field is required.');
-}
-
-class ProfileForm extends FieldsetPhorm
+class ProfileForm extends Phorm_FieldsetPhorm
 {
 	protected function define_fields()
 	{
 		// Define form fields
-		$this->user_id = new HiddenField(array('required'));
-		$this->first_name = new TextField("First name", 25, 255, array('required'));
-		$this->last_name = new TextField("Last name", 25, 255, array('required'));
-		$this->email = new EmailField("Email address", 25, 255, array('required'));
-		$this->url = new URLField("Home page", 25, 255);
-		$this->bio = new LargeTextField('Bio', 5, 40, array('required'));
-		
+		$this->user_id = new Phorm_Field_Hidden(array( 'required' ));
+		$this->first_name = new Phorm_Field_Text("First name", 25, 255, array( 'required' ));
+		$this->last_name = new Phorm_Field_Text("Last name", 25, 255, array( 'required' ));
+		$this->email = new Phorm_Field_Email("Email address", 25, 255, array( 'required' ));
+		$this->url = new Phorm_Field_URL("Home page", 25, 255);
+		$this->bio = new Phorm_Field_Textarea('Bio', 5, 40, array( 'required' ));
+
 		// Add some help text
-		$this->email->set_help_text('We will never give out your email address.');
+		$this->email->help_text('We will never give out your email address.');
 	}
-	
+
 	protected function define_fieldsets()
 	{
-        $this->fieldsets = array(new Fieldset('name', 'Name', array('user_id', 
-                                                                    'first_name', 
-                                                                    'last_name')),
-                                 new Fieldset('extra', 'Extra', array('email', 
-                                                                      'url', 
-                                                                      'bio')));
+		$this->fieldsets = array(
+			new Phorm_Fieldset('name', 'Name', array( 'user_id', 'first_name', 'last_name' )),
+			new Phorm_Fieldset('extra', 'Extra', array( 'email', 'url', 'bio' ))
+		);
 	}
-	
+
 	public function report()
 	{
-		var_dump( $this->cleaned_data() );
+		var_dump($this->cleaned_data());
 	}
+
 }
 
 // Set up the form
 $post_id = 42;
-$form = new ProfileForm(Phorm::POST, false, array('post_id'=>$post_id));
-
-// Check form validity
-$valid = $form->is_valid();
+$form = new ProfileForm('post', false, array( 'post_id' => $post_id ));
 
 ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
+	<head>
+		<title>Profile Form example for Phorm</title>
+		<link rel="stylesheet" href="assets/style.css" type="text/css" />
+	</head>
 	<body>
-		<style>
-			table { border: 1px solid #ccc; padding: 2px 4px; }
-			th { vertical-align: top; text-align: right; }
-			td { vertical-align: top; }
-			thead th { text-align: center; font-size: 16pt; background-color: #ccc; }
-			.phorm_error { color: #bb0000; font-size: 10pt; text-align: left; font-style: oblique; }
-			.phorm_help { margin: 0; padding: 2px; font-size: 10pt; font-style: oblique; color: #666; }
-		</style>
+		<?php echo $form->open();?>
+		<h1>Profile Data</h1>
+		<?php if( $form->has_errors() ) { ?>
+		<div class="phorm_error">Please correct the following errors.</div>
+		<?php } ?>
+		<?php echo $form->as_table(); ?>
 
-		<?= $form->open() ?>
-			<table>
-				<thead>
-					<tr><th colspan="2">Add a comment</th></tr>
-					<?php if ( $form->has_errors() ): ?>
-					<tr><th class="phorm_error" colspan="2">Please correct the following errors.</th></tr>
-					<?php endif ?>
-				</thead>
-				<tbody>
-					<?= $form ?>
-					<tr>
-						<th colspan="2">
-							<input type="button" value="Clear form" onclick="javascript:location.href='<?= $_SERVER['PHP_SELF'] ?>'" />
-							<input type="submit" value="Submit" />
-						</th>
-					</tr>
-				</tbody>
-			</table>
-		<?= $form->close() ?>
-		
+		<div>
+			<input type="button" value="Clear form" onclick="javascript:location.href='<?php echo $_SERVER['PHP_SELF']?>'" />
+			<input type="submit" value="Submit" onclick="javascript:console.log(this.parent);"/>
+		</div>
+		<?php echo $form->close();?>
 		<h4>Raw POST data:</h4>
-		<?php var_dump($_POST); ?>
-	
+		<?php var_dump($_POST);?>
 		<hr />
-	
-		<?php if ($form->is_bound() && $valid): ?>
-			<h4>Processed and cleaned form data:</h4>
-			<? $form->report() ?>
-		<?php elseif ($form->has_errors()): ?>
-			<h4>Errors:</h4>
-			<?php var_dump($form->get_errors()); ?>
-		<?php else: ?>
-			<p><em>The form is unbound.</em></p>
-		<?php endif ?>
+		<?php
+		if( $form->bound && $form->is_valid() )
+		{
+			echo '<h4>Processed and cleaned form data:</h4>';
+			$form->report();
+		}
+		elseif( $form->has_errors() )
+		{
+			echo '<h4>Errors:</h4>';
+			var_dump($form->get_errors());
+		}
+		else
+		{
+			echo '<p><em>The form is unbound.</em></p>';
+		}
+		?>
 	</body>
 </html>
